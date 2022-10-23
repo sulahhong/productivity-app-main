@@ -1,0 +1,11 @@
+.todoContainer {
+    padding-top: var(--navTopHeight);
+    padding-left: var(--navSideWidth) ;
+    height: 100vh;
+    background-color: red;
+}
+
+.todoBody {
+    padding: 1rem;
+}
+
