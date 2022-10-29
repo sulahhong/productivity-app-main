@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function Diary() {
   return (
-    <div>Diary</div>
+    <div>여기는 Diary</div>
   )
 }
 

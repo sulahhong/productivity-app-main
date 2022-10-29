@@ -7,11 +7,123 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s linear;
 }
 
 .todoModalContainer{
     background-color: white;
-    width: 80%;
+    width: 100vh;
+    max-width: 700px;
+    border-radius: 5px;
     margin: auto 0;
-    padding: 2rem;
+    padding: 1.5rem 2rem;
+    position: relative;
+}
+
+.todoModalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.5rem;
+    border-bottom: 1px solid rgb(216, 216, 216);
+
+}
+
+.todoModalHeaderTitle {
+    color: gray;
+    font-size: 1.5rem;
+}
+
+.todoModalCloseButton {
+    width: 1.9rem;
+    height: 1.9rem;
+
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: gray;
+    padding: 0;
+    border-radius: 1rem;
+}
+
+.todoModalCloseButton:hover {
+    background-color: rgb(227, 227, 227);
+}
+
+.todoModalBody {
+    padding: 1rem 1rem;
+}
+
+.todoModalInput {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1rem;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 1rem;
+}
+
+input:focus {
+    outline: none;
+}
+
+.todoModalInputTitle {
+    border: none;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.todoModalInputDescription {
+    border: none;
+    font-size: 1rem;
+}
+
+.todoModalSetting {
+    margin: 1rem 0;
+    padding-bottom: 1rem ;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(216, 216, 216);
+}
+
+/* .todoModalSettingIcon {
+    font-size: 0.8rem;
+    color: rgb(216, 216, 216);
+    margin-right: 1rem;
+} */
+
+.todoModalSettingText {
+    font-size: 0.8rem;
+    margin-right: 1rem;
+}
+
+.todoModalAddTodocontainer {
+    display: flex;
+    justify-content: end;
+}
+
+.todoModalDueDateTitle {
+    margin-right: 1rem;
+    font-size: 0.8rem;
+}
+
+.todoModalDueDate {
+    display: flex;
+    margin-right: 1rem;
+    font-size: 0.8rem;
+}
+
+.todoModalAddTodo {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: rgb(236, 183, 84);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    
 }

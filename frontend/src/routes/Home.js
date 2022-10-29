@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function Home() {
   return (
-    <div>Home</div>
+    <div>여기는 Home</div>
   )
 }
 

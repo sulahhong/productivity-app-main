@@ -17,6 +17,18 @@
   position: relative;
 }
 
+.todoviewCardInverted {
+  background-color: rgb(118, 91, 91);
+  border: 1px solid rgb(216, 216, 216);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 0.8rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
 .todoCardContent {
   display: flex;
 }
