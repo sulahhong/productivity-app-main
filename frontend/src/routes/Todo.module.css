@@ -2,7 +2,7 @@
     padding-top: var(--navTopHeight);
     padding-left: var(--navSideWidth) ;
     height: 100vh;
-    background-color: red;
+    background-color: rgb(204, 198, 198);
 }
 
 .todoBody {

@@ -23,3 +23,11 @@ option view (priority, done or not, 최신순 )
 1. todo 날짜별로 볼 수 있게 정렬 선택 두가지 
 2. 시간대 별로 push 알림 가능?
 3. 그룹핑해서 아카이브 시키기 
+
+
+10/30 
+
+1. 시간/우선순위/
+
+2. dribble.com 
+

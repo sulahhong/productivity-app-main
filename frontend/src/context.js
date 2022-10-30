@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from "react";
 
-const AppContext = React.createContext()
+const AppContext = React.createContext();
 
 const getLocalStorage = () => {
   let storage = localStorage.getItem("todoList");
@@ -12,18 +12,52 @@ const getLocalStorage = () => {
 };
 
 const AppProvider = ({ children }) => {
+  const [todos, setTodos] = useState(getLocalStorage());
+  const [targetTodoGlobal, setTargetTodoGlobal] = useState({});
+  const [isEditingTodo, setIsEditingTodo] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [viewTodos, setViewTodos] = useState(todos);
+  const [viewCategory, setViewCategory] = useState("all");
 
-const [todos, setTodos] = useState(getLocalStorage());  
-const [targetTodoGlobal, setTargetTodoGlobal] = useState({});
-const [isEditingTodo, setIsEditingTodo] = useState(false);
-const [openModal, setOpenModal] = useState(false);
+  useEffect(() => {
+    window.localStorage.setItem("todoList", JSON.stringify(todos));
+  }, [todos]);
 
-useEffect(() => {
-  window.localStorage.setItem("todoList", JSON.stringify(todos));
-}, [todos]);
-   
-return (
-   <AppContext.Provider 
+  useEffect(() => {
+    if (viewCategory == "done") {
+      const arr = todos.filter((item) => item.todoDone);
+    console.log("arrrr", arr);
+    setViewTodos(arr);
+    } else if (viewCategory == "notdone") {
+      const arr = todos.filter((item) => !item.todoDone);
+    console.log("arrrr", arr);
+    setViewTodos(arr);
+    } else if (viewCategory == "all") {
+      setViewTodos(todos);
+    }
+  }, [todos]);
+
+  // const handleDoneButton = () => {
+  //   const arr = todos.filter((item) => item.todoDone);
+  //   console.log("arrrr", arr);
+  //   setViewTodos(arr);
+  //   setViewCategory("done");
+  // };
+
+  // const handleNotDoneButton = () => {
+  //   const arr = todos.filter((item) => !item.todoDone);
+  //   console.log("arrrr", arr);
+  //   setViewTodos(arr);
+  //   setViewCategory("notdone");
+  // };
+
+  // const handleAllButton = () => {
+  //   setViewTodos(todos);
+  //   setViewCategory("all");
+  // };
+
+  return (
+    <AppContext.Provider
       value={{
         todos,
         setTodos,
@@ -33,14 +67,20 @@ return (
         setTargetTodoGlobal,
         isEditingTodo,
         setIsEditingTodo,
-      }}>
-       {children}
-   </AppContext.Provider>
-)
-}
+        viewTodos,
+        setViewTodos,
+        viewCategory,
+        setViewCategory,
+
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
+};
 
 export const useGlobalContext = () => {
-    return useContext(AppContext)
-}
+  return useContext(AppContext);
+};
 
-export { AppContext, AppProvider }
+export { AppContext, AppProvider };

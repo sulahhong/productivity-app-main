@@ -21,6 +21,8 @@ function TodoView() {
     setTargetTodoGlobal,
     setIsEditingTodo,
     isEditingTodo,
+    viewTodos,
+    setViewTodos,
   } = useGlobalContext();
 
   const handleEditTodo = (id) => {
@@ -63,6 +65,37 @@ function TodoView() {
   };
 
 
+  // 날짜 갭 계산 
+  // useEffect(() => {
+
+  //   const oneDay = 24 * 60 * 60* 1000;
+  //   const today = new Date();
+  //   const anotherDay = new Date("2022-11-10");
+  //   console.log("dayday", oneDay, today, anotherDay)
+
+  //   const dayDiff = anotherDay - today;
+  //   console.log('daydiff', Math.round(dayDiff/oneDay))
+  // },[])
+
+
+  const dateDifference = (dueDate) => {
+    const oneDay = 24 * 60 * 60* 1000;
+    const today = new Date();
+    const anotherDay = new Date(dueDate);
+    console.log("dayday", oneDay, today, anotherDay)
+
+    const dayDiff = Math.round((today - anotherDay)/oneDay)
+    console.log('daydiff', dayDiff)
+
+    if(dayDiff < 0) {
+      return Math.abs(dayDiff) + " days left"
+    } else {
+      return dayDiff +  " days ago"
+    }
+
+
+  } 
+
 
   // const todoDoneStatus = (todoDone) => {
   //   if (todoDone === true) {
@@ -74,9 +107,9 @@ function TodoView() {
 
   return (
     <div className={styles.todoViewContainer}>
-      {todos.map((item) => (
+      {viewTodos.map((item) => (
         // <div className={todoDoneStatus(item.tododone)}>
-        <div className={styles.todoViewCard}>
+        <div className={item.todoDone ? styles.todoViewCardDone : styles.todoViewCard}>
           <div className={styles.todoCardContent}>
             <div
               className={todoDonePrioritySelector(item.todoPriority)}
@@ -101,7 +134,7 @@ function TodoView() {
                 <div className={styles.dueDateText}>{item.todoDueDate}</div>
               </div>
               <div className={styles.dDayTrackerIcon}><MdOutlineToday /></div>
-              <div className={styles.dDayTrackerText}>{}</div>
+              <div className={styles.dDayTrackerText}>{dateDifference(item.todoDueDate)}</div>
             </div>
           </div>
           <div className={styles.todoCardButtons}>
