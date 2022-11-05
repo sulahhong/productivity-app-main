@@ -54,18 +54,17 @@ function TodoView() {
 
   const todoDonePrioritySelector = (priority) => {
     if (priority == 1) {
-      return "todoview_priority1"
+      return "todoview_priority1";
     } else if (priority == 2) {
-      return "todoview_priority2"
+      return "todoview_priority2";
     } else if (priority == 3) {
-      return "todoview_priority3"
+      return "todoview_priority3";
     } else if (priority == 4) {
-      return "todoview_priority4"
-    } 
+      return "todoview_priority4";
+    }
   };
 
-
-  // 날짜 갭 계산 
+  // 날짜 갭 계산
   // useEffect(() => {
 
   //   const oneDay = 24 * 60 * 60* 1000;
@@ -77,39 +76,37 @@ function TodoView() {
   //   console.log('daydiff', Math.round(dayDiff/oneDay))
   // },[])
 
-
   const dateDifference = (dueDate) => {
-    const oneDay = 24 * 60 * 60* 1000;
+    const oneDay = 24 * 60 * 60 * 1000;
     const today = new Date();
     const anotherDay = new Date(dueDate);
-    console.log("dayday", oneDay, today, anotherDay)
+    console.log("dayday", oneDay, today, anotherDay);
 
-    const dayDiff = Math.round((today - anotherDay)/oneDay)
-    console.log('daydiff', dayDiff)
+    const dayDiff = Math.round((today - anotherDay) / oneDay);
+    console.log("daydiff", dayDiff);
 
-    if(dayDiff < 0) {
-      return Math.abs(dayDiff) + " days left"
+    if (dayDiff < 0) {
+      return Math.abs(dayDiff) + " days left";
     } else {
-      return dayDiff +  " days ago"
+      return dayDiff + " days ago";
     }
-
-
-  } 
-
+  };
 
   // const todoDoneStatus = (todoDone) => {
   //   if (todoDone === true) {
   //     return "todoDoneIsTrue"
-  //   } 
+  //   }
   // }
-
-
 
   return (
     <div className={styles.todoViewContainer}>
       {viewTodos.map((item) => (
         // <div className={todoDoneStatus(item.tododone)}>
-        <div className={item.todoDone ? styles.todoViewCardDone : styles.todoViewCard}>
+        <div
+          className={
+            item.todoDone ? styles.todoViewCardDone : styles.todoViewCard
+          }
+        >
           <div className={styles.todoCardContent}>
             <div
               className={todoDonePrioritySelector(item.todoPriority)}
@@ -126,15 +123,20 @@ function TodoView() {
               <div className={styles.todoCardDescription}>
                 {item.todoDescription}
               </div>
-              <div className={styles.todoCardPriority}>{item.todoPriority}</div>
+              {/* <div className={styles.todoCardPriority}>{item.todoPriority}</div> */}
+              <div className={styles.todoCardDateview}>
               <div className={styles.todoCardDueDate}>
                 <div className={styles.dueDateIcon}>
                   <MdCalendarToday />
                 </div>
                 <div className={styles.dueDateText}>{item.todoDueDate}</div>
               </div>
-              <div className={styles.dDayTrackerIcon}><MdOutlineToday /></div>
-              <div className={styles.dDayTrackerText}>{dateDifference(item.todoDueDate)}</div>
+              <div className={styles.todoCardDday}>
+                <div className={styles.ddayTrackerText}>
+                  {dateDifference(item.todoDueDate)}
+                </div>
+              </div>
+            </div>
             </div>
           </div>
           <div className={styles.todoCardButtons}>

@@ -62,15 +62,75 @@
 }
 
 .todoCardButtons {
+
   display: flex;
   justify-content: end;
   align-items: end;
   position: absolute;
+  font-size: 1.2rem;
   top: 1rem;
   right: 1rem;
 }
 
+.todoCardEditButton {
+  width: 2rem;
+  height: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 1rem;
+  color: rgb(143, 134, 134);
+
+  cursor: pointer;
+}
+
+.todoCardDeleteButton {
+  width: 2rem;
+  height: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 1rem;
+  color: rgb(143, 134, 134);
+
+  cursor: pointer;
+}
+
+.todoCardDeleteButton:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.todoCardEditButton:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.todoCardDateview {
+  display: flex;
+  align-items: center;
+}
+
 .todoCardDueDate {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  margin-right: 1rem;
+  font-size: 0.8rem;
+  color: rgb(168, 164, 164);
+
+}
+
+.dueDateIcon {
+  font-size: 1rem;
+  margin-right: 0.3rem;
+  color: #8b8b8b;
+}
+
+
+.todoCardDday {
   display: flex;
   align-items: center;
   margin-bottom: 0.5rem;
@@ -78,7 +138,7 @@
   color: rgb(168, 164, 164);
 }
 
-.dueDateIcon {
+.ddayTrackerIcon {
   font-size: 1rem;
   margin-right: 0.3rem;
   color: #8b8b8b;
