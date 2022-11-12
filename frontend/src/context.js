@@ -37,24 +37,7 @@ const AppProvider = ({ children }) => {
     }
   }, [todos]);
 
-  // const handleDoneButton = () => {
-  //   const arr = todos.filter((item) => item.todoDone);
-  //   console.log("arrrr", arr);
-  //   setViewTodos(arr);
-  //   setViewCategory("done");
-  // };
 
-  // const handleNotDoneButton = () => {
-  //   const arr = todos.filter((item) => !item.todoDone);
-  //   console.log("arrrr", arr);
-  //   setViewTodos(arr);
-  //   setViewCategory("notdone");
-  // };
-
-  // const handleAllButton = () => {
-  //   setViewTodos(todos);
-  //   setViewCategory("all");
-  // };
 
   return (
     <AppContext.Provider
