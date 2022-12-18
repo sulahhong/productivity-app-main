@@ -40,3 +40,11 @@ option view (priority, done or not, 최신순 )
 
 // 다이어리 섹션을 만든다면 기억에 남는 사진 첨부할 수 있음 좋겠음 (약간 싸이월드 처럼)
 
+
+12/18 
+
+- sorting type
+1. priority (1.2.3.4)  오름차순/내림차순 
+2. done/not done 
+3. d-date, duedate  
+4. Create date 

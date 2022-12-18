@@ -47,8 +47,14 @@ function Todo() {
   };
 
   const handlePriorityButton = (e) => {
+    setViewType(e.target.id)
+    const  arr = todos.filter((item) => item.todoPriority == e.target.id)
+    console.log("PriorityARR",arr)
+    setViewTodos(arr)
     console.log("hihi", e.target.id);
   };
+
+
 
   return (
     <div className={styles.todoContainer}>
