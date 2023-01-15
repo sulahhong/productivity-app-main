@@ -86,9 +86,9 @@ function TodoView() {
     console.log("daydiff", dayDiff);
 
     if (dayDiff < 0) {
-      return Math.abs(dayDiff) + " days left";
+      return (<span className={styles.todoViewDDayLabel1}>{Math.abs(dayDiff) + " days left"}</span>)
     } else {
-      return dayDiff + " days ago";
+      return (<span className={styles.todoViewDDayLabel2}>{dayDiff + " days ago"}</span>)
     }
   };
 
@@ -100,7 +100,7 @@ function TodoView() {
 
   return (
     <div className={styles.todoViewContainer}>
-      {viewTodos.map((item) => (
+      {viewTodos.length > 0 ? (viewTodos.map((item) => (
         // <div className={todoDoneStatus(item.tododone)}>
         <div
           className={
@@ -155,7 +155,8 @@ function TodoView() {
           </div>
         </div>
         // </div>
-      ))}
+      ))) : 
+      (<div className={styles.todoViewEmpty}></div>)}
     </div>
   );
 }

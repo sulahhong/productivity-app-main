@@ -21,8 +21,7 @@ option view (priority, done or not, 최신순 )
 
 + 추가하고 싶은 기능 
 1. todo 날짜별로 볼 수 있게 정렬 선택 두가지 
-2. 시간대 별로 push 알림 가능?
-3. 그룹핑해서 아카이브 시키기 
+2. 그룹핑해서 아카이브 시키기 
 
 
 10/30 
@@ -46,5 +45,5 @@ option view (priority, done or not, 최신순 )
 - sorting type
 1. priority (1.2.3.4)  오름차순/내림차순 
 2. done/not done 
-3. d-date, duedate  
+3. d-date, duedate 
 4. Create date 

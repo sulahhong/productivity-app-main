@@ -18,6 +18,8 @@ function Todo() {
 
   const [priorityDropdown, setPriorityDropdown] = useState(false);
   const [viewType, setViewType] = useState(0);
+  const [sortDone, setSortDone] = useState(false);
+  const [sortDueDate, setSortDueDate] = useState(false);
 
   useEffect(() => {
     console.log("todos", todos);
@@ -47,13 +49,51 @@ function Todo() {
   };
 
   const handlePriorityButton = (e) => {
-    setViewType(e.target.id)
-    const  arr = todos.filter((item) => item.todoPriority == e.target.id)
-    console.log("PriorityARR",arr)
-    setViewTodos(arr)
+    setViewType(e.target.id);
+    const arr = todos.filter((item) => item.todoPriority == e.target.id);
+    console.log("PriorityARR", arr);
+    setViewTodos(arr);
     console.log("hihi", e.target.id);
   };
 
+  const handleSortDone = () => {
+setSortDone(prev=>!prev)
+    
+  }
+
+  useEffect(()=>{
+
+    if(sortDone){
+      console.log("sortsort")
+      const arr = [...todos].sort((a, b) => a.todoDone - b.todoDone)
+      console.log("handleSortDone", arr);
+      setViewTodos(arr);
+
+    } else {
+      const arr = [...todos].sort((a, b) => b.todoDone - a.todoDone)
+      console.log("handleSortDone", arr);
+      setViewTodos(arr);
+    }
+ 
+  }, [sortDone])
+
+  const handleSortDueDate = () => {
+    setSortDueDate(prev => !prev)
+  }
+
+  useEffect(() => {
+
+    if(sortDueDate) {
+      const arr = [...todos].filter((item) => !item.todoDone).sort((a, b) => Date.parse(b.todoDueDate) - Date.parse(a.todoDueDate))
+      console.log("sortduedate2",arr)
+      setViewTodos(arr)
+    } else {
+      const arr = [...todos].filter((item) => !item.todoDone).sort((a, b) => Date.parse(a.todoDueDate) - Date.parse(b.todoDueDate))
+    console.log("sortduedate2",arr)
+    setViewTodos(arr)
+    }
+
+},[sortDueDate])
 
 
   return (
@@ -92,6 +132,8 @@ function Todo() {
               </div>
             )}
           </div>
+              <button onClick={() => handleSortDone()}>sort Done</button>
+              <button onClick={() => handleSortDueDate()}>sort duedate</button>
         </div>
         <TodoView />
       </div>
