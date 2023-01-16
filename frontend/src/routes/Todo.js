@@ -20,6 +20,7 @@ function Todo() {
   const [viewType, setViewType] = useState(0);
   const [sortDone, setSortDone] = useState(false);
   const [sortDueDate, setSortDueDate] = useState(false);
+  const [sortCreateDate, setSortCreateDate] = useState(false);
 
   useEffect(() => {
     console.log("todos", todos);
@@ -53,48 +54,73 @@ function Todo() {
     const arr = todos.filter((item) => item.todoPriority == e.target.id);
     console.log("PriorityARR", arr);
     setViewTodos(arr);
-    console.log("hihi", e.target.id);
+    setViewCategory("Priority"+ e.target.id);
   };
 
   const handleSortDone = () => {
-setSortDone(prev=>!prev)
-    
-  }
-
-  useEffect(()=>{
-
-    if(sortDone){
-      console.log("sortsort")
-      const arr = [...todos].sort((a, b) => a.todoDone - b.todoDone)
-      console.log("handleSortDone", arr);
-      setViewTodos(arr);
-
-    } else {
-      const arr = [...todos].sort((a, b) => b.todoDone - a.todoDone)
-      console.log("handleSortDone", arr);
-      setViewTodos(arr);
-    }
- 
-  }, [sortDone])
-
-  const handleSortDueDate = () => {
-    setSortDueDate(prev => !prev)
-  }
+    setSortDone((prev) => !prev);
+  };
 
   useEffect(() => {
-
-    if(sortDueDate) {
-      const arr = [...todos].filter((item) => !item.todoDone).sort((a, b) => Date.parse(b.todoDueDate) - Date.parse(a.todoDueDate))
-      console.log("sortduedate2",arr)
-      setViewTodos(arr)
+    if (sortDone) {
+      console.log("sortsort");
+      const arr = [...todos].sort((a, b) => a.todoDone - b.todoDone);
+      console.log("handleSortDone", arr);
+      setViewTodos(arr);
+      setViewCategory("not done -> done")
     } else {
-      const arr = [...todos].filter((item) => !item.todoDone).sort((a, b) => Date.parse(a.todoDueDate) - Date.parse(b.todoDueDate))
-    console.log("sortduedate2",arr)
-    setViewTodos(arr)
+      const arr = [...todos].sort((a, b) => b.todoDone - a.todoDone);
+      console.log("handleSortDone", arr);
+      setViewTodos(arr);
+      setViewCategory("done -> not done")
     }
+  }, [sortDone]);
 
-},[sortDueDate])
+  const handleSortDueDate = () => {
+    setSortDueDate((prev) => !prev);
+  };
 
+  useEffect(() => {
+    if (sortDueDate) {
+      const arr = [...todos]
+        .filter((item) => !item.todoDone)
+        .sort((a, b) => Date.parse(b.todoDueDate) - Date.parse(a.todoDueDate));
+      console.log("sortduedate2", arr);
+      setViewTodos(arr);
+      setViewCategory("duedate left")
+    } else {
+      const arr = [...todos]
+        .filter((item) => !item.todoDone)
+        .sort((a, b) => Date.parse(a.todoDueDate) - Date.parse(b.todoDueDate));
+      console.log("sortduedate2", arr);
+      setViewTodos(arr);
+      setViewCategory("duedate ago")
+    }
+  }, [sortDueDate]);
+
+  const handleSortCreateDate = () => {
+    setSortCreateDate((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (sortCreateDate) {
+      const arr = [...todos]
+        .filter((item) => !item.todoDone)
+        .sort(
+          (a, b) => Date.parse(b.todoCreateDate) - Date.parse(a.todoCreateDate)
+        );
+      setViewTodos(arr);
+      setViewCategory("latest create")
+    } else {
+      const arr = [...todos]
+        .filter((item) => !item.todoDone)
+        .sort(
+          (a, b) => Date.parse(a.todoCreateDate) - Date.parse(b.todoCreateDate)
+        );
+      setViewTodos(arr);
+      setViewCategory("oldest create")
+    }
+  }, [sortCreateDate]);
 
   return (
     <div className={styles.todoContainer}>
@@ -132,9 +158,13 @@ setSortDone(prev=>!prev)
               </div>
             )}
           </div>
-              <button onClick={() => handleSortDone()}>sort Done</button>
-              <button onClick={() => handleSortDueDate()}>sort duedate</button>
+          <button onClick={() => handleSortDone()}>sort Done</button>
+          <button onClick={() => handleSortDueDate()}>sort duedate</button>
+          <button onClick={() => handleSortCreateDate()}>
+            sort Create date
+          </button>
         </div>
+        <div className={styles.viewTodoNow}>구분 : {viewCategory}</div>
         <TodoView />
       </div>
       <div className={styles.todoBodyFooter}>this is the footer </div>

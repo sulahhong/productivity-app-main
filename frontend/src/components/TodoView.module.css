@@ -166,9 +166,24 @@
     padding: 1rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     position: relative;
     width: 60%;
+}
+
+.todoViewEmptyIcon {
+  font-size: 1.2rem;
+  align-items: center;
+  margin-right: 0.5rem;
+  color: #8b8b8b;
+}
+
+.todoViewEmptyText {
+  font-size: 1rem;
+  align-items: center;
+  margin-right: 0.5rem;
+  color: #8b8b8b;
 }
 
 @media (max-width: 1080px) {

@@ -9,6 +9,7 @@ import {
   MdOutlineEdit,
   MdOutlineDelete,
   MdOutlineToday,
+  MdOutlineInfo,
 } from "react-icons/md";
 
 function TodoView() {
@@ -86,9 +87,17 @@ function TodoView() {
     console.log("daydiff", dayDiff);
 
     if (dayDiff < 0) {
-      return (<span className={styles.todoViewDDayLabel1}>{Math.abs(dayDiff) + " days left"}</span>)
+      return (
+        <span className={styles.todoViewDDayLabel1}>
+          {Math.abs(dayDiff) + " days left"}
+        </span>
+      );
     } else {
-      return (<span className={styles.todoViewDDayLabel2}>{dayDiff + " days ago"}</span>)
+      return (
+        <span className={styles.todoViewDDayLabel2}>
+          {dayDiff + " days ago"}
+        </span>
+      );
     }
   };
 
@@ -100,63 +109,73 @@ function TodoView() {
 
   return (
     <div className={styles.todoViewContainer}>
-      {viewTodos.length > 0 ? (viewTodos.map((item) => (
-        // <div className={todoDoneStatus(item.tododone)}>
-        <div
-          className={
-            item.todoDone ? styles.todoViewCardDone : styles.todoViewCard
-          }
-        >
-          <div className={styles.todoCardContent}>
-            <div
-              className={todoDonePrioritySelector(item.todoPriority)}
-              onClick={() => handleTodoDone(item.todoId)}
-            >
-              {item.todoDone ? (
-                <MdOutlineCheckCircleOutline />
-              ) : (
-                <MdRadioButtonUnchecked />
-              )}
-            </div>
-            <div className={styles.todoCardBody}>
-              <div className={styles.todoCardTitle}>{item.todoTitle}</div>
-              <div className={styles.todoCardDescription}>
-                {item.todoDescription}
+      {viewTodos.length > 0 ? (
+        viewTodos.map((item) => (
+          // <div className={todoDoneStatus(item.tododone)}>
+          <div
+            className={
+              item.todoDone ? styles.todoViewCardDone : styles.todoViewCard
+            }
+          >
+            <div className={styles.todoCardContent}>
+              <div
+                className={todoDonePrioritySelector(item.todoPriority)}
+                onClick={() => handleTodoDone(item.todoId)}
+              >
+                {item.todoDone ? (
+                  <MdOutlineCheckCircleOutline />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
               </div>
-              {/* <div className={styles.todoCardPriority}>{item.todoPriority}</div> */}
-              <div className={styles.todoCardDateview}>
-              <div className={styles.todoCardDueDate}>
-                <div className={styles.dueDateIcon}>
-                  <MdCalendarToday />
+              <div className={styles.todoCardBody}>
+                <div className={styles.todoCardTitle}>{item.todoTitle}</div>
+                <div className={styles.todoCardDescription}>
+                  {item.todoDescription}
                 </div>
-                <div className={styles.dueDateText}>{item.todoDueDate}</div>
-              </div>
-              <div className={styles.todoCardDday}>
-                <div className={styles.ddayTrackerText}>
-                  {dateDifference(item.todoDueDate)}
+                {/* <div className={styles.todoCardPriority}>{item.todoPriority}</div> */}
+                <div className={styles.todoCardDateview}>
+                  <div className={styles.todoCardDueDate}>
+                    <div className={styles.dueDateIcon}>
+                      <MdCalendarToday />
+                    </div>
+                    <div className={styles.dueDateText}>{item.todoDueDate}</div>
+                  </div>
+                  <div className={styles.todoCardDday}>
+                    <div className={styles.ddayTrackerText}>
+                      {dateDifference(item.todoDueDate)}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+            <div className={styles.todoCardButtons}>
+              <div
+                className={styles.todoCardEditButton}
+                onClick={() => handleEditTodo(item.todoId)}
+              >
+                <MdOutlineEdit />
+              </div>
+              <div
+                className={styles.todoCardDeleteButton}
+                onClick={() => handleDeleteTodo(item.todoId)}
+              >
+                <MdOutlineDelete />
+              </div>
             </div>
           </div>
-          <div className={styles.todoCardButtons}>
-            <div
-              className={styles.todoCardEditButton}
-              onClick={() => handleEditTodo(item.todoId)}
-            >
-              <MdOutlineEdit />
-            </div>
-            <div
-              className={styles.todoCardDeleteButton}
-              onClick={() => handleDeleteTodo(item.todoId)}
-            >
-              <MdOutlineDelete />
-            </div>
+          // </div>
+        ))
+      ) : (
+        <div className={styles.todoViewEmpty}>
+          <div className={styles.todoViewEmptyIcon}>
+            <MdOutlineInfo />
+          </div>
+          <div className={styles.todoViewEmptyText}>
+            해당 분류에 등록된 할일이 없습니다 :(
           </div>
         </div>
-        // </div>
-      ))) : 
-      (<div className={styles.todoViewEmpty}></div>)}
+      )}
     </div>
   );
 }
