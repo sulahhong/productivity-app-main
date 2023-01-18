@@ -1,4 +1,6 @@
 .navbarTopContainer{
+    display: flex;
+    align-items: center;
     position: fixed;
     top: 0;
     left: 0;
@@ -7,3 +9,19 @@
     background-color: var(--navTopColor);
     z-index: 1;
 }
+
+.navbarTopLeft {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    display: none;
+}
+
+
+@media (max-width: 750px) {
+    .navbarTopLeft {
+        display: block;
+    }
+    
+   }
+  

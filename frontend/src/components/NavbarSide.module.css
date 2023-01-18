@@ -33,3 +33,11 @@ body {
 .navbarSideItems:hover {
     background-color: var(--navHoverColor);
 }
+
+@media (max-width: 750px) {
+    .navbarSideContainer {
+        left: -425px;
+    }
+    
+   }
+  

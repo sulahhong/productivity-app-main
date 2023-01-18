@@ -65,3 +65,12 @@ li {
     margin: 1rem 0rem;
     
 }
+
+
+
+@media (max-width: 750px) {
+    
+    .todoContainer{
+        padding-left: 0;
+    }
+   }
