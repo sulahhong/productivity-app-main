@@ -14,6 +14,8 @@ function Todo() {
     setViewTodos,
     viewCategory,
     setViewCategory,
+    openModalProject, 
+    setOpenModalProject,
   } = useGlobalContext();
 
   const [priorityDropdown, setPriorityDropdown] = useState(false);
@@ -21,6 +23,7 @@ function Todo() {
   const [sortDone, setSortDone] = useState(false);
   const [sortDueDate, setSortDueDate] = useState(false);
   const [sortCreateDate, setSortCreateDate] = useState(false);
+  const [sortPriority, setSortPriority] =  useState(false);
 
   useEffect(() => {
     console.log("todos", todos);
@@ -122,6 +125,31 @@ function Todo() {
     }
   }, [sortCreateDate]);
 
+  const handleSortPriority = () => {
+    setSortPriority((prev => !prev))
+  };
+
+  useEffect(() => {
+    if(sortPriority) {
+      const arr = [...todos]
+      .filter((item) => !item.todoDone)
+      .sort((a, b) => b.todoPriority - a.todoPriority);
+      setViewTodos(arr);
+      setViewCategory("descending")
+    } else {
+      const arr = [...todos]
+      .filter((item) => !item.todoDone)
+      .sort((a, b) => a.todoPriority - b.todoPriority);
+      setViewTodos(arr);
+      setViewCategory("ascending")
+    }
+  },[sortPriority])
+
+
+  const handleAddNewProject = () => {
+    setOpenModalProject(!openModalProject)
+  } 
+
   return (
     <div className={styles.todoContainer}>
       <div className={styles.todoBody}>
@@ -132,6 +160,13 @@ function Todo() {
           >
             <MdAdd className={styles.todoAddIcon} />
             Add
+          </button>
+          <button
+            className={styles.todoAddButton}
+            onClick={() => handleAddNewProject()}
+          >
+            <MdAdd className={styles.todoAddIcon} />
+            Add2
           </button>
         </div>
         <div className={styles.todoBodyButton}>
@@ -158,6 +193,7 @@ function Todo() {
               </div>
             )}
           </div>
+          <button onClick={() => handleSortPriority()}>sort priority</button>
           <button onClick={() => handleSortDone()}>sort Done</button>
           <button onClick={() => handleSortDueDate()}>sort duedate</button>
           <button onClick={() => handleSortCreateDate()}>

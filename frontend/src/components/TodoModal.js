@@ -24,6 +24,7 @@ function TodoModal() {
     todoPriority: "1",
     todoCreateDate: "",
     todoDueDate: "",
+    projectId:"",
   });
   const {
     todoId,
@@ -33,6 +34,7 @@ function TodoModal() {
     todoPriority,
     todoCreateDate,
     todoDueDate,
+    projectId,
   } = todoForm;
 
   useEffect(() => {

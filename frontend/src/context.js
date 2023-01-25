@@ -16,8 +16,10 @@ const AppProvider = ({ children }) => {
   const [targetTodoGlobal, setTargetTodoGlobal] = useState({});
   const [isEditingTodo, setIsEditingTodo] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [openModalProject, setOpenModalProject] = useState(false);
   const [viewTodos, setViewTodos] = useState(todos);
   const [viewCategory, setViewCategory] = useState("all");
+  const [navbarSideIsOpen, setNavbarSideIsOpen] = useState(false);
 
   useEffect(() => {
     window.localStorage.setItem("todoList", JSON.stringify(todos));
@@ -54,7 +56,10 @@ const AppProvider = ({ children }) => {
         setViewTodos,
         viewCategory,
         setViewCategory,
-
+        navbarSideIsOpen, 
+        setNavbarSideIsOpen,
+        openModalProject, 
+        setOpenModalProject,
       }}
     >
       {children}

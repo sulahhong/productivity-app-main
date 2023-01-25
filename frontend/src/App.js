@@ -8,18 +8,20 @@ import Diary from "./routes/Diary";
 import Home from "./routes/Home";
 import Todo from "./routes/Todo";
 import { useGlobalContext } from "./context";
+import ProjectModal from "./components/ProjectModal";
 
 
 
 function App() {
 
-  const { todos, setTodos, openModal, setOpenModal } = useGlobalContext();
+  const { todos, setTodos, openModal, setOpenModal, openModalProject, setOpenModalProject } = useGlobalContext();
 
   return (
     <BrowserRouter>
       <NavbarTop />
       <NavbarSide />
       {openModal && <TodoModal/>}
+      {openModalProject && <ProjectModal /> }
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/diary" element={<Diary />} />
