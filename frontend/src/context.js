@@ -11,6 +11,15 @@ const getLocalStorage = () => {
   }
 };
 
+const getLocalStorageProject = () => {
+  let storage = localStorage.getItem("project");
+  if (storage) {
+    return JSON.parse(storage);
+  } else {
+    return [];
+  }
+};
+
 const AppProvider = ({ children }) => {
   const [todos, setTodos] = useState(getLocalStorage());
   const [targetTodoGlobal, setTargetTodoGlobal] = useState({});
@@ -20,26 +29,31 @@ const AppProvider = ({ children }) => {
   const [viewTodos, setViewTodos] = useState(todos);
   const [viewCategory, setViewCategory] = useState("all");
   const [navbarSideIsOpen, setNavbarSideIsOpen] = useState(false);
+  const [projects, setProjects] = useState(getLocalStorageProject());
+  const [targetProjectGlobal, setTargetProjectGlobal] = useState({});
+  const [isEditingProject, setIsEditingProject] = useState(false);
 
   useEffect(() => {
     window.localStorage.setItem("todoList", JSON.stringify(todos));
   }, [todos]);
 
   useEffect(() => {
+    window.localStorage.setItem("project", JSON.stringify(projects));
+  }, [projects]);
+
+  useEffect(() => {
     if (viewCategory == "done") {
       const arr = todos.filter((item) => item.todoDone);
-    console.log("arrrr", arr);
-    setViewTodos(arr);
+      console.log("arrrr", arr);
+      setViewTodos(arr);
     } else if (viewCategory == "notdone") {
       const arr = todos.filter((item) => !item.todoDone);
-    console.log("arrrr", arr);
-    setViewTodos(arr);
+      console.log("arrrr", arr);
+      setViewTodos(arr);
     } else if (viewCategory == "all") {
       setViewTodos(todos);
     }
   }, [todos]);
-
-
 
   return (
     <AppContext.Provider
@@ -56,10 +70,16 @@ const AppProvider = ({ children }) => {
         setViewTodos,
         viewCategory,
         setViewCategory,
-        navbarSideIsOpen, 
+        navbarSideIsOpen,
         setNavbarSideIsOpen,
-        openModalProject, 
+        openModalProject,
         setOpenModalProject,
+        projects,
+        setProjects,
+        targetProjectGlobal,
+        setTargetProjectGlobal,
+        isEditingProject,
+        setIsEditingProject,
       }}
     >
       {children}

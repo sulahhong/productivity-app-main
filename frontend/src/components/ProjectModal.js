@@ -7,34 +7,22 @@ import styles from "./TodoModal.module.css";
 
 function ProjectModal() {
   const {
-    todos,
-    setTodos,
-    openModal,
-    setOpenModal,
-    targetTodoGlobal,
-    setTargetTodoGlobal,
-    setIsEditingTodo,
-    isEditingTodo,
-    openModalProject,
     setOpenModalProject,
-
+    projects,
+    setProjects,
+    targetProjectGlobal,
+    setTargetProjectGlobal,
+    isEditingProject,
+    setIsEditingProject,
   } = useGlobalContext();
   const [projectForm, setProjectForm] = useState({
     projectId: "",
     projectTitle: "",
     projectDescription: "",
-  
   });
-  const {
-    projectId,
-    projectTitle,
-    projectDescription,
-  
-  } = projectForm;
-
+  const { projectId, projectTitle, projectDescription } = projectForm;
 
   const handleCreateProject = () => {
-
     const projectId = uuidv4();
     console.log(projectId);
     console.log("projectform", projectForm);
@@ -45,29 +33,40 @@ function ProjectModal() {
     // setOpenModal(false)
   };
 
+  useEffect(() => {
+    console.log("projects", projects)
+  }, [projects])
+
+  const handleEditProjectModal = () => {
+    const projectEditIndex = projects.findIndex((item) => item.projectId == projectId);
+    
+  }
+
   const handleProjectChange = (e) => {
-    // console.log("namename", e.target.value)
+    console.log("namename", e.target.value)
     setProjectForm((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-  }
-
+  };
 
   const createNewProject = () => {
     console.log("gg", projectForm);
 
+    setProjects([projectForm, ...projects]);
+    setOpenModalProject(false);
   };
 
-  // useEffect(() => {
-  //   if (!isEditingTodo) {
-  //     if (todoCreateDate && todoId) {
-  //       console.log("xxx", todoForm);
-  //       createNewTodo();
-  //     }
-  //     console.log("i run");
-  //   }
-  // }, [todoCreateDate, todoId]);
+
+  useEffect(() => {
+    if (!isEditingProject) {
+      if (projectId) {
+        console.log("xxx", projectForm);
+        createNewProject();
+      }
+      console.log("i run run");
+    }
+  }, [projectId]);
 
   const closeModalProject = () => {
     setOpenModalProject(false);
@@ -80,7 +79,10 @@ function ProjectModal() {
       <div className={styles.todoModalContainer}>
         <div className={styles.todoModalHeader}>
           <div className={styles.todoModalHeaderTitle}>New Project</div>
-          <button className={styles.todoModalCloseButton} onClick={closeModalProject}>
+          <button
+            className={styles.todoModalCloseButton}
+            onClick={closeModalProject}
+          >
             X
           </button>
         </div>
@@ -101,13 +103,13 @@ function ProjectModal() {
               onChange={handleProjectChange}
             />
           </div>
-          <div className={styles.todoModalAddTodocontainer}>           
-              <button
-                className={styles.todoModalAddTodo}
-                onClick={() => handleCreateProject()}
-              >
-                Add
-              </button>
+          <div className={styles.todoModalAddTodocontainer}>
+            <button
+              className={styles.todoModalAddTodo}
+              onClick={() => handleCreateProject()}
+            >
+              Add
+            </button>
           </div>
         </div>
       </div>

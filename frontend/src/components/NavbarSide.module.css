@@ -36,6 +36,14 @@ body {
     background-color: var(--navHoverColor);
 }
 
+.navbarProject {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 @media (max-width: 750px) {
     .navbarSideContainer {
         left: -425px;

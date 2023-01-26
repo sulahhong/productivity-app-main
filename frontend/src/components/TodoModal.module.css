@@ -127,3 +127,23 @@ input:focus {
     font-size: 1rem;
     
 }
+
+.todoModalSelectProject {
+    margin: 1rem 0;
+    padding-bottom: 1rem ;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(216, 216, 216);
+}
+
+.todoModalSelectProjectTitle {
+    display: flex;
+    margin-right: 1rem;
+    font-size: 0.8rem;
+}
+
+.todoModalSelectProjectTitleOption {
+    display: flex;
+    margin-right: 1rem;
+    font-size: 0.8rem;
+}

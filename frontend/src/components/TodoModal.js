@@ -5,6 +5,9 @@ import { v4 as uuidv4 } from "uuid";
 import { getStringDate } from "../utill/date";
 import styles from "./TodoModal.module.css";
 
+
+
+
 function TodoModal() {
   const {
     todos,
@@ -15,6 +18,8 @@ function TodoModal() {
     setTargetTodoGlobal,
     setIsEditingTodo,
     isEditingTodo,
+    projects,
+    viewCategory, setViewCategory,
   } = useGlobalContext();
   const [todoForm, setTodoForm] = useState({
     todoId: "",
@@ -24,7 +29,7 @@ function TodoModal() {
     todoPriority: "1",
     todoCreateDate: "",
     todoDueDate: "",
-    projectId:"",
+    projectId: projects[0].projectId,
   });
   const {
     todoId,
@@ -63,7 +68,7 @@ function TodoModal() {
   };
 
   const handleCreateTodo = () => {
-    const todoCreateDate = new Date().toISOString().slice(0,10);
+    const todoCreateDate = new Date().toISOString().slice(0, 10);
     console.log(todoCreateDate);
     const todoId = uuidv4();
     console.log(todoId);
@@ -73,7 +78,7 @@ function TodoModal() {
       todoCreateDate,
       todoId,
     }));
-    // setOpenModal(false)
+    setViewCategory("all");
   };
 
   const handleEditTodoModal = () => {
@@ -226,6 +231,26 @@ function TodoModal() {
                 onChange={handleTodoChange}
               />
             </div>
+          </div>
+          <div className={styles.todoModalSelectProject}>
+            <div className={styles.todoModalSelectProjectTitle}>Project</div>
+            <select
+              className={styles.todoModalSelectProjectTitleOption}
+              name="projectId"
+              value={projectId}
+              onChange={handleTodoChange}
+            >
+              {projects.length>0 &&
+              projects.map((option) => (
+                <option 
+                  key={option.projectId}
+                  value={option.projectId}
+                >
+                  {option.projectTitle}
+                </option>
+              ))}
+              
+            </select>
           </div>
           <div className={styles.todoModalAddTodocontainer}>
             {isEditingTodo ? (

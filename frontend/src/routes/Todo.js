@@ -126,7 +126,7 @@ function Todo() {
   }, [sortCreateDate]);
 
   const handleSortPriority = () => {
-    setSortPriority((prev => !prev))
+    setSortPriority(!sortPriority)
   };
 
   useEffect(() => {
@@ -137,6 +137,7 @@ function Todo() {
       setViewTodos(arr);
       setViewCategory("descending")
     } else {
+      console.log("ASC")
       const arr = [...todos]
       .filter((item) => !item.todoDone)
       .sort((a, b) => a.todoPriority - b.todoPriority);
