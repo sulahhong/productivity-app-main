@@ -16,6 +16,11 @@ function Todo() {
     setViewCategory,
     openModalProject, 
     setOpenModalProject,
+    projectIsActive, 
+    setProjectIsActive,
+    projects,
+    projectViewtype, 
+    setProjectviewType,
   } = useGlobalContext();
 
   const [priorityDropdown, setPriorityDropdown] = useState(false);
@@ -24,6 +29,7 @@ function Todo() {
   const [sortDueDate, setSortDueDate] = useState(false);
   const [sortCreateDate, setSortCreateDate] = useState(false);
   const [sortPriority, setSortPriority] =  useState(false);
+ 
 
   useEffect(() => {
     console.log("todos", todos);
@@ -129,6 +135,8 @@ function Todo() {
     setSortPriority(!sortPriority)
   };
 
+
+
   useEffect(() => {
     if(sortPriority) {
       const arr = [...todos]
@@ -147,9 +155,9 @@ function Todo() {
   },[sortPriority])
 
 
-  const handleAddNewProject = () => {
-    setOpenModalProject(!openModalProject)
-  } 
+  // const handleAddNewProject = () => {
+  //   setOpenModalProject(!openModalProject)
+  // } 
 
   return (
     <div className={styles.todoContainer}>
@@ -162,13 +170,13 @@ function Todo() {
             <MdAdd className={styles.todoAddIcon} />
             Add
           </button>
-          <button
+          {/* <button
             className={styles.todoAddButton}
             onClick={() => handleAddNewProject()}
           >
             <MdAdd className={styles.todoAddIcon} />
             Add2
-          </button>
+          </button> */}
         </div>
         <div className={styles.todoBodyButton}>
           <button onClick={() => handleAllButton()}>all</button>

@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { MdOutlineClose } from "react-icons/md";
 import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
 import { getStringDate } from "../utill/date";
@@ -14,6 +15,7 @@ function ProjectModal() {
     setTargetProjectGlobal,
     isEditingProject,
     setIsEditingProject,
+    
   } = useGlobalContext();
   const [projectForm, setProjectForm] = useState({
     projectId: "",
@@ -23,6 +25,10 @@ function ProjectModal() {
   const { projectId, projectTitle, projectDescription } = projectForm;
 
   const handleCreateProject = () => {
+    if (projectTitle.length < 1) {
+      alert("프로젝트 제목을 입력해주세요.")
+      return;
+    }
     const projectId = uuidv4();
     console.log(projectId);
     console.log("projectform", projectForm);
@@ -30,7 +36,7 @@ function ProjectModal() {
       ...prevState,
       projectId,
     }));
-    // setOpenModal(false)
+
   };
 
   useEffect(() => {
@@ -83,7 +89,7 @@ function ProjectModal() {
             className={styles.todoModalCloseButton}
             onClick={closeModalProject}
           >
-            X
+           <MdOutlineClose />
           </button>
         </div>
         <div className={styles.todoModalBody}>

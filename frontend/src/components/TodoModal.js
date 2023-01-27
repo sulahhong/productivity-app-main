@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { MdOutlineClose } from "react-icons/md";
 import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
 import { getStringDate } from "../utill/date";
@@ -184,7 +185,7 @@ function TodoModal() {
         <div className={styles.todoModalHeader}>
           <div className={styles.todoModalHeaderTitle}>New Task</div>
           <button className={styles.todoModalCloseButton} onClick={closeModal}>
-            X
+          <MdOutlineClose />
           </button>
         </div>
         <div className={styles.todoModalBody}>

@@ -32,6 +32,8 @@ const AppProvider = ({ children }) => {
   const [projects, setProjects] = useState(getLocalStorageProject());
   const [targetProjectGlobal, setTargetProjectGlobal] = useState({});
   const [isEditingProject, setIsEditingProject] = useState(false);
+  const [projectIsActive, setProjectIsActive] = useState(false);
+  const [projectViewtype, setProjectviewType] = useState("");
 
   useEffect(() => {
     window.localStorage.setItem("todoList", JSON.stringify(todos));
@@ -80,6 +82,10 @@ const AppProvider = ({ children }) => {
         setTargetProjectGlobal,
         isEditingProject,
         setIsEditingProject,
+        projectIsActive, 
+        setProjectIsActive,
+        projectViewtype, 
+        setProjectviewType,
       }}
     >
       {children}

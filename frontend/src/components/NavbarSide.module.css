@@ -44,6 +44,27 @@ body {
     align-items: center;
 }
 
+.navbarProjectDrop {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+}
+
+.navbarProjectAdd {
+    padding: 0.5rem 0.5rem;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.navbarProjectArrow {
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+
 @media (max-width: 750px) {
     .navbarSideContainer {
         left: -425px;
@@ -52,5 +73,5 @@ body {
    }
    .navbarShow {
     left: 0;
-    z-index: 1000;
+    z-index: 101;
 }
