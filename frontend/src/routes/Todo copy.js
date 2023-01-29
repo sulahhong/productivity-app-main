@@ -32,80 +32,72 @@ function Todo() {
   const [sortViewDropdown, setSortViewDropdown] = useState(false);
 
   // 새로운 솔팅 메뉴를 위한 상태
-  const [sortType, setSortType] = useState("todoPriority");
+  const [sortType, setSortType] = useState("");
   const [ascending, setAscending] = useState(true);
-  const [filterType, setFilterType] = useState("filterAll")
 
   // 새로운 상태를 위한 function
   useEffect(() => {
-    let arr = [...todos];
-    if(filterType == "filterAll") {
-      sortAction(arr)
-    } else if(filterType == "filterDone") {
-      let arrFilter = arr.filter((item) => item.todoDone)
-      sortAction(arrFilter)
-    } else if(filterType == "filterNotDone") {
-      let arrFilter = arr.filter((item) => !item.todoDone)
-      sortAction(arrFilter)
-    } else if(filterType == "filterP1") {
-      let arrFilter = arr.filter((item) => item.todoPriority == "1");
-      sortAction(arrFilter)
-    } else if(filterType == "filterP2") {
-      let arrFilter = arr.filter((item) => item.todoPriority == "2");
-      sortAction(arrFilter)
-    } else if(filterType == "filterP3") {
-      let arrFilter = arr.filter((item) => item.todoPriority == "3");
-      sortAction(arrFilter)
-    } else if(filterType == "filterP4") {
-      let arrFilter = arr.filter((item) => item.todoPriority == "4");
-      sortAction(arrFilter)
-    } 
- 
-  }, [sortType, ascending, todos, filterType]);
-
-
-const sortAction=(arr)=>{
-  console.log("SUPER", arr)
-  if (ascending) {
-    if (sortType == "todoPriority") {
-      let arr2 = arr.sort((a, b) => a.todoPriority - b.todoPriority);
-      setViewTodos(arr2);
-    } else if (sortType == "todoDone") {
-      let arr2 = arr.sort((a, b) => b.todoDone - a.todoDone);
-      setViewTodos(arr2);
-    } else if (sortType == "todoDueDate") {
-      let arr2 = arr.sort(
-          (a, b) => Date.parse(a.todoDueDate) - Date.parse(b.todoDueDate)
-        );
-      setViewTodos(arr2);
-    } else if (sortType == "todoCreateDate") {
-      let arr2 = arr.sort(
-          (a, b) =>
-            Date.parse(a.todoCreateDate) - Date.parse(b.todoCreateDate)
-        );
-      setViewTodos(arr2);
+    if (ascending) {
+      if (sortType == "todoPriority") {
+        const arr = [...todos]
+          .filter((item) => !item.todoDone)
+          .sort((a, b) => a.todoPriority - b.todoPriority);
+        setViewTodos(arr);
+        setViewCategory("ascending");
+      } else if (sortType == "todoDone") {
+        const arr = [...todos].sort((a, b) => b.todoDone - a.todoDone);
+        console.log("handleSortDone", arr);
+        setViewTodos(arr);
+        setViewCategory("done -> not done");
+      } else if (sortType == "todoDueDate") {
+        const arr = [...todos]
+          .filter((item) => !item.todoDone)
+          .sort(
+            (a, b) => Date.parse(a.todoDueDate) - Date.parse(b.todoDueDate)
+          );
+        setViewTodos(arr);
+        setViewCategory("duedate ago");
+      } else if (sortType == "todoCreateDate") {
+        const arr = [...todos]
+          .filter((item) => !item.todoDone)
+          .sort(
+            (a, b) =>
+              Date.parse(a.todoCreateDate) - Date.parse(b.todoCreateDate)
+          );
+        setViewTodos(arr);
+        setViewCategory("oldest create");
+      }
+    } else {
+      if (sortType == "todoPriority") {
+        const arr = [...todos]
+          .filter((item) => !item.todoDone)
+          .sort((a, b) => b.todoPriority - a.todoPriority);
+        setViewTodos(arr);
+        setViewCategory("descending");
+      } else if (sortType == "todoDone") {
+        const arr = [...todos].sort((a, b) => a.todoDone - b.todoDone);
+        setViewTodos(arr);
+        setViewCategory("not done -> done");
+      } else if (sortType == "todoDueDate") {
+        const arr = [...todos]
+          .filter((item) => !item.todoDone)
+          .sort(
+            (a, b) => Date.parse(b.todoDueDate) - Date.parse(a.todoDueDate)
+          );
+        setViewTodos(arr);
+        setViewCategory("duedate later");
+      } else if (sortType == "todoCreateDate") {
+        const arr = [...todos]
+          .filter((item) => !item.todoDone)
+          .sort(
+            (a, b) =>
+              Date.parse(b.todoCreateDate) - Date.parse(a.todoCreateDate)
+          );
+        setViewTodos(arr);
+        setViewCategory("latest create");
+      }
     }
-  } else {
-    if (sortType == "todoPriority") {
-      let arr2 = arr.sort((a, b) => b.todoPriority - a.todoPriority);
-      setViewTodos(arr2);
-    } else if (sortType == "todoDone") {
-      let arr2 = arr.sort((a, b) => a.todoDone - b.todoDone);
-      setViewTodos(arr2);
-    } else if (sortType == "todoDueDate") {
-      let arr2 = arr.sort(
-          (a, b) => Date.parse(b.todoDueDate) - Date.parse(a.todoDueDate)
-        );
-      setViewTodos(arr2);
-    } else if (sortType == "todoCreateDate") {
-      let arr2 = arr.sort(
-          (a, b) =>
-            Date.parse(b.todoCreateDate) - Date.parse(a.todoCreateDate)
-        );
-      setViewTodos(arr2);
-    }
-  }
-}
+  }, [sortType, ascending, todos]);
 
   useEffect(() => {
     console.log("todos", todos);
@@ -257,22 +249,6 @@ const sortAction=(arr)=>{
                 className={styles.sortDropdownContent}
                 // onMouseLeave={() => setSortViewDropdown(!sortViewDropdown)}
               >
-                <div className={styles.sortMenuHeader}>Filter</div>
-                <div className={styles.sortMenuItem}
-                onClick={() => setFilterType("filterAll")}>All</div>
-                <div className={styles.sortMenuItem}
-                onClick={() => setFilterType("filterDone")}>Done</div>
-                <div className={styles.sortMenuItem}
-                onClick={() => setFilterType("filterNotDone")}>Not Done</div>
-                <div className={styles.sortMenuItem}>Priority</div>
-                <div className={styles.sortMenuItem}
-                onClick={() => setFilterType("filterP1")}>Priority1</div>
-                <div className={styles.sortMenuItem}
-                onClick={() => setFilterType("filterP2")}>Priority2</div>
-                <div className={styles.sortMenuItem}
-                onClick={() => setFilterType("filterP3")}>Priority3</div>
-                <div className={styles.sortMenuItem}
-                onClick={() => setFilterType("filterP4")}>Priority4</div>
                 <div className={styles.sortMenuHeader}>Sort</div>
                 <div
                   className={styles.sortMenuItem}

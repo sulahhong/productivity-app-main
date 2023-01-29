@@ -22,6 +22,11 @@
     cursor: pointer;
 }
 
+.todoBodyTitle {
+    display: flex;
+    gap: 2rem;
+}
+
 .todoBodyButton {
     display: flex;
     gap: 0.5rem;
@@ -66,6 +71,59 @@ li {
     
 }
 
+.sortDropdownContainer {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sortDropdownButton {
+
+}
+
+.sortDropdownContent {
+    top: 2rem;
+    left: -20rem;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 1px 8px 0 rgb(0 0 0 / 8%);
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    z-index: 2;
+    width: 10rem;
+    padding: 0.5rem ;
+    
+}
+
+.sortMenuHeader {
+    display: flex;
+    align-items: center;
+    font-weight: 800;
+    padding-bottom:0.5rem ;
+
+}
+
+.sortMenuItem {
+    padding: 0.4rem 0rem;
+    font-size: 0.9rem;
+}
+
+.sortMenuItem:nth-child(6) {
+    padding: 0.5rem 0rem;
+    font-size: 0.9rem;
+    border-top: 1px solid rgb(192, 188, 188);
+}
+
+
+
+.viewTodoNowContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 
 @media (max-width: 750px) {

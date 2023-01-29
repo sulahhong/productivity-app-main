@@ -81,10 +81,10 @@ function TodoView() {
     const oneDay = 24 * 60 * 60 * 1000;
     const today = new Date();
     const anotherDay = new Date(dueDate);
-    console.log("dayday", oneDay, today, anotherDay);
+    // console.log("dayday", oneDay, today, anotherDay);
 
     const dayDiff = Math.round((today - anotherDay) / oneDay);
-    console.log("daydiff", dayDiff);
+    // console.log("daydiff", dayDiff);
 
     if (dayDiff < 0) {
       return (

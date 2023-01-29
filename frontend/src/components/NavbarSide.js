@@ -2,7 +2,8 @@ import React, { useEffect, useReducer, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./NavbarSide.module.css";
 import { useGlobalContext } from "../context";
-import { MdKeyboardArrowDown, MdEditNote, MdAdd, MdKeyboardArrowRight, MdSpaceDashboard } from "react-icons/md";
+import { MdKeyboardArrowDown, MdLabelImportant, MdAdd, MdKeyboardArrowRight, MdSpaceDashboard, MdGridView, MdLens } from "react-icons/md";
+import { FaRegCalendarAlt, FaRegListAlt } from "react-icons/fa";
 
 function NavbarSide() {
   const {
@@ -66,16 +67,16 @@ function NavbarSide() {
     >
       <div className={styles.navbarSideContents}>
         <div className={styles.navbarSideItems} onClick={goHome}>
-          <MdSpaceDashboard /> Dashboard
+          <MdSpaceDashboard className={styles.navbarSideIcons}/> Dashboard
         </div>
         <div className={styles.navbarSideItems} onClick={goTodo}>
-           My Todolist
+           <FaRegListAlt className={styles.navbarSideIcons} /> My Todolist
         </div>
-        <div className={styles.navbarSideItems}><RxCalendar /> upcoming</div>
-        <div className={styles.navbarSideItems}>filter & Labels</div>
+        <div className={styles.navbarSideItems}><FaRegCalendarAlt className={styles.navbarSideIcons} /> upcoming</div>
+        <div className={styles.navbarSideItems}><MdLabelImportant className={styles.navbarSideIcons} />filter & Labels</div>
 
         <div className={styles.navbarProject}>
-          <div>projects</div>
+          <div className={styles.navbarProjectTitle}><MdGridView className={styles.navbarSideIcons} /> projects</div>
           <div className={styles.navbarProjectDrop}>
           <div className={styles.navbarProjectAdd} onClick={handleAddNewProject}>
             <MdAdd />
@@ -88,12 +89,12 @@ function NavbarSide() {
         </div>
         {projects.length > 0 && projectIsActive &&
           projects.map((item) => (
-            <div onClick={() => handleProjectView(item)}>
-              {item.projectTitle}
+            <div onClick={() => handleProjectView(item)} className={styles.navbarProjectMenu} >
+               <MdLens className={styles.navbarSideIcons2}  />{item.projectTitle}
             </div>
           ))}
       </div>
-    </div>
+    </div> 
   );
 }
 

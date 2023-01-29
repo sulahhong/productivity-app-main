@@ -36,6 +36,11 @@ const AppProvider = ({ children }) => {
   const [projectViewtype, setProjectviewType] = useState("");
 
   useEffect(() => {
+    console.log("todostodos", todos)
+    console.log("projectsprojects", projects)
+  }, [])
+
+  useEffect(() => {
     window.localStorage.setItem("todoList", JSON.stringify(todos));
   }, [todos]);
 
