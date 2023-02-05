@@ -103,15 +103,41 @@ li {
     align-items: center;
     font-weight: 800;
     padding-bottom:0.5rem ;
-
+    padding-top: 0.2rem;
 }
 
 .sortMenuItem {
     padding: 0.4rem 0rem;
     font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.sortMenuItem:nth-child(6) {
+.sortMenuItem1 {
+    padding-top: 0.4rem;
+    padding-bottom: 0.2rem;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sortMenuPItem {
+    padding: 0.2rem 1rem;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sortMenuItem:nth-child(4) {
+    padding: 0.4rem 0rem 0rem 0rem ;
+    font-size: 0.9rem;
+}
+
+
+.sortMenuItem:nth-child(15) {
     padding: 0.5rem 0rem;
     font-size: 0.9rem;
     border-top: 1px solid rgb(192, 188, 188);
