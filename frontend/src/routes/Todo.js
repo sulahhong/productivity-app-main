@@ -249,7 +249,9 @@ function Todo() {
             <MdAdd className={styles.todoAddIcon} />
             Add
           </button>
-
+          <div>
+            <button>+ Add1</button>
+          </div>
           <div className={styles.sortDropdownContainer}>
             <button
               className={styles.sortDropdownButton}

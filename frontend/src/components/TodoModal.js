@@ -99,18 +99,7 @@ function TodoModal() {
     });
     console.log("test2", testArray);
 
-    // const nonEditArray= todos.filter((item)=>item.todoId!=todoId)
 
-    // console.log("hhh", nonEditArray)
-    // nonEditArray.push({ "todoId":todoId,
-    //   "todoTitle":todoTitle,
-    //   "todoDescription":todoDescription,
-    //   "todoDone": todoDone,
-    //   "todoPriority": todoPriority,
-    //   "todoCreateDate": todoCreateDate,
-    //   "todoDueDate": todoDueDate})
-
-    //   console.log("hhhV22222", nonEditArray)
 
     setTodos(testArray);
     setOpenModal(false);
@@ -127,34 +116,6 @@ function TodoModal() {
     setIsEditingTodo(false);
   };
 
-  //   const handleEditTodoModal = () => {
-  //     const nonEditArray= todos.filter((item)=>item.todoId!=todoId)
-
-  //     console.log("hhh", nonEditArray)
-  //     nonEditArray.push({ "todoId":todoId,
-  //       "todoTitle":todoTitle,
-  //       "todoDescription":todoDescription,
-  //       "todoDone": todoDone,
-  //       "todoPriority": todoPriority,
-  //       "todoCreateDate": todoCreateDate,
-  //       "todoDueDate": todoDueDate})
-
-  //       console.log("hhhV22222", nonEditArray)
-
-  //       setTodos(nonEditArray)
-  //       setOpenModal(false)
-  //       // setTodoForm({
-  //       //   todoId: "",
-  //       //   todoTitle: "",
-  //       //   todoDescription: "",
-  //       //   todoDone: false,
-  //       //   todoPriority: "1",
-  //       //   todoCreateDate: "",
-  //       //   todoDueDate: "",
-  //       // })
-  // setTargetTodoGlobal({})
-  // setIsEditingTodo(false)
-  //   }
 
   const createNewTodo = () => {
     console.log("gg", todoForm);

@@ -2,7 +2,8 @@ import React, { useEffect, useReducer, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./NavbarSide.module.css";
 import { useGlobalContext } from "../context";
-import { MdKeyboardArrowDown, MdLabelImportant, MdAdd, MdKeyboardArrowRight, MdSpaceDashboard, MdGridView, MdLens } from "react-icons/md";
+import { MdKeyboardArrowDown, MdLabelImportant, MdAdd, MdKeyboardArrowRight, MdSpaceDashboard, MdGridView, MdLens,  MdOutlineEdit,
+  MdOutlineDelete, } from "react-icons/md";
 import { FaRegCalendarAlt, FaRegListAlt } from "react-icons/fa";
 
 function NavbarSide() {
@@ -90,7 +91,8 @@ function NavbarSide() {
         {projects.length > 0 && projectIsActive &&
           projects.map((item) => (
             <div onClick={() => handleProjectView(item)} className={styles.navbarProjectMenu} >
-               <MdLens className={styles.navbarSideIcons2}  />{item.projectTitle}
+               <MdLens className={styles.navbarSideIcons2}  />{item.projectTitle} <MdOutlineEdit /> <MdOutlineDelete />
+
             </div>
           ))}
       </div>
