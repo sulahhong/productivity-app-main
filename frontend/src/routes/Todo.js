@@ -46,6 +46,18 @@ function Todo() {
   const [ascending, setAscending] = useState(true);
   const [filterType, setFilterType] = useState("filterAll");
 
+  const [groupView, setGroupView] = useState(false);
+
+  useEffect(() => {
+    let arr = [...todos];
+    if(groupView) {
+      let arr2 = arr.sort((a, b) => a.todoPriority - b.todoPriority);
+        setViewTodos(arr2);
+    } else {
+      setViewTodos(arr);
+    }
+  }, [groupView])
+
   // 새로운 상태를 위한 function
   useEffect(() => {
     let arr = [...todos];
@@ -250,7 +262,7 @@ function Todo() {
             Add
           </button>
           <div>
-            <button>+ Add1</button>
+            <button onClick={() => setGroupView(!groupView)}>Group button</button>
           </div>
           <div className={styles.sortDropdownContainer}>
             <button
@@ -408,7 +420,8 @@ function Todo() {
           <div className={styles.viewTodoNow}>구분 : {viewCategory}</div>
           <div>현재 todo 개수 : {viewTodos.length}</div>
         </div>
-        <TodoView />
+        <TodoView 
+        groupView={groupView} setGroupView={setGroupView}/>
       </div>
       <div className={styles.todoBodyFooter}>this is the footer </div>
     </div>
