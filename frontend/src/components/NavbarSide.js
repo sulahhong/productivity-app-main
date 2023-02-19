@@ -21,6 +21,11 @@ function NavbarSide() {
     setProjectIsActive,
     projectViewtype, 
     setProjectviewType,
+    targetProjectGlobal,
+    setTargetProjectGlobal,
+    isEditingProject,
+    setIsEditingProject,
+
   } = useGlobalContext();
 
 
@@ -58,6 +63,20 @@ function NavbarSide() {
     setViewCategory("all")
   }
 
+  const handleEditProject = (id) => {
+    console.log("edit project id", id)
+    const targetProject = projects.find((item) => item.projectId === id);
+    console.log("targetProject", targetProject, id)
+    setOpenModalProject(!openModalProject)
+    setTargetProjectGlobal(targetProject)
+    setIsEditingProject(true)
+  }
+
+  const handleDeleteProject = (id) => {
+    console.log("DEL project id", id)
+  }
+
+
   return (
     <div
       className={
@@ -91,7 +110,10 @@ function NavbarSide() {
         {projects.length > 0 && projectIsActive &&
           projects.map((item) => (
             <div onClick={() => handleProjectView(item)} className={styles.navbarProjectMenu} >
-               <MdLens className={styles.navbarSideIcons2}  />{item.projectTitle} <MdOutlineEdit /> <MdOutlineDelete />
+              <div>
+               <MdLens className={styles.navbarSideIcons2}  />{item.projectTitle} </div>
+               <div onClick={() => handleEditProject(item.projectId)}><MdOutlineEdit /></div> 
+               <div onClick={() => handleDeleteProject(item.projectId)}><MdOutlineDelete /></div>
 
             </div>
           ))}
