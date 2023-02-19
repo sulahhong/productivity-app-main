@@ -30,7 +30,7 @@ function TodoModal() {
     todoPriority: "1",
     todoCreateDate: "",
     todoDueDate: "",
-    projectId: projects[0].projectId,
+    projectId: projects.length>0 ? projects[0].projectId : "",
   });
   const {
     todoId,

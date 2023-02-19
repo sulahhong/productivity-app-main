@@ -11,9 +11,8 @@ import {
   MdOutlineToday,
   MdOutlineInfo,
 } from "react-icons/md";
-import SingleTodoItem from "./SingleTodoItem";
 
-function TodoView({groupView, setGroupView}) {
+function TodoView() {
   const {
     todos,
     setTodos,
@@ -110,23 +109,63 @@ function TodoView({groupView, setGroupView}) {
 
   return (
     <div className={styles.todoViewContainer}>
-
-      {viewTodos.length > 0 && groupView ?
-      (
-<div>
-  <div>P1</div>
-  {viewTodos.filter((item)=>(item.todoPriority == "1")).map((item)=> <SingleTodoItem item={item} />)}
-  <div>P2</div>
-  {viewTodos.filter((item)=>(item.todoPriority == "2")).map((item)=> <SingleTodoItem item={item} />)}
-  <div>P3</div>
-  {viewTodos.filter((item)=>(item.todoPriority == "3")).map((item)=> <SingleTodoItem item={item} />)}
-  <div>P4</div>
-  
-  {viewTodos.filter((item)=>(item.todoPriority == "4")).map((item)=> <SingleTodoItem item={item} />)}
-</div>
-      ):
-      (viewTodos.length > 0 ? (
-        viewTodos.map((item) => <SingleTodoItem item={item} />)
+      {viewTodos.length > 0 ? (
+        viewTodos.map((item) => (
+          // <div className={todoDoneStatus(item.tododone)}>
+          <div
+            className={
+              item.todoDone ? styles.todoViewCardDone : styles.todoViewCard
+            }
+          >
+            <div className={styles.todoCardContent}>
+              <div
+                className={todoDonePrioritySelector(item.todoPriority)}
+                onClick={() => handleTodoDone(item.todoId)}
+              >
+                {item.todoDone ? (
+                  <MdOutlineCheckCircleOutline />
+                ) : (
+                  <MdRadioButtonUnchecked />
+                )}
+              </div>
+              <div className={styles.todoCardBody}>
+                <div className={styles.todoCardTitle}>{item.todoTitle}</div>
+                <div className={styles.todoCardDescription}>
+                  {item.todoDescription}
+                </div>
+                {/* <div className={styles.todoCardPriority}>{item.todoPriority}</div> */}
+                <div className={styles.todoCardDateview}>
+                  <div className={styles.todoCardDueDate}>
+                    <div className={styles.dueDateIcon}>
+                      <MdCalendarToday />
+                    </div>
+                    <div className={styles.dueDateText}>{item.todoDueDate}</div>
+                  </div>
+                  <div className={styles.todoCardDday}>
+                    <div className={styles.ddayTrackerText}>
+                      {dateDifference(item.todoDueDate)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles.todoCardButtons}>
+              <div
+                className={styles.todoCardEditButton}
+                onClick={() => handleEditTodo(item.todoId)}
+              >
+                <MdOutlineEdit />
+              </div>
+              <div
+                className={styles.todoCardDeleteButton}
+                onClick={() => handleDeleteTodo(item.todoId)}
+              >
+                <MdOutlineDelete />
+              </div>
+            </div>
+          </div>
+          // </div>
+        ))
       ) : (
         <div className={styles.todoViewEmpty}>
           <div className={styles.todoViewEmptyIcon}>
@@ -136,9 +175,7 @@ function TodoView({groupView, setGroupView}) {
             해당 분류에 등록된 할일이 없습니다 :(
           </div>
         </div>
-      ))
-    }
-  
+      )}
     </div>
   );
 }
