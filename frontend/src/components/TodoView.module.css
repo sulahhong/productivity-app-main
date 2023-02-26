@@ -32,6 +32,19 @@
   width: 60%;
 }
 
+.todoViewGroupContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.todoViewGroupTitle {
+
+}
+
 .todoCardContent {
   display: flex;
 }

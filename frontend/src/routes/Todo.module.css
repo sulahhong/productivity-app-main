@@ -86,7 +86,7 @@ li {
 
 .sortDropdownContent {
     top: 2rem;
-    left: -20rem;
+    left: 0rem;
     position: absolute;
     background-color: #fff;
     box-shadow: 0 1px 8px 0 rgb(0 0 0 / 8%);

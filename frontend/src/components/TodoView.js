@@ -13,7 +13,7 @@ import {
 } from "react-icons/md";
 import SingleTodoItem from "./SingleTodoItem";
 
-function TodoView({groupView, setGroupView}) {
+function TodoView({ groupView, setGroupView }) {
   const {
     todos,
     setTodos,
@@ -110,22 +110,35 @@ function TodoView({groupView, setGroupView}) {
 
   return (
     <div className={styles.todoViewContainer}>
+      {viewTodos.length > 0 && groupView ? (
+        <div className={styles.todoViewGroupContainer}>
+          <div className={styles.todoViewGroupTitle}>P1</div>
+          {viewTodos
+            .filter((item) => item.todoPriority == "1")
+            .map((item) => (
+              <SingleTodoItem item={item} />
+            ))}
+          <div className={styles.todoViewGroupTitle}>P2</div>
+          {viewTodos
+            .filter((item) => item.todoPriority == "2")
+            .map((item) => (
+              <SingleTodoItem item={item} />
+            ))}
+          <div className={styles.todoViewGroupTitle}>P3</div>
+          {viewTodos
+            .filter((item) => item.todoPriority == "3")
+            .map((item) => (
+              <SingleTodoItem item={item} />
+            ))}
+          <div className={styles.todoViewGroupTitle}>P4</div>
 
-      {viewTodos.length > 0 && groupView ?
-      (
-<div>
-  <div>P1</div>
-  {viewTodos.filter((item)=>(item.todoPriority == "1")).map((item)=> <SingleTodoItem item={item} />)}
-  <div>P2</div>
-  {viewTodos.filter((item)=>(item.todoPriority == "2")).map((item)=> <SingleTodoItem item={item} />)}
-  <div>P3</div>
-  {viewTodos.filter((item)=>(item.todoPriority == "3")).map((item)=> <SingleTodoItem item={item} />)}
-  <div>P4</div>
-  
-  {viewTodos.filter((item)=>(item.todoPriority == "4")).map((item)=> <SingleTodoItem item={item} />)}
-</div>
-      ):
-      (viewTodos.length > 0 ? (
+          {viewTodos
+            .filter((item) => item.todoPriority == "4")
+            .map((item) => (
+              <SingleTodoItem item={item} />
+            ))}
+        </div>
+      ) : viewTodos.length > 0 ? (
         viewTodos.map((item) => <SingleTodoItem item={item} />)
       ) : (
         <div className={styles.todoViewEmpty}>
@@ -136,9 +149,7 @@ function TodoView({groupView, setGroupView}) {
             해당 분류에 등록된 할일이 없습니다 :(
           </div>
         </div>
-      ))
-    }
-  
+      )}
     </div>
   );
 }

@@ -31,7 +31,7 @@
 
 .todoModalHeaderTitle {
     color: gray;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .todoModalCloseButton {
@@ -55,13 +55,13 @@
 }
 
 .todoModalBody {
-    padding: 1rem 1rem;
+    padding-top: 1rem;
 }
 
 .todoModalInput {
     display: flex;
     flex-direction: column;
-    padding: 1rem 1rem;
+    padding: 1rem 0rem;
     border: 1px solid rgb(216, 216, 216);
     border-radius: 1rem;
     margin-bottom: 1rem;
@@ -75,31 +75,51 @@ input:focus {
     border: none;
     margin-bottom: 0.5rem;
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .todoModalInputDescription {
     border: none;
-    font-size: 1rem;
+    font-size: 0.8rem;
+    
+}
+
+.todoModalSettingIcon2 {
+    font-size: 0.8rem;
+    color: rgb(145, 142, 142);
+    display: flex;
+    align-items: center;
 }
 
 .todoModalSetting {
     margin: 1rem 0;
     padding-bottom: 1rem ;
+    padding-left: 1rem;
     display: flex;
     align-items: center;
     border-bottom: 1px solid rgb(216, 216, 216);
+
 }
 
-/* .todoModalSettingIcon {
+.todoModalSettingIcon {
     font-size: 0.8rem;
-    color: rgb(216, 216, 216);
+    color: rgb(145, 142, 142);
     margin-right: 1rem;
-} */
+    display: flex;
+    align-items: center;
+}
 
 .todoModalSettingText {
     font-size: 0.8rem;
+    font-weight: 600;
     margin-right: 1rem;
+    width: 4rem;
+    color: rgb(110, 107, 107);
+}
+
+.todoDesWrap {
+    display: flex;
+    padding: 0rem 1rem;
 }
 
 .todoModalAddTodocontainer {
@@ -110,16 +130,25 @@ input:focus {
 .todoModalDueDateTitle {
     margin-right: 1rem;
     font-size: 0.8rem;
+    font-weight: 600;
+    align-items: center;
+    width: 4rem;
+    color: rgb(110, 107, 107);
+}
+
+.todoDueDateInput {
+
 }
 
 .todoModalDueDate {
     display: flex;
+    align-items: center;
     margin-right: 1rem;
     font-size: 0.8rem;
 }
 
 .todoModalAddTodo {
-    padding: 0.5rem 1rem;
+    padding: 0.2rem 1.3rem;
     border: none;
     border-radius: 0.5rem;
     background-color: rgb(236, 183, 84);
@@ -129,18 +158,37 @@ input:focus {
     
 }
 
+select, input {
+    /* -webkit-appearance: none; */
+    padding: 0.2rem 1rem;
+    width: 20%;
+    background: white;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 0.5rem;
+    /* box-shadow: 0 1px 3px -2px #9098A9; */
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.8rem;
+    transition: all 150ms ease;
+    width: 10rem;
+}
+
 .todoModalSelectProject {
     margin: 1rem 0;
     padding-bottom: 1rem ;
     display: flex;
     align-items: center;
     border-bottom: 1px solid rgb(216, 216, 216);
+    padding-left: 1rem;
 }
 
 .todoModalSelectProjectTitle {
     display: flex;
     margin-right: 1rem;
     font-size: 0.8rem;
+    font-weight: 600;
+    width: 4rem;
+    color: rgb(110, 107, 107);
 }
 
 .todoModalSelectProjectTitleOption {

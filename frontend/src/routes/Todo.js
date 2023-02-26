@@ -43,6 +43,24 @@ function Todo() {
 
   const [groupView, setGroupView] = useState(false);
 
+  let menuRef = useRef();
+
+  useEffect(() => {
+   let handler = (e) => {
+    if(!menuRef.current.contains(e.target)){
+      setSortViewDropdown(false);
+    }
+    console.log("menumenu", e.target)
+    console.log("menu222", menuRef.current)
+   }
+    
+    document.addEventListener("mousedown", handler);
+
+    return() => {
+      document.removeEventListener("mousedown", handler)
+    }
+  })
+
   useEffect(() => {
     let arr = [...todos];
     if(groupView) {
@@ -154,7 +172,8 @@ function Todo() {
             {sortViewDropdown && (
               <div
                 className={styles.sortDropdownContent}
-                // onMouseLeave={() => setSortViewDropdown(!sortViewDropdown)}
+                ref={menuRef}
+                
               >
                 <div className={styles.sortMenuHeader}>Filter</div>
                 <div

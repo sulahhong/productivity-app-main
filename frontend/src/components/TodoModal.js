@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { MdOutlineClose } from "react-icons/md";
+import { MdOutlineClose,MdCalendarToday,MdOutlinedFlag, MdSort,MdGridView } from "react-icons/md";
 import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
 import { getStringDate } from "../utill/date";
@@ -140,8 +140,14 @@ function TodoModal() {
     setIsEditingTodo(false);
   };
 
+  const handleOverlayClose = (e) => {
+    if(e.target.id == "overlay") {
+      setOpenModal(false);
+    }
+  }
+
   return (
-    <div className={styles.todoModalOverlay}>
+    <div className={styles.todoModalOverlay} onClick={(e) => handleOverlayClose(e)} id="overlay">
       <div className={styles.todoModalContainer}>
         <div className={styles.todoModalHeader}>
           <div className={styles.todoModalHeaderTitle}>New Task</div>
@@ -154,10 +160,12 @@ function TodoModal() {
             <input
               className={styles.todoModalInputTitle}
               name="todoTitle"
-              placeholder="title"
+              placeholder="Title"
               value={todoTitle}
               onChange={handleTodoChange}
             />
+             <div className={styles.todoDesWrap}>
+             <div className={styles.todoModalSettingIcon2}><MdSort size={20} /> </div>
             <input
               className={styles.todoModalInputDescription}
               placeholder="Description"
@@ -165,10 +173,11 @@ function TodoModal() {
               value={todoDescription}
               onChange={handleTodoChange}
             />
+            </div>
           </div>
           <div className={styles.todoModalSettings}>
             <div className={styles.todoModalSetting}>
-              <div className={styles.todoModalSettingIcon}></div>
+              <div className={styles.todoModalSettingIcon}><MdOutlinedFlag size={20} /> </div>
               <div className={styles.todoModalSettingText}>Priority</div>
               <select
                 className={styles.todoModalSettingOption}
@@ -185,8 +194,10 @@ function TodoModal() {
           </div>
           <div className={styles.todoModalSetting}>
             <div className={styles.todoModalDueDate}>
+            <div className={styles.todoModalSettingIcon}><MdCalendarToday size={20} /> </div>
               <div className={styles.todoModalDueDateTitle}>Duedate</div>
               <input
+                className="todoDueDateInput"
                 type="date"
                 value={todoDueDate}
                 name="todoDueDate"
@@ -195,6 +206,7 @@ function TodoModal() {
             </div>
           </div>
           <div className={styles.todoModalSelectProject}>
+          <div className={styles.todoModalSettingIcon}><MdGridView size={20} /> </div>
             <div className={styles.todoModalSelectProjectTitle}>Project</div>
             <select
               className={styles.todoModalSelectProjectTitleOption}
