@@ -31,6 +31,7 @@ function TodoModal() {
     todoCreateDate: "",
     todoDueDate: "",
     projectId: projects.length>0 ? projects[0].projectId : "",
+    projectTitle: projects.length>0 ? projects[0].projectTitle :"",
   });
   const {
     todoId,
@@ -41,6 +42,7 @@ function TodoModal() {
     todoCreateDate,
     todoDueDate,
     projectId,
+    projectTitle,
   } = todoForm;
 
   useEffect(() => {
@@ -64,9 +66,22 @@ function TodoModal() {
     // console.log("value", e.target.value);
     setTodoForm((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value, 
+      // projectId: item.projectID
     }));
   };
+
+  useEffect(() => {
+    const proj= projects.filter((item)=> item.projectId == projectId)
+    console.log("PROJ", proj)
+    const projectTitle = proj[0].projectTitle
+    console.log("PROJ2", projectTitle )
+
+    setTodoForm((prevState) => ({
+      ...prevState,
+      projectTitle : projectTitle,
+    }))
+  },[projectId])
 
   const handleCreateTodo = () => {
     const todoCreateDate = new Date().toISOString().slice(0, 10);

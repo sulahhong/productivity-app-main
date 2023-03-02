@@ -24,6 +24,8 @@ function SingleTodoItem({item}) {
     isEditingTodo,
     viewTodos,
     setViewTodos,
+    projects,
+    setProjects,
   } = useGlobalContext();
 
   const handleEditTodo = (id) => {
@@ -135,7 +137,11 @@ function SingleTodoItem({item}) {
                     <div className={styles.dueDateIcon}>
                       <MdCalendarToday />
                     </div>
+                    
                     <div className={styles.dueDateText}>{item.todoDueDate}</div>
+                    <div className={styles.todoProjectTitle}>
+                    <div className={styles.todoProjectName}>{item.projectTitle}</div>
+                    </div>
                   </div>
                   <div className={styles.todoCardDday}>
                     <div className={styles.ddayTrackerText}>
