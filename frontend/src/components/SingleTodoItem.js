@@ -33,7 +33,7 @@ function SingleTodoItem({item}) {
     const targetTodo = todos.find((item) => item.todoId === id);
     console.log("targetTodo", targetTodo, id);
     setOpenModal(!openModal);
-    setTargetTodoGlobal(targetTodo);
+    setTargetTodoGlobal(targetTodo); // targetTodo에 저장해야 수정 시 SetTodoForm 불러올 수 있음
     setIsEditingTodo(true);
   };
 

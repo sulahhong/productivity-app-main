@@ -16,7 +16,11 @@ const getLocalStorageProject = () => {
   if (storage) {
     return JSON.parse(storage);
   } else {
-    return [];
+    return [
+     { projectId: "",
+      projectTitle: "No Project",
+      projectDescription: ""}
+    ];
   }
 };
 
@@ -34,6 +38,7 @@ const AppProvider = ({ children }) => {
   const [isEditingProject, setIsEditingProject] = useState(false);
   const [projectIsActive, setProjectIsActive] = useState(false);
   const [projectViewtype, setProjectviewType] = useState("");
+  const [filterType, setFilterType] = useState("filterAll");
 
   useEffect(() => {
     console.log("todostodos", todos)
@@ -48,19 +53,47 @@ const AppProvider = ({ children }) => {
     window.localStorage.setItem("project", JSON.stringify(projects));
   }, [projects]);
 
+
   useEffect(() => {
-    if (viewCategory == "done") {
-      const arr = todos.filter((item) => item.todoDone);
-      console.log("arrrr", arr);
-      setViewTodos(arr);
-    } else if (viewCategory == "notdone") {
-      const arr = todos.filter((item) => !item.todoDone);
-      console.log("arrrr", arr);
-      setViewTodos(arr);
-    } else if (viewCategory == "all") {
+    // let arr = [...todos];
+    if (filterType == "filterAll") {
       setViewTodos(todos);
+    } else if (filterType == "filterDone") {
+      let arr = todos.filter((item) => item.todoDone);
+      setViewTodos(arr);
+    } else if (filterType == "filterNotDone") {
+      let arr = todos.filter((item) => !item.todoDone);
+      setViewTodos(arr);
+    } else if (filterType == "filterP1") {
+      let arr = todos.filter((item) => item.todoPriority == "1");
+      setViewTodos(arr);
+    } else if (filterType == "filterP2") {
+      let arr = todos.filter((item) => item.todoPriority == "2");
+      setViewTodos(arr);
+    } else if (filterType == "filterP3") {
+      let arr = todos.filter((item) => item.todoPriority == "3");
+      setViewTodos(arr);
+    } else if (filterType == "filterP4") {
+      let arr = todos.filter((item) => item.todoPriority == "4");
+      setViewTodos(arr);
     }
   }, [todos]);
+
+
+
+  // useEffect(() => {
+  //   if (viewCategory == "done") {
+  //     const arr = todos.filter((item) => item.todoDone);
+  //     console.log("arrrr", arr);
+  //     setViewTodos(arr);
+  //   } else if (viewCategory == "notdone") {
+  //     const arr = todos.filter((item) => !item.todoDone);
+  //     console.log("arrrr", arr);
+  //     setViewTodos(arr);
+  //   } else if (viewCategory == "all") {
+  //     setViewTodos(todos);
+  //   }
+  // }, [todos]);
 
   return (
     <AppContext.Provider
@@ -91,6 +124,7 @@ const AppProvider = ({ children }) => {
         setProjectIsActive,
         projectViewtype, 
         setProjectviewType,
+        filterType, setFilterType,
       }}
     >
       {children}

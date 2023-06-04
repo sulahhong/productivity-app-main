@@ -30,6 +30,7 @@ function Todo() {
     projects,
     projectViewtype,
     setProjectviewType,
+    filterType, setFilterType,
   } = useGlobalContext();
 
 
@@ -39,7 +40,7 @@ function Todo() {
   // 새로운 솔팅 메뉴를 위한 상태
   const [sortType, setSortType] = useState("todoPriority");
   const [ascending, setAscending] = useState(true);
-  const [filterType, setFilterType] = useState("filterAll");
+  // const [filterType, setFilterType] = useState("filterAll");
 
   const [groupView, setGroupView] = useState(false);
 
@@ -136,6 +137,7 @@ function Todo() {
         setViewTodos(arr2);
       }
     }
+    
   };
 
   useEffect(() => {
@@ -146,6 +148,21 @@ function Todo() {
     setOpenModal(!openModal);
   };
 
+  const clearAllTodo = () => {
+    // setTodos([]);
+    const filteredArray = todos.filter((item) => {
+      return !viewTodos.some(obj => obj.todoId === item.todoId)
+    })
+    console.log("todos 1", todos)
+    console.log("viewTodos 1", viewTodos)
+    console.log("filteredArray 1", filteredArray)
+
+    setTodos(filteredArray)
+  }
+
+  const selectAlltodo = () => {
+   //
+  }
 
   return (
     <div className={styles.todoContainer}>
@@ -161,6 +178,7 @@ function Todo() {
           <div>
             <button onClick={() => setGroupView(!groupView)}>Group button</button>
           </div>
+         
           <div className={styles.sortDropdownContainer}>
             <button
               className={styles.sortDropdownButton}
@@ -287,6 +305,11 @@ function Todo() {
           <div className={styles.viewTodoNow}>구분 : {viewCategory}</div>
           <div>현재 todo 개수 : {viewTodos.length}</div>
         </div>
+        <div>
+          <button onClick={selectAlltodo}>모두 선택</button>
+          <button onClick={clearAllTodo}>모두 삭제</button>
+        </div>
+
         <TodoView 
         groupView={groupView} setGroupView={setGroupView}/>
       </div>

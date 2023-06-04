@@ -9,6 +9,7 @@ import Home from "./routes/Home";
 import Todo from "./routes/Todo";
 import { useGlobalContext } from "./context";
 import ProjectModal from "./components/ProjectModal";
+import Archive from "./routes/Archive";
 
 
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/diary" element={<Diary />} />
         <Route path="/todo" element={<Todo />} />
+        <Route path="/archive" element={<Archive />} />
       </Routes>
     </BrowserRouter>
   );

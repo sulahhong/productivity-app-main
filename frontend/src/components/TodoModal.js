@@ -47,7 +47,7 @@ function TodoModal() {
 
   useEffect(() => {
     if (isEditingTodo) {
-      setTodoForm(targetTodoGlobal);
+      setTodoForm(targetTodoGlobal); // setTodoForm에 저장된 내용을 수정 할때 가지고올 수 있도록 
     }
     console.log("jenggo", isEditingTodo);
   }, []);
@@ -72,16 +72,31 @@ function TodoModal() {
   };
 
   useEffect(() => {
-    const proj= projects.filter((item)=> item.projectId == projectId)
-    console.log("PROJ", proj)
-    const projectTitle = proj[0].projectTitle
-    console.log("PROJ2", projectTitle )
+   
+    // const proj= projects.filter((item)=> item.projectId == projectId)//""
+    // console.log("PROJ", proj)
+    // const projectTitle = proj[0].projectTitle
+    // console.log("PROJ2", projectTitle )
 
-    setTodoForm((prevState) => ({
-      ...prevState,
-      projectTitle : projectTitle,
-    }))
-  },[projectId])
+    // setTodoForm((prevState) => ({
+    //   ...prevState,
+    //   projectTitle : projectTitle,
+    // }))
+
+    console.log("PROJ ID:", projectId)
+    
+    if(projectId){
+      const proj= projects.filter((item)=> item.projectId == projectId)//""
+      console.log("PROJ", proj)
+      const projectTitle = proj[0].projectTitle
+      console.log("PROJ2", projectTitle )
+  
+      setTodoForm((prevState) => ({
+        ...prevState,
+        projectTitle : projectTitle,
+      }))
+      }
+     },[projectId])
 
   const handleCreateTodo = () => {
     const todoCreateDate = new Date().toISOString().slice(0, 10);
