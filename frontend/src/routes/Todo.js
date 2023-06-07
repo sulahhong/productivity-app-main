@@ -63,7 +63,8 @@ function Todo() {
   })
 
   useEffect(() => {
-    let arr = [...todos];
+    let arr1 = [...todos];
+    let arr = arr1.filter(item => item.todoDone === false)
     if(groupView) {
       let arr2 = arr.sort((a, b) => a.todoPriority - b.todoPriority);
         setViewTodos(arr2);
@@ -74,15 +75,16 @@ function Todo() {
 
   // 새로운 상태를 위한 function
   useEffect(() => {
-    let arr = [...todos];
+    let arr1 = [...todos];
+    let arr = arr1.filter(item => item.todoDone === false)
     if (filterType == "filterAll") {
       sortAction(arr);
-    } else if (filterType == "filterDone") {
-      let arrFilter = arr.filter((item) => item.todoDone);
-      sortAction(arrFilter);
-    } else if (filterType == "filterNotDone") {
-      let arrFilter = arr.filter((item) => !item.todoDone);
-      sortAction(arrFilter);
+    // } else if (filterType == "filterDone") {
+    //   let arrFilter = arr.filter((item) => item.todoDone);
+    //   sortAction(arrFilter);
+    // } else if (filterType == "filterNotDone") {
+    //   let arrFilter = arr.filter((item) => !item.todoDone);
+    //   sortAction(arrFilter);
     } else if (filterType == "filterP1") {
       let arrFilter = arr.filter((item) => item.todoPriority == "1");
       sortAction(arrFilter);
@@ -104,9 +106,10 @@ function Todo() {
       if (sortType == "todoPriority") {
         let arr2 = arr.sort((a, b) => a.todoPriority - b.todoPriority);
         setViewTodos(arr2);
-      } else if (sortType == "todoDone") {
-        let arr2 = arr.sort((a, b) => b.todoDone - a.todoDone);
-        setViewTodos(arr2);
+      // } else if (sortType == "todoDone") {
+      //   let arr2 = arr.sort((a, b) => b.todoDone - a.todoDone);
+      //   setViewTodos(arr2);
+      // } 
       } else if (sortType == "todoDueDate") {
         let arr2 = arr.sort(
           (a, b) => Date.parse(a.todoDueDate) - Date.parse(b.todoDueDate)
@@ -122,9 +125,9 @@ function Todo() {
       if (sortType == "todoPriority") {
         let arr2 = arr.sort((a, b) => b.todoPriority - a.todoPriority);
         setViewTodos(arr2);
-      } else if (sortType == "todoDone") {
-        let arr2 = arr.sort((a, b) => a.todoDone - b.todoDone);
-        setViewTodos(arr2);
+      // } else if (sortType == "todoDone") {
+      //   let arr2 = arr.sort((a, b) => a.todoDone - b.todoDone);
+      //   setViewTodos(arr2);
       } else if (sortType == "todoDueDate") {
         let arr2 = arr.sort(
           (a, b) => Date.parse(b.todoDueDate) - Date.parse(a.todoDueDate)
@@ -200,7 +203,7 @@ function Todo() {
                 >
                   All {filterType == "filterAll" && <MdCheck />}
                 </div>
-                <div
+                {/* <div
                   className={styles.sortMenuItem}
                   onClick={() => setFilterType("filterDone")}
                 >
@@ -211,7 +214,7 @@ function Todo() {
                   onClick={() => setFilterType("filterNotDone")}
                 >
                   Not Done {filterType == "filterNotDone" && <MdCheck />}
-                </div>
+                </div> */}
                 <div
                   className={styles.sortMenuItem1}
                   onClick={() => setPriorityIsActive(!priorityIsActive)}
@@ -263,12 +266,12 @@ function Todo() {
                 >
                   Priority {sortType == "todoPriority" && <MdCheck />}
                 </div>
-                <div
+                {/* <div
                   className={styles.sortMenuItem}
                   onClick={() => setSortType("todoDone")}
                 >
                   Done {sortType == "todoDone" && <MdCheck />}
-                </div>
+                </div> */}
                 <div
                   className={styles.sortMenuItem}
                   onClick={() => setSortType("todoDueDate")}
@@ -303,7 +306,7 @@ function Todo() {
         </div>
         <div className={styles.viewTodoNowContainer}>
           <div className={styles.viewTodoNow}>구분 : {viewCategory}</div>
-          <div>현재 todo 개수 : {viewTodos.length}</div>
+          <div>현재 todo 개수 :{viewTodos.filter(item => item.todoDone == false).length}</div>
         </div>
         <div>
           <button onClick={selectAlltodo}>모두 선택</button>

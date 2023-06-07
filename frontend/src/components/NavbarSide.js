@@ -85,6 +85,9 @@ function NavbarSide() {
   };
 
   const handleDeleteProject = (id) => {
+    if(projects.length ===2){
+      setProjectIsActive(false)
+    }
     console.log("DEL project id", id);
     const newArray = projects.filter((item) => item.projectId !== id);
     console.log("newProjects", newArray);
@@ -96,7 +99,7 @@ function NavbarSide() {
 
     const arr = todos.map((item) => {
       if (item.projectId === id) {
-        return { ...item, projectId: "", projectTitle: "" };
+        return { ...item, projectId: "", projectTitle: "No Project" };
       }
       return item;
     });

@@ -10,12 +10,14 @@ import Todo from "./routes/Todo";
 import { useGlobalContext } from "./context";
 import ProjectModal from "./components/ProjectModal";
 import Archive from "./routes/Archive";
+import EmptyProjectModal from "./components/EmptyProjectModal";
+
 
 
 
 function App() {
 
-  const { todos, setTodos, openModal, setOpenModal, openModalProject, setOpenModalProject } = useGlobalContext();
+  const { todos, setTodos, openModal, setOpenModal, openModalProject, setOpenModalProject, projectIsActive, projects, } = useGlobalContext();
 
   return (
     <BrowserRouter>
@@ -23,6 +25,7 @@ function App() {
       <NavbarSide />
       {openModal && <TodoModal/>}
       {openModalProject && <ProjectModal /> }
+      {(projectIsActive && projects.length == 1) && <EmptyProjectModal/> }
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/diary" element={<Diary />} />

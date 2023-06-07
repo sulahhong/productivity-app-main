@@ -112,25 +112,34 @@ function TodoView({ groupView, setGroupView }) {
     <div className={styles.todoViewContainer}>
       {viewTodos.length > 0 && groupView ? (
         <div className={styles.todoViewGroupContainer}>
-          <div className={styles.todoViewGroupTitle}>P1</div>
+          {viewTodos.find((item) => item.todoPriority === "1") && (
+            <div className={styles.todoViewGroupTitle}>P1</div>
+          )}
+
           {viewTodos
             .filter((item) => item.todoPriority == "1")
             .map((item) => (
               <SingleTodoItem item={item} />
             ))}
-          <div className={styles.todoViewGroupTitle}>P2</div>
+          {viewTodos.find((item) => item.todoPriority === "2") && (
+            <div className={styles.todoViewGroupTitle}>P2</div>
+          )}
           {viewTodos
             .filter((item) => item.todoPriority == "2")
             .map((item) => (
               <SingleTodoItem item={item} />
             ))}
-          <div className={styles.todoViewGroupTitle}>P3</div>
+          {viewTodos.find((item) => item.todoPriority === "3") && (
+            <div className={styles.todoViewGroupTitle}>P3</div>
+          )}
           {viewTodos
             .filter((item) => item.todoPriority == "3")
             .map((item) => (
               <SingleTodoItem item={item} />
             ))}
-          <div className={styles.todoViewGroupTitle}>P4</div>
+          {viewTodos.find((item) => item.todoPriority === "4") && (
+            <div className={styles.todoViewGroupTitle}>P4</div>
+          )}
 
           {viewTodos
             .filter((item) => item.todoPriority == "4")
@@ -138,8 +147,10 @@ function TodoView({ groupView, setGroupView }) {
               <SingleTodoItem item={item} />
             ))}
         </div>
-      ) : viewTodos.length > 0 ? (
-        viewTodos.map((item) => <SingleTodoItem item={item} />)
+      ) : viewTodos.filter((item) => item.todoDone === false).length > 0 ? (
+        viewTodos
+          .filter((item) => item.todoDone === false)
+          .map((item) => <SingleTodoItem item={item} />)
       ) : (
         <div className={styles.todoViewEmpty}>
           <div className={styles.todoViewEmptyIcon}>

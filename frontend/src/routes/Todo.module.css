@@ -151,6 +151,13 @@ li {
     align-items: center;
 }
 
+.todoViewContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    margin: 1rem 0;
+}
 
 @media (max-width: 750px) {
     

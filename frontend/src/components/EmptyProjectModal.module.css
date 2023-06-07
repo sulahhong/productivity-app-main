@@ -1,0 +1,29 @@
+.emptyModalOverlay {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.848);
+    width: 100vw;
+    height: 100vh;
+    z-index: 101;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s linear;
+}
+
+.emptyModalContainer {
+    background-color: white;
+    width: 100vh;
+    max-width: 700px;
+    border-radius: 5px;
+    margin: auto 0;
+    padding: 1.5rem 2rem;
+    position: relative;
+}
+
+.emptyModalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.5rem;
+    border-bottom: 1px solid rgb(216, 216, 216);
+}
