@@ -4,7 +4,7 @@ import { MdOutlineClose } from "react-icons/md";
 import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
 import { getStringDate } from "../utill/date";
-import styles from "./TodoModal.module.css";
+import styles from "./ProjectModal.module.css";
 
 function ProjectModal() {
   const {
@@ -15,7 +15,6 @@ function ProjectModal() {
     setTargetProjectGlobal,
     isEditingProject,
     setIsEditingProject,
-    
   } = useGlobalContext();
   const [projectForm, setProjectForm] = useState({
     projectId: "",
@@ -26,7 +25,7 @@ function ProjectModal() {
 
   const handleCreateProject = () => {
     if (projectTitle.length < 1) {
-      alert("프로젝트 제목을 입력해주세요.")
+      alert("프로젝트 제목을 입력해주세요.");
       return;
     }
     const projectId = uuidv4();
@@ -36,20 +35,20 @@ function ProjectModal() {
       ...prevState,
       projectId,
     }));
-
   };
 
   useEffect(() => {
-    console.log("projects", projects)
-  }, [projects])
+    console.log("projects", projects);
+  }, [projects]);
 
   const handleEditProjectModal = () => {
-    const projectEditIndex = projects.findIndex((item) => item.projectId == projectId);
-    
-  }
+    const projectEditIndex = projects.findIndex(
+      (item) => item.projectId == projectId
+    );
+  };
 
   const handleProjectChange = (e) => {
-    console.log("namename", e.target.value)
+    console.log("namename", e.target.value);
     setProjectForm((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
@@ -62,7 +61,6 @@ function ProjectModal() {
     setProjects([projectForm, ...projects]);
     setOpenModalProject(false);
   };
-
 
   useEffect(() => {
     if (!isEditingProject) {
@@ -81,37 +79,37 @@ function ProjectModal() {
   };
 
   return (
-    <div className={styles.todoModalOverlay}>
-      <div className={styles.todoModalContainer}>
-        <div className={styles.todoModalHeader}>
-          <div className={styles.todoModalHeaderTitle}>New Project</div>
+    <div className={styles.ProjectModalOverlay}>
+      <div className={styles.ProjectModalContainer}>
+        <div className={styles.ProjectModalHeader}>
+          <div className={styles.ProjectModalHeaderTitle}>New Project</div>
           <button
-            className={styles.todoModalCloseButton}
+            className={styles.ProjectModalCloseButton}
             onClick={closeModalProject}
           >
-           <MdOutlineClose />
+            <MdOutlineClose />
           </button>
         </div>
-        <div className={styles.todoModalBody}>
-          <div className={styles.todoModalInput}>
+        <div className={styles.ProjectModalBody}>
+          <div className={styles.ProjectModalInput}>
             <input
-              className={styles.todoModalInputTitle}
+              className={styles.ProjectModalInputTitle}
               name="projectTitle"
               placeholder="title"
               value={projectTitle}
               onChange={handleProjectChange}
             />
             <input
-              className={styles.todoModalInputDescription}
+              className={styles.ProjectModalInputDescription}
               placeholder="Description"
               name="projectDescription"
               value={projectDescription}
               onChange={handleProjectChange}
             />
           </div>
-          <div className={styles.todoModalAddTodocontainer}>
+          <div className={styles.ProjectModalAddTodocontainer}>
             <button
-              className={styles.todoModalAddTodo}
+              className={styles.ProjectModalAddTodo}
               onClick={() => handleCreateProject()}
             >
               Add

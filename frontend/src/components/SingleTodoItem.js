@@ -28,6 +28,15 @@ function SingleTodoItem({item}) {
     setProjects,
   } = useGlobalContext();
 
+  const handleModalContents = (id) => {
+    console.log("modal will be opened", id)
+    const targetTodo = todos.find((item) => item.todoId === id)
+    console.log("targetTodomodal", targetTodo, id)
+    setOpenModal(true)
+    setTargetTodoGlobal(targetTodo);
+    setIsEditingTodo(true)
+  }
+
   const handleEditTodo = (id) => {
     console.log("Edit id", id);
     const targetTodo = todos.find((item) => item.todoId === id);
@@ -110,12 +119,12 @@ function SingleTodoItem({item}) {
   // }
 
   return (
-          <div
+          <div onClick={() => handleModalContents(item.todoId)}
             className={
               item.todoDone ? styles.todoViewCardDone : styles.todoViewCard
             }
           >
-            <div className={styles.todoCardContent}>
+            <div className={styles.todoCardContent} >
               <div
                 className={todoDonePrioritySelector(item.todoPriority)}
                 onClick={() => handleTodoDone(item.todoId)}

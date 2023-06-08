@@ -17,10 +17,26 @@ const getLocalStorageProject = () => {
     return JSON.parse(storage);
   } else {
     return [
-     { projectId: "",
-      projectTitle: "No Project",
-      projectDescription: ""}
+      { projectId: "", projectTitle: "No Project", projectDescription: "" },
     ];
+  }
+};
+
+const getLocalStorageComments = () => {
+  let storage = localStorage.getItem("comments");
+  if (storage) {
+    return JSON.parse(storage);
+  } else {
+    return [];
+  }
+};
+
+const getLocalStorageReply = () => {
+  let storage = localStorage.getItem("reply");
+  if (storage) {
+    return JSON.parse(storage);
+  } else {
+    return [];
   }
 };
 
@@ -40,10 +56,19 @@ const AppProvider = ({ children }) => {
   const [projectViewtype, setProjectviewType] = useState("");
   const [filterType, setFilterType] = useState("filterAll");
 
+  const [comments, setComments] = useState(getLocalStorageComments());
+  const [reply, setReply] = useState(getLocalStorageReply());
+
+  const [user, setUser] = useState({
+    userId: "8888",
+    userName: "SA",
+    userEmail: "sulah@gmail.com",
+  })
+
   useEffect(() => {
-    console.log("todostodos", todos)
-    console.log("projectsprojects", projects)
-  }, [])
+    console.log("todostodos", todos);
+    console.log("projectsprojects", projects);
+  }, []);
 
   useEffect(() => {
     window.localStorage.setItem("todoList", JSON.stringify(todos));
@@ -53,6 +78,13 @@ const AppProvider = ({ children }) => {
     window.localStorage.setItem("project", JSON.stringify(projects));
   }, [projects]);
 
+  useEffect(() => {
+    window.localStorage.setItem("comments", JSON.stringify(comments));
+  }, [comments])
+
+  useEffect(() => {
+    window.localStorage.setItem("reply", JSON.stringify(reply));
+  }, [reply])
 
   useEffect(() => {
     // let arr = [...todos];
@@ -78,8 +110,6 @@ const AppProvider = ({ children }) => {
       setViewTodos(arr);
     }
   }, [todos]);
-
-
 
   // useEffect(() => {
   //   if (viewCategory == "done") {
@@ -120,11 +150,17 @@ const AppProvider = ({ children }) => {
         setTargetProjectGlobal,
         isEditingProject,
         setIsEditingProject,
-        projectIsActive, 
+        projectIsActive,
         setProjectIsActive,
-        projectViewtype, 
+        projectViewtype,
         setProjectviewType,
-        filterType, setFilterType,
+        filterType,
+        setFilterType,
+        comments,
+        setComments,
+        reply,
+        setReply,
+        user, setUser,
       }}
     >
       {children}

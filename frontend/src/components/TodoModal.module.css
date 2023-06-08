@@ -12,8 +12,9 @@
 
 .todoModalContainer{
     background-color: white;
-    width: 100vh;
-    max-width: 700px;
+    width: 150vh;
+    height: 70vh;
+    max-width: 800px;
     border-radius: 5px;
     margin: auto 0;
     padding: 1.5rem 2rem;
@@ -56,6 +57,10 @@
 
 .todoModalBody {
     padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    
+
 }
 
 .todoModalInput {
@@ -65,11 +70,43 @@
     border: 1px solid rgb(216, 216, 216);
     border-radius: 1rem;
     margin-bottom: 1rem;
+    width: 465px;
+    height: 150px;
 }
+
+.todoModalComments {
+    color: gray;
+    font-size: 0.8rem;
+    width: 50%;
+}
+
+.todoModalCommentsTitle {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.5rem;
+    border-bottom: 1px ;
+    
+}
+
 
 input:focus {
     outline: none;
 }
+
+.todoSubTask {
+    position: relative;
+    /* bottom: -135px; */
+}
+
+.todoSubTaskBtn {
+    border: none;
+    font-size: 0.8rem;
+    padding-left: 1.2rem;
+    background-color: white;
+    color: gray;
+    font-weight: 700;
+}
+
 
 .todoModalInputTitle {
     border: none;
@@ -82,6 +119,11 @@ input:focus {
     border: none;
     font-size: 0.8rem;
     
+}
+
+.todoModalSelector {
+    width: 300px;
+    padding-right: 1rem;
 }
 
 .todoModalSettingIcon2 {
@@ -123,6 +165,7 @@ input:focus {
 }
 
 .todoModalAddTodocontainer {
+    
     display: flex;
     justify-content: end;
 }
