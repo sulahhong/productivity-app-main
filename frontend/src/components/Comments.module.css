@@ -2,11 +2,50 @@
     border: 1px solid rgb(216, 216, 216);
     border-radius: 1rem;
     margin-bottom: 1rem;
-   
+    padding: 0.5rem;
+    align-items: center;
+}
+
+.commentAuthorPart {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.commentFirstPart{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.commentLikeBox {
+    display: flex;
+    align-items: center;
+    /* flex-direction: column; */
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 0.5rem;
+    gap: 0.2rem;
+    padding: 0.2rem;
+}
+
+.commentBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+}
+
+.commentReplyBtn {
+    border: none;
+    background-color: white;
+    /* display: flex;
+    align-items: center; */
+    cursor: pointer;
+    color: gray;
 }
 
 .commentUser {
     display: flex;
+    justify-content: space-between;
     padding-right: 1rem;
     gap : 1rem;
 }

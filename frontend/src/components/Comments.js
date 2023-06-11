@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import styles from "./Comments.module.css";
 import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
+import { MdThumbUp, MdReply, MdModeEdit, MdDelete } from "react-icons/md";
 
 function Comments({ item }) {
-  const { reply, setReply, user, setUser } = useGlobalContext();
+  const { reply, setReply, user, setUser, comments, setComments } = useGlobalContext();
 
   const [replyForm, setReplyForm] = useState({
     replyId: "",
@@ -12,7 +13,7 @@ function Comments({ item }) {
     replyAuthor: user,
     replyCreateTime: "",
     replyUpdateTime: "",
-   replyTo:"",
+    replyTo: "",
   });
 
   const {
@@ -32,66 +33,101 @@ function Comments({ item }) {
   };
 
   const handelCreateReply = () => {
-      const replyCreateTime = new Date();
-      const replyId = uuidv4();
-      const replyTo = item.commentId;
-      const replyText = replyInputValue;
+    const replyCreateTime = new Date();
+    const replyId = uuidv4();
+    const replyTo = item.commentId;
+    const replyText = replyInputValue;
 
-      console.log("createreply", replyCreateTime, replyId, replyTo);
+    console.log("createreply", replyCreateTime, replyId, replyTo);
 
-      setReplyForm((prevState) => ({
-        ...prevState,
-        replyCreateTime,
-        replyId,
-        replyTo, 
-        replyText, 
-      }));
-    
+    setReplyForm((prevState) => ({
+      ...prevState,
+      replyCreateTime,
+      replyId,
+      replyTo,
+      replyText,
+    }));
   };
 
   useEffect(() => {
-    if(replyCreateTime && replyId && replyTo ) {
-        console.log("reply useEffect is Checked")
-        
-    setReply([...reply, replyForm])
-    setReplyForm({
+    if (replyCreateTime && replyId && replyTo) {
+      console.log("reply useEffect is Checked");
+
+      setReply([...reply, replyForm]);
+      setReplyForm({
         replyId: "",
         replyText: "",
         replyAuthor: user,
         replyCreateTime: "",
         replyUpdateTime: "",
-        replyTo:"",
-    })
-    setReplyInputValue("");
-    setOnReply(false)
+        replyTo: "",
+      });
+      setReplyInputValue("");
+      setOnReply(false);
     }
+  }, [replyForm]);
 
+  const handleDeleteComment = (id) => {
+    console.log("delete comment ", id )
+    const newCommentsArray = comments.filter((item) => item.commentId !== id)
+    console.log("deldeldelComents", newCommentsArray)
+    const newReplyArray = reply.filter((item) => item.replyTo !== id)
+    console.log("sssss", newReplyArray)
+    setComments(newCommentsArray);
+    setReply(newReplyArray)
 
-  }, [replyForm])
+  }
 
   return (
     <>
       <div className={styles.commentsContainer}>
         <div className={styles.commentUser}>
-          <div>{item.commentAuthor.userName}</div>
-          <div>{item.commentCreateTime.toString()}</div>
+          <div className={styles.commentFirstPart}>
+            <div className={styles.commentLikeBox}>
+              <MdThumbUp />
+                {0}
+             
+            </div>
+            <div className={styles.commentAuthorPart}>
+              <div className={styles.commentUserName}>
+                {item.commentAuthor.userName}
+              </div>
+              <div className={styles.commentDate}>
+                {new Date(item.commentCreateTime).toLocaleDateString("ko-KR")}
+              </div>
+            </div>
+          </div>
+          <div className={styles.commentBtn}>
+            <button className={styles.commentReplyBtn}><MdModeEdit /></button>
+            <button className={styles.commentReplyBtn} onClick={() => handleDeleteComment(item.commentId)}><MdDelete /></button>
+          <button 
+          className={styles.commentReplyBtn}
+          onClick={() => setOnReply(!onReply)}><MdReply /></button>
+          </div>
         </div>
-        <div>{item.commentText}</div>
-        <button onClick={() => setOnReply(!onReply)}>reply</button>
+        <div className={styles.commentTextBox}>{item.commentText}</div>
       </div>
       {onReply && (
-        <div>
+        <div className={styles.commentInput}>
           <input
             type="text"
             value={replyInputValue}
             onChange={handleOnChange}
           />
-          <button 
-          onClick={handelCreateReply}>
-          입력</button>
+          <button
+            className={styles.commentInputButton}
+            onClick={handelCreateReply}
+          >
+            입력
+          </button>
         </div>
       )}
-      {reply.filter(obj => obj.replyTo == item.commentId).map((item) => <div>{item.replyText}</div>)}
+      {reply
+        .filter((obj) => obj.replyTo == item.commentId)
+        .map((item) => (
+          <div className={styles.replyItem}>{item.replyText}</div>
+        ))}
+      
     </>
   );
 }
