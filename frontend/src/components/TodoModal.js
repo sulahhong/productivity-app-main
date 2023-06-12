@@ -31,7 +31,12 @@ function TodoModal() {
     setComments,
     reply,
     setReply,
-    user, setUser,
+    user, 
+    setUser,
+    targetCommentGlobal,
+    setTaegetCommentGlobal,
+    isEditingComment,
+    setIsEditingComment,
   } = useGlobalContext();
   const [todoForm, setTodoForm] = useState({
     todoId: "",
@@ -366,7 +371,7 @@ function TodoModal() {
             <button onClick={hanldeCreateComment}>입력</button>
           </div>
             
-          {comments && comments.filter(item => item.postId == todoId).map((item) => <Comments item={item} />)}
+          {comments && comments.filter(item => item.postId == todoId).map((item) => <Comments item={item} commentsForm={commentsForm} setCommentsForm={setCommentsForm} />)}
         </div>
         <div className={styles.todoModalAddTodocontainer}>
           {isEditingTodo ? (

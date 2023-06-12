@@ -57,13 +57,16 @@ const AppProvider = ({ children }) => {
   const [filterType, setFilterType] = useState("filterAll");
 
   const [comments, setComments] = useState(getLocalStorageComments());
+  const [targetCommentGlobal, setTaegetCommentGlobal] = useState({});
+  const [isEditingComment, setIsEditingComment] = useState(false);
+
   const [reply, setReply] = useState(getLocalStorageReply());
 
   const [user, setUser] = useState({
     userId: "8888",
     userName: "SA",
     userEmail: "sulah@gmail.com",
-  })
+  });
 
   useEffect(() => {
     console.log("todostodos", todos);
@@ -80,11 +83,11 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     window.localStorage.setItem("comments", JSON.stringify(comments));
-  }, [comments])
+  }, [comments]);
 
   useEffect(() => {
     window.localStorage.setItem("reply", JSON.stringify(reply));
-  }, [reply])
+  }, [reply]);
 
   useEffect(() => {
     // let arr = [...todos];
@@ -160,7 +163,12 @@ const AppProvider = ({ children }) => {
         setComments,
         reply,
         setReply,
-        user, setUser,
+        user,
+        setUser,
+        targetCommentGlobal,
+        setTaegetCommentGlobal,
+        isEditingComment,
+        setIsEditingComment,
       }}
     >
       {children}
