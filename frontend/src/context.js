@@ -58,7 +58,7 @@ const AppProvider = ({ children }) => {
 
   const [comments, setComments] = useState(getLocalStorageComments());
   const [targetCommentGlobal, setTaegetCommentGlobal] = useState({});
-  const [isEditingComment, setIsEditingComment] = useState(false);
+  // const [isEditingComment, setIsEditingComment] = useState(false);
 
   const [reply, setReply] = useState(getLocalStorageReply());
 
@@ -167,8 +167,8 @@ const AppProvider = ({ children }) => {
         setUser,
         targetCommentGlobal,
         setTaegetCommentGlobal,
-        isEditingComment,
-        setIsEditingComment,
+        // isEditingComment,
+        // setIsEditingComment,
       }}
     >
       {children}

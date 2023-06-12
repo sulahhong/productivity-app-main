@@ -14,8 +14,6 @@ function Comments({ item, commentsForm, setCommentsForm, }) {
     setComments,
     targetCommentGlobal,
     setTaegetCommentGlobal,
-    isEditingComment,
-    setIsEditingComment,
   } = useGlobalContext();
 
   const {
@@ -48,6 +46,7 @@ function Comments({ item, commentsForm, setCommentsForm, }) {
 
   const [onReply, setOnReply] = useState(false);
   const [replyInputValue, setReplyInputValue] = useState("");
+  const [isEditingComment, setIsEditingComment] = useState(false);
 
   const handleOnChange = (e) => {
     setReplyInputValue(e.target.value);
@@ -154,7 +153,7 @@ function Comments({ item, commentsForm, setCommentsForm, }) {
           <div className={styles.commentBtn}>
             <button
               className={styles.commentReplyBtn}
-              onClick={setIsEditingComment(!isEditingComment)}
+              onClick={()=>setIsEditingComment(!isEditingComment)}
             >
               <MdModeEdit />
             </button>
