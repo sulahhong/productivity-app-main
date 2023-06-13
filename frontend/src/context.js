@@ -40,6 +40,15 @@ const getLocalStorageReply = () => {
   }
 };
 
+const getLocalStorageSubtask = () => {
+  let storage = localStorage.getItem("subtask");
+  if (storage) {
+    return JSON.parse(storage);
+  } else {
+    return [];
+  }
+};
+
 const AppProvider = ({ children }) => {
   const [todos, setTodos] = useState(getLocalStorage());
   const [targetTodoGlobal, setTargetTodoGlobal] = useState({});
@@ -61,6 +70,7 @@ const AppProvider = ({ children }) => {
   // const [isEditingComment, setIsEditingComment] = useState(false);
 
   const [reply, setReply] = useState(getLocalStorageReply());
+  const [subtask, setSubtask] = useState(getLocalStorageSubtask());
 
   const [user, setUser] = useState({
     userId: "8888",
@@ -87,6 +97,10 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     window.localStorage.setItem("reply", JSON.stringify(reply));
+  }, [reply]);
+
+  useEffect(() => {
+    window.localStorage.setItem("subtask", JSON.stringify(subtask));
   }, [reply]);
 
   useEffect(() => {
@@ -167,6 +181,8 @@ const AppProvider = ({ children }) => {
         setUser,
         targetCommentGlobal,
         setTaegetCommentGlobal,
+        subtask, 
+        setSubtask,
         // isEditingComment,
         // setIsEditingComment,
       }}

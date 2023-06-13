@@ -28,13 +28,17 @@ function SingleTodoItem({item}) {
     setProjects,
   } = useGlobalContext();
 
-  const handleModalContents = (id) => {
-    console.log("modal will be opened", id)
+  const handleModalContents = (id, e) => {
+    if( (e.target.id !="todoDone1") && (e.target.id !="todoDone2") && (e.target.id !="editBtn") && (e.target.id !="deleteBtn")  ){
+
+      console.log("modal will be opened", id, e.target.id)
     const targetTodo = todos.find((item) => item.todoId === id)
     console.log("targetTodomodal", targetTodo, id)
     setOpenModal(true)
     setTargetTodoGlobal(targetTodo);
     setIsEditingTodo(true)
+    }
+    
   }
 
   const handleEditTodo = (id) => {
@@ -119,7 +123,7 @@ function SingleTodoItem({item}) {
   // }
 
   return (
-          <div onClick={() => handleModalContents(item.todoId)}
+          <div onClick={(e) => handleModalContents(item.todoId, e)}
             className={
               item.todoDone ? styles.todoViewCardDone : styles.todoViewCard
             }
@@ -130,9 +134,9 @@ function SingleTodoItem({item}) {
                 onClick={() => handleTodoDone(item.todoId)}
               >
                 {item.todoDone ? (
-                  <MdOutlineCheckCircleOutline />
+                  <MdOutlineCheckCircleOutline id="todoDone1"/>
                 ) : (
-                  <MdRadioButtonUnchecked />
+                  <MdRadioButtonUnchecked id="todoDone2"/>
                 )}
               </div>
               <div className={styles.todoCardBody}>
@@ -161,17 +165,17 @@ function SingleTodoItem({item}) {
               </div>
             </div>
             <div className={styles.todoCardButtons}>
-              <div
+              <div id="editBtn"
                 className={styles.todoCardEditButton}
                 onClick={() => handleEditTodo(item.todoId)}
               >
-                <MdOutlineEdit />
+                <MdOutlineEdit id="editBtn"/>
               </div>
-              <div
+              <div id="deleteBtn"
                 className={styles.todoCardDeleteButton}
                 onClick={() => handleDeleteTodo(item.todoId)}
               >
-                <MdOutlineDelete />
+                < MdOutlineDelete id="deleteBtn"/>
               </div>
             </div>
           </div>

@@ -4,7 +4,11 @@ import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
 import { MdThumbUp, MdReply, MdModeEdit, MdDelete } from "react-icons/md";
 
-function Comments({ item, commentsForm, setCommentsForm, }) {
+function Comments({
+  item,
+  
+
+}) {
   const {
     reply,
     setReply,
@@ -14,7 +18,19 @@ function Comments({ item, commentsForm, setCommentsForm, }) {
     setComments,
     targetCommentGlobal,
     setTaegetCommentGlobal,
+
   } = useGlobalContext();
+
+  
+  const [commentsForm, setCommentsForm] = useState({
+    commentId: "",
+    commentText: "",
+    commentAuthor: user,
+    commentCreateTime: "",
+    commentUpdateTime: "",
+    commentIsReply: false,
+    postId: "",
+  });
 
   const {
     commentId,
@@ -51,6 +67,11 @@ function Comments({ item, commentsForm, setCommentsForm, }) {
   const handleOnChange = (e) => {
     setReplyInputValue(e.target.value);
   };
+
+  useEffect(()=>{
+    console.log("ITEM", item)
+    setCommentsForm(item)
+  }, [])
 
   const handelCreateReply = () => {
     const replyCreateTime = new Date();
@@ -98,38 +119,55 @@ function Comments({ item, commentsForm, setCommentsForm, }) {
   };
 
   const handleEditComment = (id) => {
-      // const targetComment = comments.find((item) => item.commentId === id)
-      // console.log("targetComment", targetComment, id )
-      const commentEditIndex = comments.findIndex((item) => item.commentId == id)
-      console.log("index", commentEditIndex)
+    // const targetComment = comments.find((item) => item.commentId === id)
+    // console.log("targetComment", targetComment, id )
+    const commentEditIndex = comments.findIndex((item) => item.commentId == id);
+    console.log("index", commentEditIndex);
 
-      const testArray = [...comments]
-      console.log("test", testArray)
+    const testArray = [...comments];
+    console.log("test", testArray);
 
-      let data=  {
-        commentAuthor: user, 
-        commentCreateTime: commentCreateTime, 
-        commentUpdateTime: commentUpdateTime,
-        commentIsReply: false,
-        postId: commentId,
-        commentId: commentId, 
-        commentText: commentText, 
-      }
+    let data = {
+     ...commentsForm,
+      commentUpdateTime: new Date() ,
+    };
 
-      console.log("SAVE DATA", data)
-      // testArray.splice(commentEditIndex, 1, {
-      //   commentAuthor: user, 
-      //   commentCreateTime: commentCreateTime, 
-      //   commentUpdateTime: commentUpdateTime,
-      //   commentIsReply: false,
-      //   postId: commentId,
-      //   commentId: commentId, 
-      //   commentText: commentText, 
-      // })
-      
-      // setComments(testArray)
+    // let data = {
+    //   commentAuthor: commentAuthor,
+    //   commentCreateTime: commentCreateTime,
+    //   commentUpdateTime: new Date() ,
+    //   commentIsReply: false,
+    //   postId: postId,
+    //   commentId: commentId,
+    //   commentText: commentText,
+    // };
 
-    }
+    console.log("SAVE DATA", data);
+    testArray.splice(commentEditIndex, 1, data)
+
+    setComments(testArray)
+    setIsEditingComment(false)
+  };
+
+  const handleDeleteReply = (id) => {
+    console.log("deleteReply", id)
+    const newReplyArray = reply.filter((item) => item.replyId !== id)
+    console.log("replydeltest", newReplyArray)
+    setReply(newReplyArray)
+  }
+
+  const handleCommentChange = (e) => {
+    
+      // setCommentsForm((prevState) => ({
+      //   ...prevState,
+      //   [e.target.name]: e.target.value
+      // }))
+
+      setCommentsForm((prevState) => ({
+        ...prevState,
+        commentText: e.target.value
+      }))
+  }
 
 
   return (
@@ -153,7 +191,7 @@ function Comments({ item, commentsForm, setCommentsForm, }) {
           <div className={styles.commentBtn}>
             <button
               className={styles.commentReplyBtn}
-              onClick={()=>setIsEditingComment(!isEditingComment)}
+              onClick={() => setIsEditingComment(!isEditingComment)}
             >
               <MdModeEdit />
             </button>
@@ -170,9 +208,17 @@ function Comments({ item, commentsForm, setCommentsForm, }) {
               <MdReply />
             </button>
           </div>
-        </div> 
-        {isEditingComment ? <div><input type="text" /></div> :
-        <div className={styles.commentTextBox}>{item.commentText}</div> }
+        </div>
+        
+        
+        {isEditingComment ? (
+          <div>
+            <input type="text" value={commentText} onChange={handleCommentChange} name="commentText" />
+            <button onClick={() => handleEditComment(item.commentId)}>수정</button>
+          </div>
+        ) : (
+          <div className={styles.commentTextBox}>{item.commentText}</div>
+        )}
       </div>
       {onReply && (
         <div className={styles.commentInput}>
@@ -192,10 +238,38 @@ function Comments({ item, commentsForm, setCommentsForm, }) {
       {reply
         .filter((obj) => obj.replyTo == item.commentId)
         .map((item) => (
-          <div className={styles.replyItem}>{item.replyText}</div>
+          <div className={styles.replyContainer}>
+            <div className={styles.replyUser}>
+              <div className={styles.replyFirstPart}>
+                <div className={styles.replyLikeBox}>
+                  <MdThumbUp />
+                  {0}
+                </div>
+                <div className={styles.replyAuthorPart}>
+                  <div className={styles.replyUserName}>
+                    {item.replyAuthor.userName}
+                  </div>
+                  <div className={styles.replyDate}>
+                    {new Date(item.replyCreateTime).toLocaleDateString("ko-KR")}
+                  </div>
+                </div>
+              </div>
+              <div className={styles.replyBtn}>
+                <button className={styles.replyInBtn}>
+                  <MdModeEdit />
+                </button>
+                <button className={styles.replyInBtn}
+                  onClick={() => handleDeleteReply(item.replyId)}
+                >
+                  <MdDelete />
+                </button>
+              </div>
+            </div>
+            <div className={styles.replyTextBox}>{item.replyText}</div>
+          </div>
         ))}
     </>
   );
- }
+}
 
 export default Comments;

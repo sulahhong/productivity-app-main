@@ -31,12 +31,11 @@ function TodoModal() {
     setComments,
     reply,
     setReply,
-    user, 
+    user,
     setUser,
     targetCommentGlobal,
     setTaegetCommentGlobal,
-    isEditingComment,
-    setIsEditingComment,
+    subtask, setSubtask,
   } = useGlobalContext();
   const [todoForm, setTodoForm] = useState({
     todoId: "",
@@ -79,6 +78,9 @@ function TodoModal() {
     commentIsReply,
     postId,
   } = commentsForm;
+
+  const [commentInputValue, setCommentInputValue] = useState("");
+  const [onSubtask, setOnSubtask] = useState(false)
 
   useEffect(() => {
     if (isEditingTodo) {
@@ -212,39 +214,35 @@ function TodoModal() {
       ...prevState,
       [e.target.name]: e.target.value,
     }))
-  }
+    // setCommentInputValue(e.target.value);
+  };
 
   const hanldeCreateComment = () => {
-    if(todoId) {
-    const commentCreateTime = new Date();
-    const commentId = uuidv4();
-    const postId = todoId;
-   
-    console.log("ABC", commentCreateTime, commentId, postId, todoId)
+    if (todoId) {
+      const commentCreateTime = new Date();
+      const commentId = uuidv4();
+      const postId = todoId;
 
-    setCommentsForm((prevState) => ({
-      ...prevState,
-      commentCreateTime,
-      commentId,
-      postId,
-    }))
-    console.log("commentsForm", commentsForm)
+      console.log("ABC", commentCreateTime, commentId, postId, todoId);
 
+      setCommentsForm((prevState) => ({
+        ...prevState,
+        commentCreateTime,
+        commentId,
+        postId,
+      }));
+      console.log("commentsForm", commentsForm);
+    } else {
+      console.log("cannot create comment");
+    }
+    console.log("todoidcheck", todoId);
+  };
 
-   
-  }else{
-    console.log("cannot create comment")
-  }
-    console.log("todoidcheck", todoId)
-  }
+  useEffect(() => {
+    if (commentCreateTime && commentId && postId) {
+      console.log("useeffect check");
 
-  useEffect(()=>{
-
-    if(commentCreateTime &&
-      commentId && postId) {
-      console.log("useeffect check")
-
-      setComments([ ...comments, commentsForm])
+      setComments([...comments, commentsForm]);
       setCommentsForm({
         commentId: "",
         commentText: "",
@@ -253,11 +251,9 @@ function TodoModal() {
         commentUpdateTime: "",
         commentIsReply: false,
         postId: "",
-      })
+      });
     }
-
-    
-  }, [commentsForm])
+  }, [commentsForm]);
 
   return (
     <div
@@ -293,10 +289,9 @@ function TodoModal() {
                 onChange={handleTodoChange}
               />
             </div>
-            <div className={styles.todoSubTask}>
-              <button className={styles.todoSubTaskBtn}>
-                {" "}
-                <MdAdd /> Sub Task{" "}
+            <div className={styles.todoSubtask}>
+              <button className={styles.todoSubtaskBtn} onClick={() => setOnSubtask(!onSubtask)}>
+                {onSubtask ? <div><input /><button>입력</button></div> : <div><MdAdd /> Sub task</div>}
               </button>
             </div>
           </div>
@@ -304,7 +299,7 @@ function TodoModal() {
             <div className={styles.todoModalSettings}>
               <div className={styles.todoModalSetting}>
                 <div className={styles.todoModalSettingIcon}>
-                  <MdOutlinedFlag size={20} />{" "}
+                  <MdOutlinedFlag size={20} />
                 </div>
                 <div className={styles.todoModalSettingText}>Priority</div>
                 <select
@@ -360,7 +355,7 @@ function TodoModal() {
           <div className={styles.todoModalCommentsTitle}>
             <MdKeyboardArrowDown /> Comments
           </div>
-          
+
           <div className={styles.todoModalCommentsInput}>
             <input
               name="commentText"
@@ -370,8 +365,16 @@ function TodoModal() {
             />
             <button onClick={hanldeCreateComment}>입력</button>
           </div>
-            
-          {comments && comments.filter(item => item.postId == todoId).map((item) => <Comments item={item} commentsForm={commentsForm} setCommentsForm={setCommentsForm} />)}
+
+          {comments &&
+            comments
+              .filter((item) => item.postId == todoId)
+              .map((item) => (
+                <Comments
+                  item={item}
+                  setCommentsForm={setCommentsForm}
+                />
+              ))}
         </div>
         <div className={styles.todoModalAddTodocontainer}>
           {isEditingTodo ? (
