@@ -3,6 +3,8 @@ import styles from "./Comments.module.css";
 import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
 import { MdThumbUp, MdReply, MdModeEdit, MdDelete } from "react-icons/md";
+import Reply from "./Reply";
+
 
 function Comments({
   item,
@@ -60,9 +62,11 @@ function Comments({
     replyTo,
   } = replyForm;
 
+  const [isEditingComment, setIsEditingComment] = useState(false);
   const [onReply, setOnReply] = useState(false);
   const [replyInputValue, setReplyInputValue] = useState("");
-  const [isEditingComment, setIsEditingComment] = useState(false);
+  
+  
 
   const handleOnChange = (e) => {
     setReplyInputValue(e.target.value);
@@ -71,7 +75,10 @@ function Comments({
   useEffect(()=>{
     console.log("ITEM", item)
     setCommentsForm(item)
+    console.log("HEYYYYYYYY")
   }, [])
+
+
 
   const handelCreateReply = () => {
     const replyCreateTime = new Date();
@@ -149,12 +156,12 @@ function Comments({
     setIsEditingComment(false)
   };
 
-  const handleDeleteReply = (id) => {
-    console.log("deleteReply", id)
-    const newReplyArray = reply.filter((item) => item.replyId !== id)
-    console.log("replydeltest", newReplyArray)
-    setReply(newReplyArray)
-  }
+  // const handleDeleteReply = (id) => {
+  //   console.log("deleteReply", id)
+  //   const newReplyArray = reply.filter((item) => item.replyId !== id)
+  //   console.log("replydeltest", newReplyArray)
+  //   setReply(newReplyArray)
+  // }
 
   const handleCommentChange = (e) => {
     
@@ -169,6 +176,15 @@ function Comments({
       }))
   }
 
+  const handleCancelEdit = () => {
+    setCommentsForm(item)
+    setIsEditingComment(false);
+  }
+
+  const handleEditCommentToggle = () => {
+    setIsEditingComment(!isEditingComment)
+    setCommentsForm(item)
+  }
 
   return (
     <>
@@ -191,7 +207,7 @@ function Comments({
           <div className={styles.commentBtn}>
             <button
               className={styles.commentReplyBtn}
-              onClick={() => setIsEditingComment(!isEditingComment)}
+              onClick={() => handleEditCommentToggle()}
             >
               <MdModeEdit />
             </button>
@@ -215,6 +231,7 @@ function Comments({
           <div>
             <input type="text" value={commentText} onChange={handleCommentChange} name="commentText" />
             <button onClick={() => handleEditComment(item.commentId)}>수정</button>
+            <button onClick={() => handleCancelEdit()}>취소</button>
           </div>
         ) : (
           <div className={styles.commentTextBox}>{item.commentText}</div>
@@ -238,35 +255,7 @@ function Comments({
       {reply
         .filter((obj) => obj.replyTo == item.commentId)
         .map((item) => (
-          <div className={styles.replyContainer}>
-            <div className={styles.replyUser}>
-              <div className={styles.replyFirstPart}>
-                <div className={styles.replyLikeBox}>
-                  <MdThumbUp />
-                  {0}
-                </div>
-                <div className={styles.replyAuthorPart}>
-                  <div className={styles.replyUserName}>
-                    {item.replyAuthor.userName}
-                  </div>
-                  <div className={styles.replyDate}>
-                    {new Date(item.replyCreateTime).toLocaleDateString("ko-KR")}
-                  </div>
-                </div>
-              </div>
-              <div className={styles.replyBtn}>
-                <button className={styles.replyInBtn}>
-                  <MdModeEdit />
-                </button>
-                <button className={styles.replyInBtn}
-                  onClick={() => handleDeleteReply(item.replyId)}
-                >
-                  <MdDelete />
-                </button>
-              </div>
-            </div>
-            <div className={styles.replyTextBox}>{item.replyText}</div>
-          </div>
+          <Reply item={item} />
         ))}
     </>
   );

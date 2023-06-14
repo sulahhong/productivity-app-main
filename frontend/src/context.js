@@ -71,6 +71,7 @@ const AppProvider = ({ children }) => {
 
   const [reply, setReply] = useState(getLocalStorageReply());
   const [subtask, setSubtask] = useState(getLocalStorageSubtask());
+  // const [onSubtask, setOnSubtask] = useState(false);
 
   const [user, setUser] = useState({
     userId: "8888",
@@ -101,7 +102,7 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     window.localStorage.setItem("subtask", JSON.stringify(subtask));
-  }, [reply]);
+  }, [subtask]);
 
   useEffect(() => {
     // let arr = [...todos];
@@ -127,6 +128,13 @@ const AppProvider = ({ children }) => {
       setViewTodos(arr);
     }
   }, [todos]);
+
+  
+//   const checkFunc=()=>{
+//     console.log("NNNN")
+//     setOnSubtask(false)
+// }
+
 
   // useEffect(() => {
   //   if (viewCategory == "done") {
@@ -183,6 +191,9 @@ const AppProvider = ({ children }) => {
         setTaegetCommentGlobal,
         subtask, 
         setSubtask,
+        // onSubtask, 
+        // setOnSubtask, 
+        // checkFunc
         // isEditingComment,
         // setIsEditingComment,
       }}

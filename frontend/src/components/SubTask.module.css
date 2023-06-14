@@ -1,0 +1,36 @@
+.subTaskContainer {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 0.5rem;
+    width: 100%;
+}
+
+.subTaskInputContainer {
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.subTaskBtnGroup {
+    
+
+}
+
+.subTaskInput {
+    border: none;
+}
+
+.subTaskBtn {
+    margin-right: 0.3rem;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 0.5rem;
+    background-color: white;
+    color: gray;
+    cursor: pointer;
+}

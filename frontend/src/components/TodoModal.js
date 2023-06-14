@@ -14,6 +14,7 @@ import styles from "./TodoModal.module.css";
 import Comments from "./Comments";
 import { MdKeyboardArrowDown, MdAdd } from "react-icons/md";
 
+
 function TodoModal() {
   const {
     todos,
@@ -35,7 +36,8 @@ function TodoModal() {
     setUser,
     targetCommentGlobal,
     setTaegetCommentGlobal,
-    subtask, setSubtask,
+    subtask,
+    setSubtask,
   } = useGlobalContext();
   const [todoForm, setTodoForm] = useState({
     todoId: "",
@@ -79,8 +81,24 @@ function TodoModal() {
     postId,
   } = commentsForm;
 
+  const [subtaskForm, setSubtaskForm] = useState({
+    subtaskId: "",
+    subtaskText: "",
+    subtaskDone: false,
+    subtaskCreateDate: "",
+    subtastPostId: "",
+  });
+
+  const {
+    subtaskId,
+    subtaskText,
+    subtaskDone,
+    subtaskCreateDate,
+    subtastPostId,
+  } = subtaskForm;
+
   const [commentInputValue, setCommentInputValue] = useState("");
-  const [onSubtask, setOnSubtask] = useState(false)
+  const [onSubtask, setOnSubtask] = useState(false);
 
   useEffect(() => {
     if (isEditingTodo) {
@@ -213,11 +231,11 @@ function TodoModal() {
     setCommentsForm((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
-    }))
+    }));
     // setCommentInputValue(e.target.value);
   };
 
-  const hanldeCreateComment = () => {
+  const handleCreateComment = () => {
     if (todoId) {
       const commentCreateTime = new Date();
       const commentId = uuidv4();
@@ -255,6 +273,51 @@ function TodoModal() {
     }
   }, [commentsForm]);
 
+  const handleSubtaskChange = (e) => {
+    console.log("subsubsubsub", e.target.value)
+    setSubtaskForm((prevState) => ({
+      ...prevState,
+      subtaskText: e.target.value,
+    }))
+  }
+
+  const handleCreateSubtask = () => {
+      if (todoId) {
+        const subtaskCreateDate = new Date();
+        const subtaskId = uuidv4();
+        const subtastPostId = todoId;
+
+      console.log("SSSSSS",subtaskCreateDate, subtaskId, subtastPostId )
+
+      setSubtaskForm((prevState) => ({
+        ...prevState, 
+        subtaskCreateDate, 
+        subtaskId, 
+        subtastPostId,
+      }))
+      console.log("SUBTASKFORM", subtaskForm)
+      } else {
+        console.log("cannot create subtask")
+      }
+  }
+
+  useEffect(() => {
+    if (subtaskCreateDate && subtaskId && subtastPostId ) {
+      setSubtask([...subtask, subtaskForm]);
+     
+      setSubtaskForm({
+        subtaskId: "",
+        subtaskText: "",
+        subtaskDone: false,
+        subtaskCreateDate: "",
+        subtastPostId: "",
+      })
+      setOnSubtask(false)
+    }
+  }, [subtaskForm])
+
+
+
   return (
     <div
       className={styles.todoModalOverlay}
@@ -289,11 +352,26 @@ function TodoModal() {
                 onChange={handleTodoChange}
               />
             </div>
+
             <div className={styles.todoSubtask}>
-              <button className={styles.todoSubtaskBtn} onClick={() => setOnSubtask(!onSubtask)}>
-                {onSubtask ? <div><input /><button>입력</button></div> : <div><MdAdd /> Sub task</div>}
-              </button>
+                
+                {onSubtask ? (
+                  <div>
+                    <input placeholder="Task name" value={subtaskText} onChange={handleSubtaskChange}/>
+                    <button onClick={handleCreateSubtask}>입력</button>
+                    <button onClick={() => setOnSubtask(false)}>취소</button>
+                  </div>
+                ) : (
+                  <div
+                  className={styles.todoSubtaskBtn}
+                  onClick={() => setOnSubtask(true)}
+                >
+                    <MdAdd /> Sub task
+                  </div>
+                )}
             </div>
+
+
           </div>
           <div className={styles.todoModalSelector}>
             <div className={styles.todoModalSettings}>
@@ -363,18 +441,13 @@ function TodoModal() {
               placeholder="댓글을 입력해주세요 :)"
               onChange={handleCommentChange}
             />
-            <button onClick={hanldeCreateComment}>입력</button>
+            <button onClick={handleCreateComment}>입력</button>
           </div>
 
           {comments &&
             comments
               .filter((item) => item.postId == todoId)
-              .map((item) => (
-                <Comments
-                  item={item}
-                  setCommentsForm={setCommentsForm}
-                />
-              ))}
+              .map((item) => <Comments item={item} />)}
         </div>
         <div className={styles.todoModalAddTodocontainer}>
           {isEditingTodo ? (
