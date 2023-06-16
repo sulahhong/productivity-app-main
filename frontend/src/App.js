@@ -23,7 +23,7 @@ function App() {
     <BrowserRouter>
       <NavbarTop />
       <NavbarSide />
-      {openModal && <TodoModal/>}
+      {openModal && <TodoModal />}
       {openModalProject && <ProjectModal /> }
       {(projectIsActive && projects.length == 1) && <EmptyProjectModal/> }
       <Routes>

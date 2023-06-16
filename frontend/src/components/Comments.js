@@ -8,7 +8,6 @@ import Reply from "./Reply";
 
 function Comments({
   item,
-  
 
 }) {
   const {

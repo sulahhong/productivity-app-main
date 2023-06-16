@@ -59,7 +59,7 @@
     padding-top: 1rem;
     display: flex;
     justify-content: space-between;
-    
+    height: 55%;
 
 }
 
@@ -70,14 +70,15 @@
     border: 1px solid rgb(216, 216, 216);
     border-radius: 1rem;
     margin-bottom: 1rem;
-    width: 465px;
-    height: 150px;
+    width: 50%;
+    height: 100%;
 }
 
 .todoModalComments {
     color: gray;
     font-size: 0.8rem;
-    width: 50%;
+    width: 48%;
+    height: 100%;
 }
 
 .todoModalCommentsTitle {
@@ -101,12 +102,35 @@ input:focus {
 .todoSubtaskBtn {
     border: none;
     font-size: 0.8rem;
-    padding-left: 1.2rem;
+    margin: 1rem;
     background-color: white;
     color: gray;
     font-weight: 700;
 }
 
+.todoSubtaskList {
+
+}
+
+.todoSubtaskListContainer {
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0.5rem;
+    padding: 0.3rem;
+    font-size: 0.8rem;
+    color: gray;
+}
+
+.todoSubtaskCheckBox {
+    display: flex;
+    align-items: center;
+    padding-right:0.5rem;
+    padding: 0.2rem;
+}
 
 .todoModalInputTitle {
     border: none;
@@ -122,7 +146,9 @@ input:focus {
 }
 
 .todoModalSelector {
-    width: 300px;
+    margin-top: 3rem;
+    width: 20%;
+    height: 20%;
     padding-right: 1rem;
 }
 
@@ -133,8 +159,13 @@ input:focus {
     align-items: center;
 }
 
+.todoModalSettings {
+
+
+}
+
 .todoModalSetting {
-    margin: 1rem 0;
+    margin:  0;
     padding-bottom: 1rem ;
     padding-left: 1rem;
     display: flex;
@@ -217,7 +248,7 @@ select, input {
 }
 
 .todoModalSelectProject {
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     padding-bottom: 1rem ;
     display: flex;
     align-items: center;
@@ -238,4 +269,28 @@ select, input {
     display: flex;
     margin-right: 1rem;
     font-size: 0.8rem;
+}
+
+.todoModalCommentsInput {
+    margin-bottom: 1rem;
+}
+
+.todoSubtaskDone {
+    text-decoration: line-through;
+    color: rgb(185, 182, 182);
+    padding-left: 0.5rem;
+}
+
+.todoSubtask {
+    padding-left: 0.5rem;
+}
+
+.todoSubtaskIcon {
+    padding-right: 0.5rem;
+}
+
+.todoSubtaskIconGroup {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 }
