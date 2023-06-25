@@ -11,6 +11,7 @@ import { useGlobalContext } from "./context";
 import ProjectModal from "./components/ProjectModal";
 import Archive from "./routes/Archive";
 import EmptyProjectModal from "./components/EmptyProjectModal";
+import TodoSinglePage from "./page/TodoSinglePage";
 
 
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="/diary" element={<Diary />} />
         <Route path="/todo" element={<Todo />} />
         <Route path="/archive" element={<Archive />} />
+        <Route path="/todo/:id" element={<TodoSinglePage />} />
       </Routes>
     </BrowserRouter>
   );
