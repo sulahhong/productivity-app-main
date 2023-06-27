@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import styles from "./TodoView.module.css";
 import { useGlobalContext } from "../context";
 import {
@@ -28,8 +28,10 @@ function SingleTodoItem({item}) {
     setProjects,
   } = useGlobalContext();
 
+  const navigate = useNavigate();
+
   const handleModalContents = (id, e) => {
-    if( (e.target.id !="todoDone1") && (e.target.id !="todoDone2") && (e.target.id !="editBtn") && (e.target.id !="deleteBtn")  ){
+    if( (e.target.id !="todoDone1") && (e.target.id !="todoDone2") && (e.target.id !="editBtn") && (e.target.id !="deleteBtn") ){
 
       console.log("modal will be opened", id, e.target.id)
     const targetTodo = todos.find((item) => item.todoId === id)
@@ -165,6 +167,7 @@ function SingleTodoItem({item}) {
               </div>
             </div>
             <div className={styles.todoCardButtons}>
+              <div ><button id="deleteBtn" onClick={() => navigate(`/todo/${item.todoId}`)}>page button</button></div>
               <div id="editBtn"
                 className={styles.todoCardEditButton}
                 onClick={() => handleEditTodo(item.todoId)}

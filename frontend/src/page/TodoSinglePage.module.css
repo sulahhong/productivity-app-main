@@ -1,0 +1,94 @@
+.singlePageContainer {
+    padding-top: var(--navTopHeight);
+    padding-left: var(--navSideWidth) ;
+    height: 100%;
+    background-color: white;
+    color: gray;
+}
+
+.singlePageBody {
+    padding: 1rem;
+}
+
+.singlePageBodyTitle {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgb(209, 206, 206);
+}
+
+.singlePageMain {
+    padding-top: 1rem;
+}
+
+.singlePageInputTitle {
+    border: none;
+    outline: none;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 1.5rem;
+    cursor: text;
+    width: 50%;
+}
+
+.singlePageInputTitle:focus {
+    border: 1px solid gray;
+    width: 70%;
+}
+
+.singlePageDesInput {
+    border: none;
+    outline: none;
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+    font-size: 1.2rem;
+    cursor: text;
+    width: 70%;
+}
+
+.singlePageDesInput:focus {
+    border: 1px solid gray;
+    width: 70%;
+}
+
+.todoSubtaskListContainer {
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0.5rem;
+    padding: 0.3rem;
+    font-size: 0.8rem;
+    color: gray;
+}
+
+.todoSubtaskCheckBox {
+    display: flex;
+    align-items: center;
+    padding-right:0.5rem;
+    padding: 0.2rem;
+}
+
+.todoSubtaskDone {
+    text-decoration: line-through;
+    color: rgb(185, 182, 182);
+    padding-left: 0.5rem;
+}
+
+.todoSubtask {
+    padding-left: 0.5rem;
+}
+
+.todoSubtaskIcon {
+    padding-right: 0.5rem;
+}
+
+.todoSubtaskIconGroup {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.singlePageProject {
+    background-color: pink;
+}

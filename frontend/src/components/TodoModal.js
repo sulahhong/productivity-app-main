@@ -89,7 +89,7 @@ function TodoModal() {
     subtaskText: "",
     subtaskDone: false,
     subtaskCreateDate: "",
-    subtastPostId: "",
+    subtaskPostId: "",
   });
 
   const {
@@ -97,7 +97,7 @@ function TodoModal() {
     subtaskText,
     subtaskDone,
     subtaskCreateDate,
-    subtastPostId,
+    subtaskPostId,
   } = subtaskForm;
 
   const [commentInputValue, setCommentInputValue] = useState("");
@@ -130,7 +130,11 @@ function TodoModal() {
       [e.target.name]: e.target.value,
       // projectId: item.projectID
     }));
+
+
   };
+
+  
 
   useEffect(() => {
     // const proj= projects.filter((item)=> item.projectId == projectId)//""
@@ -291,15 +295,15 @@ function TodoModal() {
     if (todoId) {
       const subtaskCreateDate = new Date();
       const subtaskId = uuidv4();
-      const subtastPostId = todoId;
+      const subtaskPostId = todoId;
 
-      console.log("SSSSSS", subtaskCreateDate, subtaskId, subtastPostId);
+      console.log("SSSSSS", subtaskCreateDate, subtaskId, subtaskPostId);
 
       setSubtaskForm((prevState) => ({
         ...prevState,
         subtaskCreateDate,
         subtaskId,
-        subtastPostId,
+        subtaskPostId,
       }));
       console.log("SUBTASKFORM", subtaskForm);
     } else {
@@ -308,7 +312,7 @@ function TodoModal() {
   };
 
   useEffect(() => {
-    if (subtaskCreateDate && subtaskId && subtastPostId) {
+    if (subtaskCreateDate && subtaskId && subtaskPostId) {
       setSubtask([...subtask, subtaskForm]);
 
       setSubtaskForm({
@@ -316,7 +320,7 @@ function TodoModal() {
         subtaskText: "",
         subtaskDone: false,
         subtaskCreateDate: "",
-        subtastPostId: "",
+        subtaskPostId: "",
       });
       setOnSubtask(false);
     }
@@ -434,7 +438,7 @@ function TodoModal() {
             <div className={styles.todoSubtaskList}>
               {subtask &&
                 subtask
-                  .filter((item) => item.subtastPostId == todoId)
+                  .filter((item) => item.subtaskPostId == todoId)
                   .map((item) => (
                     <div className={styles.todoSubtaskListContainer}>
                       <div className={styles.todoSubtaskCheckBox}> 
