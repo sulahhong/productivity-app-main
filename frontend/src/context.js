@@ -64,6 +64,17 @@ const AppProvider = ({ children }) => {
   const [projectIsActive, setProjectIsActive] = useState(false);
   const [projectViewtype, setProjectviewType] = useState("");
   const [filterType, setFilterType] = useState("filterAll");
+  const [priority, setPriority] = useState([
+    { priorityId: "1", priorityTitle: "Urgent" },
+    { priorityId: "2", priorityTitle: "High" },
+    { priorityId: "3", priorityTitle: "Medium" },
+    { priorityId: "4", priorityTitle: "Low" },
+    { priorityId: "5", priorityTitle: "No priority" },
+  ]);
+
+  const [priorityDropdown, setPriorityDropdown] = useState(false);
+  const [dueDateDropdown, setDueDateDropdown] = useState(false);
+  const [projectDropdown, setProjectDropdown] = useState(false);
 
   const [comments, setComments] = useState(getLocalStorageComments());
   const [targetCommentGlobal, setTaegetCommentGlobal] = useState({});
@@ -129,12 +140,10 @@ const AppProvider = ({ children }) => {
     }
   }, [todos]);
 
-  
-//   const checkFunc=()=>{
-//     console.log("NNNN")
-//     setOnSubtask(false)
-// }
-
+  //   const checkFunc=()=>{
+  //     console.log("NNNN")
+  //     setOnSubtask(false)
+  // }
 
   // useEffect(() => {
   //   if (viewCategory == "done") {
@@ -189,13 +198,16 @@ const AppProvider = ({ children }) => {
         setUser,
         targetCommentGlobal,
         setTaegetCommentGlobal,
-        subtask, 
+        subtask,
         setSubtask,
-        // onSubtask, 
-        // setOnSubtask, 
-        // checkFunc
-        // isEditingComment,
-        // setIsEditingComment,
+        priority,
+        setPriority,
+        priorityDropdown,
+        setPriorityDropdown,
+        dueDateDropdown,
+        setDueDateDropdown,
+        projectDropdown,
+        setProjectDropdown,
       }}
     >
       {children}

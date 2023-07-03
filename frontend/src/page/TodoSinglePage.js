@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
@@ -33,6 +33,14 @@ function TodoSinglePage() {
     setSubtask,
     user,
     setUser,
+    priorityDropdown,
+    setPriorityDropdown,
+    dueDateDropdown,
+    setDueDateDropdown,
+    projectDropdown,
+    setProjectDropdown,
+    priority,
+    setPriority,
   } = useGlobalContext();
 
   const { id } = useParams();
@@ -327,38 +335,152 @@ function TodoSinglePage() {
 
   const handleTodoTitleEnter = (e) => {
     if (e.key === "Enter") {
-      console.log("BBB")
-      document.getElementById("todoTitle").blur()
+      console.log("BBB");
+      document.getElementById("todoTitle").blur();
     }
-  }
+  };
 
-  const handleMenuChange=(option)=>{
-    console.log("menu", option)
+  const handleMenuChange = (option) => {
+    console.log("menu", option);
     setTodoForm((prevState) => ({
       ...prevState,
       ["projectId"]: option.projectId,
-      ["projectTitle"]: option.projectTitle}))
-  }
+      ["projectTitle"]: option.projectTitle,
+    }));
+  };
 
-  
+  const handlePriorityMenuChange = (option) => {
+    setTodoForm((prevState) => ({
+      ...prevState,
+      ["priorityId"]: option.priorityId,
+      ["prorityTitle"]: option.priorityTitle,
+    }));
+  };
+
+  const handleProjectMenuChange = (option) => {
+    setTodoForm((prevState) => ({
+      ...prevState,
+      ["projectId"]: option.projectId,
+      ["projectTitle"]: option.projectTitle,
+    }));
+  };
+
+  let priorityRef = useRef();
+  let dueDateRef = useRef();
+  let projectRef = useRef();
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!priorityRef.current.contains(e.target)) {
+        setPriorityDropdown(false);
+      }
+      console.log("ppppmmmm", e.target);
+      console.log("ppmmm2222", priorityRef.current);
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
+  useEffect(() => {
+    let handler = (e) => {
+      if (!dueDateRef.current.contains(e.target)) {
+        setDueDateDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
+  useEffect(() => {
+    let handler = (e) => {
+      if (!projectRef.current.contains(e.target)) {
+        setProjectDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
+
   return (
     <div className={styles.singlePageContainer}>
       <div className={styles.singlePageBody}>
         <div className={styles.singlePageBodyTitle}>Detail page</div>
         <div className={styles.singlePageMain}>
-          <div className={styles.singlePageInput}>
-           
+          <div className={styles.textBoxIcons}>
+            <button
+              className={styles.textBoxIconsingle}
+              onClick={() => setPriorityDropdown(!priorityDropdown)}
+            >
+              <MdOutlinedFlag /> Priority
+            </button>
+            {priorityDropdown && (
+              <div className={styles.priorityDropdownContent} ref={priorityRef}>
+                {priority.map((option) => (
+                  <div
+                    key={option.priorityId}
+                    value={option.priorityId}
+                    onClick={() => handlePriorityMenuChange(option)}
+                  >
+                    {option.priorityTitle}
+                  </div>
+                ))}
+              </div>
+            )}
+            <button
+              className={styles.textBoxIconsingle}
+              onClick={() => setDueDateDropdown(!dueDateDropdown)}
+            >
+              <MdCalendarToday /> Date
+            </button>
+            {dueDateDropdown && (
               <input
-                className={styles.singlePageInputTitle}
-                id="todoTitle"
-                name="todoTitle"
-                placeholder="Title"
-                value={todoTitle}
-                onBlur={handleBlur}
+                ref={dueDateRef}
+                className={styles.dueDateDropdownContent}
+                type="date"
+                value={todoDueDate}
+                name="todoDueDate"
                 onChange={handleTodoChange}
-                onKeyDown={(e) => handleTodoTitleEnter(e)}
               />
-            
+            )}
+            <button
+              className={styles.textBoxIconsingle}
+              onClick={() => setProjectDropdown(!projectDropdown)}
+            >
+              <MdGridView /> Project
+            </button>
+            {projectDropdown && (
+              <div className={styles.projectDropdownContent} ref={projectRef}>
+                {projects.length > 0 &&
+                  projects.map((option) => (
+                    <div
+                      key={option.projectId}
+                      value={option.projectId}
+                      onClick={() => handleProjectMenuChange(option)}
+                    >
+                      {option.projectTitle}
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+          <div className={styles.singlePageInput}>
+            <input
+              className={styles.singlePageInputTitle}
+              id="todoTitle"
+              name="todoTitle"
+              placeholder="Title"
+              value={todoTitle}
+              onBlur={handleBlur}
+              onChange={handleTodoChange}
+              onKeyDown={(e) => handleTodoTitleEnter(e)}
+            />
           </div>
           <div className={styles.singlePageInput}>
             <input
@@ -370,7 +492,7 @@ function TodoSinglePage() {
               onChange={handleTodoChange}
             />
           </div>
-          <div className={styles.singlePagePriorityInput}>
+          {/* <div className={styles.singlePagePriorityInput}>
             <select
               name="todoPriority"
               value={todoPriority}
@@ -403,20 +525,25 @@ function TodoSinglePage() {
                   </option>
                 ))}
             </select>
-          </div>
+          </div> */}
         </div>
       </div>
 
       {/* MENU */}
-      {<div className={styles.singlePageProject}>
-        {projects.length > 0 &&
-                projects.map((option) => (
-                  <div key={option.projectId} value={option.projectId} onClick={()=>handleMenuChange(option)}>
-                    {option.projectTitle}
-                  </div>
-                ))}
-        </div>}
-
+      {/* {
+        <div className={styles.singlePageProject}>
+          {projects.length > 0 &&
+            projects.map((option) => (
+              <div
+                key={option.projectId}
+                value={option.projectId}
+                onClick={() => handleMenuChange(option)}
+              >
+                {option.projectTitle}
+              </div>
+            ))}
+        </div>
+      } */}
       <div className={styles.todoSubtask}>
         {onSubtask ? (
           <div>

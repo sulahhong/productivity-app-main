@@ -41,6 +41,14 @@ function TodoModal() {
     setTaegetCommentGlobal,
     subtask,
     setSubtask,
+    priority,
+    setPriority,
+    priorityDropdown,
+    setPriorityDropdown,
+    dueDateDropdown,
+    setDueDateDropdown,
+    projectDropdown,
+    setProjectDropdown,
   } = useGlobalContext();
   const [todoForm, setTodoForm] = useState({
     todoId: "",
@@ -130,11 +138,7 @@ function TodoModal() {
       [e.target.name]: e.target.value,
       // projectId: item.projectID
     }));
-
-
   };
-
-  
 
   useEffect(() => {
     // const proj= projects.filter((item)=> item.projectId == projectId)//""
@@ -380,6 +384,65 @@ function TodoModal() {
     setEditingSubtaskId("");
   };
 
+  let priorityRef = useRef();
+  let dueDateRef = useRef();
+  let projectRef = useRef();
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!priorityRef.current.contains(e.target)) {
+        setPriorityDropdown(false);
+      }
+      console.log("ppppmmmm", e.target);
+      console.log("ppmmm2222", priorityRef.current);
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
+  useEffect(() => {
+    let handler = (e) => {
+      if (!dueDateRef.current.contains(e.target)) {
+        setDueDateDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
+  useEffect(() => {
+    let handler = (e) => {
+      if (!projectRef.current.contains(e.target)) {
+        setProjectDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
+
+  const handlePriorityMenuChange = (option) => {
+    setTodoForm((prevState) => ({
+      ...prevState,
+      ["priorityId"]: option.priorityId,
+      ["prorityTitle"]: option.priorityTitle,
+    }));
+  };
+
+  const handleProjectMenuChange = (option) => {
+    setTodoForm((prevState) => ({
+      ...prevState,
+      ["projectId"]: option.projectId,
+      ["projectTitle"]: option.projectTitle,
+    }));
+  };
+
   return (
     <div
       className={styles.todoModalOverlay}
@@ -394,6 +457,63 @@ function TodoModal() {
           </button>
         </div>
         <div className={styles.todoModalBody}>
+          <div className={styles.textBoxIcons}>
+            <button
+              className={styles.textBoxIconsingle}
+              onClick={() => setPriorityDropdown(!priorityDropdown)}
+            >
+              <MdOutlinedFlag /> Priority
+            </button>
+            {priorityDropdown && (
+              <div className={styles.priorityDropdownContent} ref={priorityRef}>
+                {priority.map((option) => (
+                  <div
+                    key={option.priorityId}
+                    value={option.priorityId}
+                    onClick={() => handlePriorityMenuChange(option)}
+                  >
+                    {option.priorityTitle}
+                  </div>
+                ))}
+              </div>
+            )}
+            <button
+              className={styles.textBoxIconsingle}
+              onClick={() => setDueDateDropdown(!dueDateDropdown)}
+            >
+              <MdCalendarToday /> Date
+            </button>
+            {dueDateDropdown && (
+              <input
+                ref={dueDateRef}
+                className={styles.dueDateDropdownContent}
+                type="date"
+                value={todoDueDate}
+                name="todoDueDate"
+                onChange={handleTodoChange}
+              />
+            )}
+            <button
+              className={styles.textBoxIconsingle}
+              onClick={() => setProjectDropdown(!projectDropdown)}
+            >
+              <MdGridView /> Project
+            </button>
+            {projectDropdown && (
+              <div className={styles.projectDropdownContent} ref={projectRef}>
+                {projects.length > 0 &&
+                  projects.map((option) => (
+                    <div
+                      key={option.projectId}
+                      value={option.projectId}
+                      onClick={() => handleProjectMenuChange(option)}
+                    >
+                      {option.projectTitle}
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
           <div className={styles.todoModalInput}>
             <input
               className={styles.todoModalInputTitle}
@@ -403,196 +523,34 @@ function TodoModal() {
               onChange={handleTodoChange}
             />
             <div className={styles.todoDesWrap}>
-              <div className={styles.todoModalSettingIcon2}>
-                <MdSort size={20} />{" "}
-              </div>
-              <input
+              <textarea
                 className={styles.todoModalInputDescription}
                 placeholder="Description"
                 name="todoDescription"
+                rows="3"
+                cols="100"
                 value={todoDescription}
                 onChange={handleTodoChange}
               />
             </div>
-
-            <div className={styles.todoSubtask}>
-              {onSubtask ? (
-                <div>
-                  <input
-                    placeholder="Task name"
-                    value={subtaskText}
-                    onChange={handleSubtaskChange}
-                  />
-                  <button onClick={handleCreateSubtask}>입력</button>
-                  <button onClick={() => setOnSubtask(false)}>취소</button>
-                </div>
-              ) : (
-                <div
-                  className={styles.todoSubtaskBtn}
-                  onClick={() => setOnSubtask(true)}
-                >
-                  <MdAdd /> Sub task
-                </div>
-              )}
-            </div>
-            <div className={styles.todoSubtaskList}>
-              {subtask &&
-                subtask
-                  .filter((item) => item.subtaskPostId == todoId)
-                  .map((item) => (
-                    <div className={styles.todoSubtaskListContainer}>
-                      <div className={styles.todoSubtaskCheckBox}> 
-                      {item.subtaskDone ? (
-                        <div
-                          className={styles.todoSubtaskCheckBox}
-                          onClick={() => handleSubtaskDone(item.subtaskId)}
-                        >
-                          <MdOutlineCheckCircleOutline id="subtaskDone" />
-                        </div>
-                      ) : (
-                        <div
-                          className={styles.todoSubtaskCheckBox}
-                          onClick={() => handleSubtaskDone(item.subtaskId)}
-                        >
-                          <MdRadioButtonUnchecked id="subtaskNotDone" />
-                        </div>
-                      )}
-                      {item.subtaskId == editingSubtaskId ? (
-                        <div className={styles.todoSubtaskEditMode}>
-                          <input
-                            value={editSubtaskValue}
-                            onChange={(e) =>
-                              setEditSubtaskValue(e.target.value)
-                            }
-                          />
-                          <button onClick={() => handleSubtaskEditing(item)}>
-                            수정
-                          </button>
-                        </div>
-                      ) : (
-                        <div
-                          className={
-                            item.subtaskDone
-                              ? styles.todoSubtaskDone
-                              : styles.todoSubtask
-                          }
-                        >
-                          {item.subtaskText}
-                        </div>
-                      )}
-                      </div>
-                      {}
-                      <div className={styles.todoSubtaskIconGroup}>
-                        <div
-                          className={styles.todoSubtaskIcon}
-                          onClick={() => handleEditSubTaskToggle(item)}
-                        >
-                          <MdModeEdit />
-                        </div>
-                        <div
-                          className={styles.todoSubtaskIcon}
-                          onClick={() => handleSubtaskDelete(item.subtaskId)}
-                        >
-                          <MdDelete />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-            </div>
           </div>
-
-          <div className={styles.todoModalComments}>
-            <div className={styles.todoModalCommentsTitle}>
-              <MdKeyboardArrowDown /> Comments
-            </div>
-
-            <div className={styles.todoModalCommentsInput}>
-              <input
-                name="commentText"
-                value={commentText}
-                placeholder="댓글을 입력해주세요 :)"
-                onChange={handleCommentChange}
-              />
-              <button onClick={handleCreateComment}>입력</button>
-            </div>
-
-            {comments &&
-              comments
-                .filter((item) => item.postId == todoId)
-                .map((item) => <Comments item={item} />)}
-          </div>
-        </div>
-        <div className={styles.todoModalSelector}>
-          <div className={styles.todoModalSettings}>
-            <div className={styles.todoModalSetting}>
-              <div className={styles.todoModalSettingIcon}>
-                <MdOutlinedFlag size={20} />
-              </div>
-              <div className={styles.todoModalSettingText}>Priority</div>
-              <select
-                className={styles.todoModalSettingOption}
-                name="todoPriority"
-                value={todoPriority}
-                onChange={handleTodoChange}
+          <div className={styles.todoModalAddTodocontainer}>
+            {isEditingTodo ? (
+              <button
+                className={styles.todoModalAddTodo}
+                onClick={() => handleEditTodoModal()}
               >
-                <option value="1">priority 1</option>
-                <option value="2">priority 2</option>
-                <option value="3">priority 3</option>
-                <option value="4">priority 4</option>
-              </select>
-            </div>
+                Edit
+              </button>
+            ) : (
+              <button
+                className={styles.todoModalAddTodo}
+                onClick={() => handleCreateTodo()}
+              >
+                Add
+              </button>
+            )}
           </div>
-          <div className={styles.todoModalSetting}>
-            <div className={styles.todoModalDueDate}>
-              <div className={styles.todoModalSettingIcon}>
-                <MdCalendarToday size={20} />{" "}
-              </div>
-              <div className={styles.todoModalDueDateTitle}>Duedate</div>
-              <input
-                className="todoDueDateInput"
-                type="date"
-                value={todoDueDate}
-                name="todoDueDate"
-                onChange={handleTodoChange}
-              />
-            </div>
-          </div>
-          <div className={styles.todoModalSelectProject}>
-            <div className={styles.todoModalSettingIcon}>
-              <MdGridView size={20} />{" "}
-            </div>
-            <div className={styles.todoModalSelectProjectTitle}>Project</div>
-            <select
-              className={styles.todoModalSelectProjectTitleOption}
-              name="projectId"
-              value={projectId}
-              onChange={handleTodoChange}
-            >
-              {projects.length > 0 &&
-                projects.map((option) => (
-                  <option key={option.projectId} value={option.projectId}>
-                    {option.projectTitle}
-                  </option>
-                ))}
-            </select>
-          </div>
-        </div>
-        <div className={styles.todoModalAddTodocontainer}>
-          {isEditingTodo ? (
-            <button
-              className={styles.todoModalAddTodo}
-              onClick={() => handleEditTodoModal()}
-            >
-              Edit
-            </button>
-          ) : (
-            <button
-              className={styles.todoModalAddTodo}
-              onClick={() => handleCreateTodo()}
-            >
-              Add
-            </button>
-          )}
         </div>
       </div>
     </div>
