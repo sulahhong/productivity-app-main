@@ -15,6 +15,7 @@ import {
   MdModeEdit,
   MdAdd,
   MdKeyboardArrowDown,
+  MdCheck,
 } from "react-icons/md";
 import Comments from "../components/Comments";
 
@@ -61,6 +62,8 @@ function TodoSinglePage() {
     todoDueDate,
     projectId,
     projectTitle,
+    priorityId,
+    priorityTitle,
   } = todoForm;
 
   console.log("!!!", todoTitle);
@@ -104,6 +107,10 @@ function TodoSinglePage() {
   const [isEditingSubtask, setIsEditingSubtask] = useState(false);
   const [editingSubtaskId, setEditingSubtaskId] = useState("");
   const [editSubtaskValue, setEditSubtaskValue] = useState(""); // 저장된 subtaskText 값을 수정할 때 change되는 값 저장
+  const [priorityMenuType, setPriorityMenuType] = useState("")
+
+  // comment inputbox cursor 상태 
+  const [commentIsFocused, setCommentIsFocused] = useState(false);
 
   useEffect(() => {
     // console.log("todopathIdcheck", id);
@@ -349,12 +356,27 @@ function TodoSinglePage() {
     }));
   };
 
-  const handlePriorityMenuChange = (option) => {
-    setTodoForm((prevState) => ({
-      ...prevState,
+  const  handlePriorityMenuChange = (option) => {
+    // setTodoForm((prevState) => ({
+    //   ...prevState,
+    //   ["priorityId"]: option.priorityId,
+    //   ["prorityTitle"]: option.priorityTitle,
+    // }));
+
+    let todo ={
+      ...todoForm,
       ["priorityId"]: option.priorityId,
-      ["prorityTitle"]: option.priorityTitle,
-    }));
+      ["priorityTitle"]: option.priorityTitle,
+    }
+
+    setTodoForm(todo)
+
+    const todoEditIndex = todos.findIndex((item) => item.todoId == todoId);
+    const testArray = [...todos];
+    testArray.splice(todoEditIndex, 1, todo);
+    setTodos(testArray);
+    setPriorityDropdown(false)
+    setPriorityMenuType(option.priorityId)
   };
 
   const handleProjectMenuChange = (option) => {
@@ -418,17 +440,18 @@ function TodoSinglePage() {
               className={styles.textBoxIconsingle}
               onClick={() => setPriorityDropdown(!priorityDropdown)}
             >
-              <MdOutlinedFlag /> Priority
+              <MdOutlinedFlag /> {todoForm.priorityTitle=="" ? (<span>{todoForm.priorityTitle}</span> ) : <span>priority</span>}
             </button>
             {priorityDropdown && (
               <div className={styles.priorityDropdownContent} ref={priorityRef}>
                 {priority.map((option) => (
                   <div
+                    className={styles.priorityDropdownContentItem}
                     key={option.priorityId}
                     value={option.priorityId}
                     onClick={() => handlePriorityMenuChange(option)}
                   >
-                    {option.priorityTitle}
+                    {option.priorityTitle} {todoForm.priorityId == option.priorityId &&  <MdCheck />}
                   </div>
                 ))}
               </div>
@@ -482,8 +505,8 @@ function TodoSinglePage() {
               onKeyDown={(e) => handleTodoTitleEnter(e)}
             />
           </div>
-          <div className={styles.singlePageInput}>
-            <input
+          <div className={styles.singlePageTextBox}>
+            <textarea
               className={styles.singlePageDesInput}
               placeholder="Description"
               name="todoDescription"
@@ -492,154 +515,140 @@ function TodoSinglePage() {
               onChange={handleTodoChange}
             />
           </div>
-          {/* <div className={styles.singlePagePriorityInput}>
-            <select
-              name="todoPriority"
-              value={todoPriority}
-              onChange={handleTodoChange}
-            >
-              <option value="1">priority 1</option>
-              <option value="2">priority 2</option>
-              <option value="3">priority 3</option>
-              <option value="4">priority 4</option>
-            </select>
-          </div>
-          <div className={styles.singlePageDueDateInput}>
-            <input
-              type="date"
-              value={todoDueDate}
-              name="todoDueDate"
-              onChange={handleTodoChange}
-            />
-          </div>
-          <div className={styles.singlePageProjectInput}>
-            <select
-              name="projectId"
-              value={projectId}
-              onChange={handleTodoChange}
-            >
-              {projects.length > 0 &&
-                projects.map((option) => (
-                  <option key={option.projectId} value={option.projectId}>
-                    {option.projectTitle}
-                  </option>
-                ))}
-            </select>
-          </div> */}
         </div>
       </div>
-
-      {/* MENU */}
-      {/* {
-        <div className={styles.singlePageProject}>
-          {projects.length > 0 &&
-            projects.map((option) => (
-              <div
-                key={option.projectId}
-                value={option.projectId}
-                onClick={() => handleMenuChange(option)}
-              >
-                {option.projectTitle}
+      <div className={styles.subtaskMainContainer}>
+        <div className={styles.todoSubtask}>
+          {onSubtask ? (
+            <div className={styles.subtaskInputContainer}>
+              <input
+                className={styles.subtaskInputBox}
+                placeholder="Add New Sub-task..."
+                value={subtaskText}
+                onChange={handleSubtaskChange}
+              />
+              <div className={styles.subtaskInputButtonBox}>
+                <button
+                  className={styles.subtaskCancelButton}
+                  onClick={() => setOnSubtask(false)}
+                >
+                  취소
+                </button>
+                <button
+                  className={styles.subtaskSaveButton}
+                  onClick={handleCreateSubtask}
+                >
+                  입력
+                </button>
               </div>
-            ))}
+            </div>
+          ) : (
+            <div
+              className={styles.todoSubtaskBtn}
+              onClick={() => setOnSubtask(true)}
+            >
+              <MdAdd /> Sub task
+            </div>
+          )}
         </div>
-      } */}
-      <div className={styles.todoSubtask}>
-        {onSubtask ? (
-          <div>
-            <input
-              placeholder="Task name"
-              value={subtaskText}
-              onChange={handleSubtaskChange}
-            />
-            <button onClick={handleCreateSubtask}>입력</button>
-            <button onClick={() => setOnSubtask(false)}>취소</button>
-          </div>
-        ) : (
-          <div
-            className={styles.todoSubtaskBtn}
-            onClick={() => setOnSubtask(true)}
-          >
-            <MdAdd /> Sub task
-          </div>
-        )}
-      </div>
-      <div className={styles.singlePageSubtaskList}>
-        {subtask &&
-          subtask
-            .filter((item) => item.subtaskPostId == todoId)
-            .map((item) => (
-              <div className={styles.todoSubtaskListContainer}>
-                <div className={styles.todoSubtaskCheckBox}>
-                  {item.subtaskDone ? (
-                    <div
-                      className={styles.todoSubtaskCheckBox}
-                      onClick={() => handleSubtaskDone(item.subtaskId)}
-                    >
-                      <MdOutlineCheckCircleOutline id="subtaskDone" />
-                    </div>
-                  ) : (
-                    <div
-                      className={styles.todoSubtaskCheckBox}
-                      onClick={() => handleSubtaskDone(item.subtaskId)}
-                    >
-                      <MdRadioButtonUnchecked id="subtaskNotDone" />
-                    </div>
-                  )}
-                  {item.subtaskId == editingSubtaskId ? (
-                    <div className={styles.todoSubtaskEditMode}>
-                      <input
-                        value={editSubtaskValue}
-                        onChange={(e) => setEditSubtaskValue(e.target.value)}
-                      />
-                      <button onClick={() => handleSubtaskEditing(item)}>
-                        수정
-                      </button>
-                    </div>
-                  ) : (
-                    <div
-                      className={
-                        item.subtaskDone
-                          ? styles.todoSubtaskDone
-                          : styles.todoSubtask
-                      }
-                    >
-                      {item.subtaskText}
-                    </div>
-                  )}
-                </div>
-                <div className={styles.todoSubtaskIconGroup}>
-                  <div
-                    className={styles.todoSubtaskIcon}
-                    onClick={() => handleEditSubTaskToggle(item)}
-                  >
-                    <MdModeEdit />
+        <div className={styles.singlePageSubtaskList}>
+          {subtask &&
+            subtask
+              .filter((item) => item.subtaskPostId == todoId)
+              .map((item) => (
+                <div className={styles.todoSubtaskListContainer}>
+                  <div className={styles.todoSubtaskCheckBox}>
+                    {item.subtaskDone ? (
+                      <div
+                        className={styles.todoSubtaskCheckBox}
+                        onClick={() => handleSubtaskDone(item.subtaskId)}
+                      >
+                        <MdOutlineCheckCircleOutline id="subtaskDone" />
+                      </div>
+                    ) : (
+                      <div
+                        className={styles.todoSubtaskCheckBox}
+                        onClick={() => handleSubtaskDone(item.subtaskId)}
+                      >
+                        <MdRadioButtonUnchecked id="subtaskNotDone" />
+                      </div>
+                    )}
+                    {item.subtaskId == editingSubtaskId ? (
+                      <div className={styles.todoSubtaskEditMode}>
+                        <input
+                          className={styles.subtaskEditMode}
+                          value={editSubtaskValue}
+                          onChange={(e) => setEditSubtaskValue(e.target.value)}
+                        />
+                        <div className={styles.subtaskEditModeButtonBox}>
+                          <button
+                            className={styles.subtaskSaveButton}
+                            onClick={() => handleSubtaskEditing(item)}
+                          >
+                            수정
+                          </button>
+                          <button
+                            className={styles.subtaskCancelButton}
+                            onClick={() => handleEditSubTaskToggle(item)}
+                          >
+                            취소
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div
+                        className={
+                          item.subtaskDone
+                            ? styles.todoSubtaskDone
+                            : styles.todoSubtask
+                        }
+                      >
+                        {item.subtaskText}
+                      </div>
+                    )}
                   </div>
-                  <div
-                    className={styles.todoSubtaskIcon}
-                    onClick={() => handleSubtaskDelete(item.subtaskId)}
-                  >
-                    <MdDelete />
+                  <div className={styles.todoSubtaskIconGroup}>
+                    <div
+                      className={styles.todoSubtaskIcon}
+                      onClick={() => handleEditSubTaskToggle(item)}
+                    >
+                      <MdModeEdit />
+                    </div>
+                    <div
+                      className={styles.todoSubtaskIcon}
+                      onClick={() => handleSubtaskDelete(item.subtaskId)}
+                    >
+                      <MdDelete />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+        </div>
       </div>
 
       <div className={styles.singleComments}>
-        <div className={styles.todoModalComments}>
-          <div className={styles.todoModalCommentsTitle}>
-            <MdKeyboardArrowDown /> Comments
+        <div className={styles.comments}>
+          <div className={styles.commentsTitle}>
+            <MdKeyboardArrowDown className={styles.commentsIcon} /> Comments
           </div>
 
-          <div className={styles.todoModalCommentsInput}>
-            <input
-              name="commentText"
-              value={commentText}
-              placeholder="댓글을 입력해주세요 :)"
-              onChange={handleCommentChange}
-            />
-            <button onClick={handleCreateComment}>입력</button>
+          <div className={styles.commentsInputContainer}>
+            <div className={styles.commentsInputBox}>
+              <input
+                className={styles.commentsInput}
+                name="commentText"
+                value={commentText}
+                placeholder={commentIsFocused ? '' : "댓글을 입력해주세요 :)"}
+                onFocus={() => setCommentIsFocused(true)}
+                onBlur={() => setCommentIsFocused(false)}
+                onChange={handleCommentChange}
+              />
+            </div>
+            <div className={styles.commentsInputButtonBox}>
+              <button 
+              className={styles.commentsInputButton}
+              onClick={handleCreateComment}>입력</button>
+            </div>
           </div>
 
           {comments &&

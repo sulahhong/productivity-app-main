@@ -5,11 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { MdThumbUp, MdReply, MdModeEdit, MdDelete } from "react-icons/md";
 import Reply from "./Reply";
 
-
-function Comments({
-  item,
-
-}) {
+function Comments({ item }) {
   const {
     reply,
     setReply,
@@ -19,10 +15,8 @@ function Comments({
     setComments,
     targetCommentGlobal,
     setTaegetCommentGlobal,
-
   } = useGlobalContext();
 
-  
   const [commentsForm, setCommentsForm] = useState({
     commentId: "",
     commentText: "",
@@ -64,20 +58,16 @@ function Comments({
   const [isEditingComment, setIsEditingComment] = useState(false);
   const [onReply, setOnReply] = useState(false);
   const [replyInputValue, setReplyInputValue] = useState("");
-  
-  
 
   const handleOnChange = (e) => {
     setReplyInputValue(e.target.value);
   };
 
-  useEffect(()=>{
-    console.log("ITEM", item)
-    setCommentsForm(item)
-    console.log("HEYYYYYYYY")
-  }, [])
-
-
+  useEffect(() => {
+    console.log("ITEM", item);
+    setCommentsForm(item);
+    console.log("HEYYYYYYYY");
+  }, []);
 
   const handelCreateReply = () => {
     const replyCreateTime = new Date();
@@ -134,8 +124,8 @@ function Comments({
     console.log("test", testArray);
 
     let data = {
-     ...commentsForm,
-      commentUpdateTime: new Date() ,
+      ...commentsForm,
+      commentUpdateTime: new Date(),
     };
 
     // let data = {
@@ -149,10 +139,10 @@ function Comments({
     // };
 
     console.log("SAVE DATA", data);
-    testArray.splice(commentEditIndex, 1, data)
+    testArray.splice(commentEditIndex, 1, data);
 
-    setComments(testArray)
-    setIsEditingComment(false)
+    setComments(testArray);
+    setIsEditingComment(false);
   };
 
   // const handleDeleteReply = (id) => {
@@ -163,27 +153,26 @@ function Comments({
   // }
 
   const handleCommentChange = (e) => {
-    
-      // setCommentsForm((prevState) => ({
-      //   ...prevState,
-      //   [e.target.name]: e.target.value
-      // }))
+    // setCommentsForm((prevState) => ({
+    //   ...prevState,
+    //   [e.target.name]: e.target.value
+    // }))
 
-      setCommentsForm((prevState) => ({
-        ...prevState,
-        commentText: e.target.value
-      }))
-  }
+    setCommentsForm((prevState) => ({
+      ...prevState,
+      commentText: e.target.value,
+    }));
+  };
 
   const handleCancelEdit = () => {
-    setCommentsForm(item)
+    setCommentsForm(item);
     setIsEditingComment(false);
-  }
+  };
 
   const handleEditCommentToggle = () => {
-    setIsEditingComment(!isEditingComment)
-    setCommentsForm(item)
-  }
+    setIsEditingComment(!isEditingComment);
+    setCommentsForm(item);
+  };
 
   return (
     <>
@@ -224,21 +213,33 @@ function Comments({
             </button>
           </div>
         </div>
-        
-        
+
         {isEditingComment ? (
-          <div>
-            <input type="text" value={commentText} onChange={handleCommentChange} name="commentText" />
-            <button onClick={() => handleEditComment(item.commentId)}>수정</button>
-            <button onClick={() => handleCancelEdit()}>취소</button>
+          <div className={styles.commentEditMode}>
+            <input
+              className={styles.commentEditInput}
+              type="text"
+              value={commentText}
+              onChange={handleCommentChange}
+              name="commentText"
+            />
+            <button 
+              className={styles.commentEditButton}
+              onClick={() => handleEditComment(item.commentId)}>
+              수정
+            </button>
+            <button 
+              className={styles.commentEditCancelButton}
+              onClick={() => handleCancelEdit()}>취소</button>
           </div>
         ) : (
           <div className={styles.commentTextBox}>{item.commentText}</div>
         )}
       </div>
       {onReply && (
-        <div className={styles.commentInput}>
+        <div className={styles.commentInputBox}>
           <input
+            className={styles.commentInput}
             type="text"
             value={replyInputValue}
             onChange={handleOnChange}

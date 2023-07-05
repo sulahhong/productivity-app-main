@@ -13,18 +13,21 @@
     padding: 0.2rem 1rem;
     font-size: 1rem;
     border: none;
-    background-color: rgb(138, 140, 145);
-    color: white;
-    font-weight: 600;
+    background-color: whitesmoke;
+    color: gray;
+    font-weight: 400;
     border-radius: 0.5rem;
     display: flex;
     align-items: center;
     cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 1px;
 }
 
 .todoBodyTitle {
     display: flex;
-    gap: 2rem;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 4rem;
 }
 
 .todoBodyButton {

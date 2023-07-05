@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import {
   MdAdd,
+  MdFilterAlt,
   MdOutlineCancel,
   MdHome,
   MdCheck,
@@ -179,16 +180,18 @@ function Todo() {
             Add
           </button>
           <div>
-            <button onClick={() => setGroupView(!groupView)}>Group button</button>
+            <button 
+            className={styles.todoAddButton}
+            onClick={() => setGroupView(!groupView)}>Group View</button>
           </div>
          
           <div className={styles.sortDropdownContainer}>
             <button
-              className={styles.sortDropdownButton}
+              className={styles.todoAddButton}
               onClick={() => setSortViewDropdown(!sortViewDropdown)}
             >
-              <MdAdd />
-              Add2
+              <MdFilterAlt  />
+               Filter
             </button>
             {sortViewDropdown && (
               <div
@@ -304,17 +307,14 @@ function Todo() {
             )}
           </div>
         </div>
-        <div className={styles.viewTodoNowContainer}>
-          <div className={styles.viewTodoNow}>구분 : {viewCategory}</div>
-          <div>현재 todo 개수 :{viewTodos.filter(item => item.todoDone == false).length}</div>
-        </div>
+
+
+        <TodoView 
+        groupView={groupView} setGroupView={setGroupView}/>
         <div>
           <button onClick={selectAlltodo}>모두 선택</button>
           <button onClick={clearAllTodo}>모두 삭제</button>
         </div>
-
-        <TodoView 
-        groupView={groupView} setGroupView={setGroupView}/>
       </div>
       <div className={styles.todoBodyFooter}>this is the footer </div>
     </div>

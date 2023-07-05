@@ -19,6 +19,12 @@
     padding-top: 1rem;
 }
 
+.singlePageTextBox {
+    padding: 0.5rem;
+    width: 95%;
+
+}
+
 .singlePageInputTitle {
     border: none;
     outline: none;
@@ -42,24 +48,35 @@
     font-size: 1.2rem;
     cursor: text;
     width: 70%;
+    height: 180px;
+    padding-left: 0.5rem;
 }
+
 
 .singlePageDesInput:focus {
     border: 1px solid gray;
-    width: 70%;
+    border-radius: 0.5rem;
+    width: 100%;
 }
 
 .todoSubtaskListContainer {
     border: 1px solid rgb(216, 216, 216);
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 80%;
-    margin: 0.5rem;
-    padding: 0.3rem;
+    width: 90%;
+    margin: 1rem;
+    padding: 0.5rem;
     font-size: 0.8rem;
     color: gray;
+    margin: 0.5rem;
+
+}
+
+.subtaskMainContainer {
+    width: 100%;
+    margin: 1rem;
 }
 
 .todoSubtaskCheckBox {
@@ -67,6 +84,7 @@
     align-items: center;
     padding-right:0.5rem;
     padding: 0.2rem;
+
 }
 
 .todoSubtaskDone {
@@ -77,6 +95,7 @@
 
 .todoSubtask {
     padding-left: 0.5rem;
+    color: gray;
 }
 
 .todoSubtaskIcon {
@@ -94,7 +113,7 @@
 }
 
 .priorityDropdownContent {
-    top: 8.5rem;
+    top: 8.8rem;
     left: 16.5rem;
     position: absolute;
     background-color: #fff;
@@ -102,9 +121,27 @@
     border: 1px solid #ddd;
     border-radius: 0.5rem;
     z-index: 2;
-    width: 5rem;
-    padding: 0.5rem ;
+    width: 6.5rem;
+    padding: 0.2rem ;
     font-size: 0.8rem;
+}
+
+.priorityDropdownContentItem {
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+
+    border-radius: 0.2rem;
+    transition: background-color 0.3s ease;
+
+}
+
+.priorityDropdownContentItem:hover {
+    background-color: rgb(231, 230, 230);   
+    /* transition: 0.3s; */
+    
 }
 
 .dueDateDropdownContent {
@@ -156,4 +193,127 @@
 .textBoxIconsingle:hover {
     background-color: rgb(227, 227, 227);
 
+}
+
+.subtaskInputContainer {
+    width: 93%;
+    height: 5rem;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 0.5rem;
+
+
+}
+
+.subtaskInputBox {
+    display: flex;
+    width: 80%;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    color: gray;
+    border: none;
+}
+
+.subtaskInputButtonBox {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.subtaskSaveButton  {
+    margin-right: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: white;
+    color: gray;
+    padding: 0.2rem 1rem;
+    border: 1px solid rgb(223, 225, 228);
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 1px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.subtaskCancelButton {
+    margin-right: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: white;
+    color: gray;
+    padding: 0.2rem 1rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.subtaskSaveButton:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+.todoSubtaskEditMode {
+    display: flex;
+    justify-content: space-between;
+}
+
+.subtaskEditMode {
+    border: none;
+    color: gray;
+}
+
+.singleComments {
+    margin: 1rem;
+    margin-top: 2rem;
+}
+
+
+.comments {
+    margin: 0.5rem;
+}
+
+.commentsTitle {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.commentsInputContainer {
+    margin-bottom: 1rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid rgb(223, 225, 228);
+    border-radius: 0.5rem;
+}
+
+.commentsInputBox {
+    width: 80%;
+}
+
+.commentsInput {
+    width: 100%;
+    border: none;
+}
+
+.commentsInputButtonBox {
+    margin-right: 1rem;
+}
+
+.commentsInputButton {
+    margin-right: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: white;
+    color: gray;
+    padding: 0.2rem 1rem;
+    border: 1px solid rgb(223, 225, 228);
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 1px;
+    cursor: pointer;
+    font-size: 0.8rem;
+
+}
+
+.todoSubtaskBtn {
+    color: gray;
 }

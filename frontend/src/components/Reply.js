@@ -100,12 +100,27 @@ function Reply({ item }) {
           </div>
         </div>
         {isEditingReply ? (
-          <div>
-            <input type="text" value={replyText} onChange={handleReplyChange} />
-            <button onClick={() => handleEditReply(replyId)}>수정</button>
-            <button onClick={() => setIsEditingReply(isEditingReply == false)}>
+          <div className={styles.replyEditMode}>
+            <input
+              className={styles.replyEditInputBox}
+              type="text"
+              value={replyText}
+              onChange={handleReplyChange}
+            />
+            <div className={styles.replyEditButtonBox}>
+            <button
+              className={styles.commentEditButton}
+              onClick={() => handleEditReply(replyId)}
+            >
+              수정
+            </button>
+            <button
+              className={styles.commentEditCancelButton}
+              onClick={() => setIsEditingReply(isEditingReply == false)}
+            >
               취소
             </button>
+            </div>
           </div>
         ) : (
           <div className={styles.replyTextBox}>{item.replyText}</div>
