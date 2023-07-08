@@ -107,9 +107,9 @@ function TodoSinglePage() {
   const [isEditingSubtask, setIsEditingSubtask] = useState(false);
   const [editingSubtaskId, setEditingSubtaskId] = useState("");
   const [editSubtaskValue, setEditSubtaskValue] = useState(""); // 저장된 subtaskText 값을 수정할 때 change되는 값 저장
-  const [priorityMenuType, setPriorityMenuType] = useState("")
 
-  // comment inputbox cursor 상태 
+
+  // comment inputbox cursor 상태
   const [commentIsFocused, setCommentIsFocused] = useState(false);
 
   useEffect(() => {
@@ -356,27 +356,27 @@ function TodoSinglePage() {
     }));
   };
 
-  const  handlePriorityMenuChange = (option) => {
+  const handlePriorityMenuChange = (option) => {
     // setTodoForm((prevState) => ({
     //   ...prevState,
     //   ["priorityId"]: option.priorityId,
     //   ["prorityTitle"]: option.priorityTitle,
     // }));
 
-    let todo ={
+    let todo = {
       ...todoForm,
       ["priorityId"]: option.priorityId,
       ["priorityTitle"]: option.priorityTitle,
-    }
+    };
 
-    setTodoForm(todo)
+    setTodoForm(todo);
 
     const todoEditIndex = todos.findIndex((item) => item.todoId == todoId);
     const testArray = [...todos];
     testArray.splice(todoEditIndex, 1, todo);
     setTodos(testArray);
-    setPriorityDropdown(false)
-    setPriorityMenuType(option.priorityId)
+    setPriorityDropdown(false);
+
   };
 
   const handleProjectMenuChange = (option) => {
@@ -385,6 +385,7 @@ function TodoSinglePage() {
       ["projectId"]: option.projectId,
       ["projectTitle"]: option.projectTitle,
     }));
+    setProjectDropdown(false);
   };
 
   let priorityRef = useRef();
@@ -440,7 +441,12 @@ function TodoSinglePage() {
               className={styles.textBoxIconsingle}
               onClick={() => setPriorityDropdown(!priorityDropdown)}
             >
-              <MdOutlinedFlag /> {todoForm.priorityTitle=="" ? (<span>{todoForm.priorityTitle}</span> ) : <span>priority</span>}
+              <MdOutlinedFlag />{" "}
+              {todoForm.priorityTitle == "" ? (
+                <span>Priority</span>
+              ) : (
+                <span>{todoForm.priorityTitle}</span>
+              )}
             </button>
             {priorityDropdown && (
               <div className={styles.priorityDropdownContent} ref={priorityRef}>
@@ -451,7 +457,8 @@ function TodoSinglePage() {
                     value={option.priorityId}
                     onClick={() => handlePriorityMenuChange(option)}
                   >
-                    {option.priorityTitle} {todoForm.priorityId == option.priorityId &&  <MdCheck />}
+                    {option.priorityTitle}{" "}
+                    {todoForm.priorityId == option.priorityId && <MdCheck />}
                   </div>
                 ))}
               </div>
@@ -459,8 +466,10 @@ function TodoSinglePage() {
             <button
               className={styles.textBoxIconsingle}
               onClick={() => setDueDateDropdown(!dueDateDropdown)}
+              key={todoForm.todoDueDate}
+              value={todoForm.todoDueDate}
             >
-              <MdCalendarToday /> Date
+              <MdCalendarToday /> {todoForm.todoDueDate}
             </button>
             {dueDateDropdown && (
               <input
@@ -476,18 +485,20 @@ function TodoSinglePage() {
               className={styles.textBoxIconsingle}
               onClick={() => setProjectDropdown(!projectDropdown)}
             >
-              <MdGridView /> Project
+              <MdGridView /> {todoForm.projectTitle}
             </button>
             {projectDropdown && (
               <div className={styles.projectDropdownContent} ref={projectRef}>
                 {projects.length > 0 &&
                   projects.map((option) => (
                     <div
+                      className={styles.projectDropdownItem}
                       key={option.projectId}
                       value={option.projectId}
                       onClick={() => handleProjectMenuChange(option)}
                     >
-                      {option.projectTitle}
+                      {option.projectTitle}{" "}
+                      {todoForm.projectId == option.projectId && <MdCheck />}
                     </div>
                   ))}
               </div>
@@ -638,16 +649,19 @@ function TodoSinglePage() {
                 className={styles.commentsInput}
                 name="commentText"
                 value={commentText}
-                placeholder={commentIsFocused ? '' : "댓글을 입력해주세요 :)"}
+                placeholder={commentIsFocused ? "" : "댓글을 입력해주세요 :)"}
                 onFocus={() => setCommentIsFocused(true)}
                 onBlur={() => setCommentIsFocused(false)}
                 onChange={handleCommentChange}
               />
             </div>
             <div className={styles.commentsInputButtonBox}>
-              <button 
-              className={styles.commentsInputButton}
-              onClick={handleCreateComment}>입력</button>
+              <button
+                className={styles.commentsInputButton}
+                onClick={handleCreateComment}
+              >
+                입력
+              </button>
             </div>
           </div>
 

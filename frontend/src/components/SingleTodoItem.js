@@ -30,18 +30,20 @@ function SingleTodoItem({item}) {
 
   const navigate = useNavigate();
 
-  const handleModalContents = (id, e) => {
-    if( (e.target.id !="todoDone1") && (e.target.id !="todoDone2") && (e.target.id !="editBtn") && (e.target.id !="deleteBtn") ){
+  // const handleModalContents = (id, e) => {
+  //   if( (e.target.id !="todoDone1") && (e.target.id !="todoDone2") && (e.target.id !="editBtn") && (e.target.id !="deleteBtn") ){
 
-      console.log("modal will be opened", id, e.target.id)
-    const targetTodo = todos.find((item) => item.todoId === id)
-    console.log("targetTodomodal", targetTodo, id)
-    setOpenModal(true)
-    setTargetTodoGlobal(targetTodo);
-    setIsEditingTodo(true)
-    }
+  //     console.log("modal will be opened", id, e.target.id)
+  //   const targetTodo = todos.find((item) => item.todoId === id)
+  //   console.log("targetTodomodal", targetTodo, id)
+  //   setOpenModal(true)
+  //   setTargetTodoGlobal(targetTodo);
+  //   setIsEditingTodo(true)
+  //   }
     
-  }
+  // }
+
+
 
   const handleEditTodo = (id) => {
     console.log("Edit id", id);
@@ -125,7 +127,7 @@ function SingleTodoItem({item}) {
   // }
 
   return (
-          <div onClick={(e) => handleModalContents(item.todoId, e)}
+          <div onClick={() => navigate(`/todo/${item.todoId}`)}
             className={
               item.todoDone ? styles.todoViewCardDone : styles.todoViewCard
             }
@@ -167,7 +169,7 @@ function SingleTodoItem({item}) {
               </div>
             </div>
             <div className={styles.todoCardButtons}>
-              <div ><button id="deleteBtn" onClick={() => navigate(`/todo/${item.todoId}`)}>page button</button></div>
+              {/* <div ><button id="deleteBtn" onClick={() => navigate(`/todo/${item.todoId}`)}>page button</button></div> */}
               <div id="editBtn"
                 className={styles.todoCardEditButton}
                 onClick={() => handleEditTodo(item.todoId)}

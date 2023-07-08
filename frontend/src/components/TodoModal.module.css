@@ -45,9 +45,27 @@
     border: 1px solid #ddd;
     border-radius: 0.5rem;
     z-index: 2;
-    width: 5rem;
-    padding: 0.5rem ;
+    width: 6.5rem;
+    padding: 0.2rem ;
     font-size: 0.8rem;
+}
+
+.priorityDropdownContentItem {
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+
+    border-radius: 0.2rem;
+    transition: background-color 0.3s ease;
+
+}
+
+.priorityDropdownContentItem:hover {
+    background-color: rgb(231, 230, 230);   
+    /* transition: 0.3s; */
+    
 }
 
 .dueDateDropdownContent {
@@ -73,10 +91,26 @@
     border: 1px solid #ddd;
     border-radius: 0.5rem;
     z-index: 2;
-    width: 5rem;
-    padding: 0.5rem ;
+    width: 6.5rem;
+    padding: 0.2rem ;
     font-size: 0.8rem;
 }
+
+.projectDropdownItem {
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+
+    border-radius: 0.2rem;
+    transition: background-color 0.3s ease;
+}
+
+.projectDropdownItem:hover {
+    background-color: rgb(231, 230, 230);   
+}
+
 
 .todoModalCloseButton {
     width: 1.9rem;
