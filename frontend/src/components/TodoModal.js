@@ -10,7 +10,7 @@ import {
   MdOutlineCheckCircleOutline,
   MdDelete,
   MdModeEdit,
-  MdCheck, 
+  MdCheck,
 } from "react-icons/md";
 import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
@@ -56,20 +56,18 @@ function TodoModal() {
     todoTitle: "",
     todoDescription: "",
     todoDone: false,
-    todoPriority: "1",
     todoCreateDate: "",
     todoDueDate: "",
     projectId: projects.length > 0 ? projects[0].projectId : "",
     projectTitle: projects.length > 0 ? projects[0].projectTitle : "",
-    priorityId:"",
-    priorityTitle:"",
+    priorityId: "",
+    priorityTitle: "",
   });
   const {
     todoId,
     todoTitle,
     todoDescription,
     todoDone,
-    todoPriority,
     todoCreateDate,
     todoDueDate,
     projectId,
@@ -196,9 +194,10 @@ function TodoModal() {
       todoTitle: todoTitle,
       todoDescription: todoDescription,
       todoDone: todoDone,
-      todoPriority: todoPriority,
       todoCreateDate: todoCreateDate,
       todoDueDate: todoDueDate,
+      priorityId: priorityId,
+      priorityTitle: priorityTitle,
     });
     console.log("test2", testArray);
 
@@ -209,7 +208,6 @@ function TodoModal() {
     //   todoTitle: "",
     //   todoDescription: "",
     //   todoDone: false,
-    //   todoPriority: "1",
     //   todoCreateDate: "",
     //   todoDueDate: "",
     // })
@@ -441,12 +439,11 @@ function TodoModal() {
 
     setTodoForm(todo);
 
-    const todoEditIndex = todos.findIndex((item) => item.todoId == todoId);
-    const testArray = [...todos];
-    testArray.splice(todoEditIndex, 1, todo);
-    setTodos(testArray);
+    // const todoEditIndex = todos.findIndex((item) => item.todoId == todoId);
+    // const testArray = [...todos];
+    // testArray.splice(todoEditIndex, 1, todo);
+    // setTodos(testArray);
     setPriorityDropdown(false);
-
   };
 
   const handleProjectMenuChange = (option) => {
@@ -476,7 +473,8 @@ function TodoModal() {
               className={styles.textBoxIconsingle}
               onClick={() => setPriorityDropdown(!priorityDropdown)}
             >
-              <MdOutlinedFlag />  {todoForm.priorityTitle == "" ? (
+              <MdOutlinedFlag />{" "}
+              {todoForm.priorityTitle == "" ? (
                 <span>Priority</span>
               ) : (
                 <span>{todoForm.priorityTitle}</span>
@@ -486,12 +484,13 @@ function TodoModal() {
               <div className={styles.priorityDropdownContent} ref={priorityRef}>
                 {priority.map((option) => (
                   <div
-                  className={styles.priorityDropdownContentItem}
+                    className={styles.priorityDropdownContentItem}
                     key={option.priorityId}
                     value={option.priorityId}
                     onClick={() => handlePriorityMenuChange(option)}
                   >
-                    {option.priorityTitle}  {todoForm.priorityId == option.priorityId && <MdCheck />}
+                    {option.priorityTitle}
+                    {todoForm.priorityId == option.priorityId && <MdCheck />}
                   </div>
                 ))}
               </div>
@@ -502,7 +501,8 @@ function TodoModal() {
               key={todoForm.todoDueDate}
               value={todoForm.todoDueDate}
             >
-              <MdCalendarToday />   {todoForm.todoDueDate == "" ? (
+              <MdCalendarToday />{" "}
+              {todoForm.todoDueDate == "" ? (
                 <span>Date</span>
               ) : (
                 <span>{todoForm.todoDueDate}</span>
@@ -522,7 +522,12 @@ function TodoModal() {
               className={styles.textBoxIconsingle}
               onClick={() => setProjectDropdown(!projectDropdown)}
             >
-              <MdGridView /> {todoForm.projectTitle}
+              <MdGridView />{" "}
+              {todoForm.projectTitle == "No project" ? (
+                <span>No project</span>
+              ) : (
+                <span>{todoForm.projectTitle}</span>
+              )}
             </button>
             {projectDropdown && (
               <div className={styles.projectDropdownContent} ref={projectRef}>
@@ -534,7 +539,8 @@ function TodoModal() {
                       value={option.projectId}
                       onClick={() => handleProjectMenuChange(option)}
                     >
-                      {option.projectTitle} {todoForm.projectId == option.projectId && <MdCheck />}
+                      {option.projectTitle}{" "}
+                      {todoForm.projectId == option.projectId && <MdCheck />}
                     </div>
                   ))}
               </div>

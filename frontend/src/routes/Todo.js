@@ -31,15 +31,15 @@ function Todo() {
     projects,
     projectViewtype,
     setProjectviewType,
-    filterType, setFilterType,
+    filterType,
+    setFilterType,
   } = useGlobalContext();
-
 
   const [sortViewDropdown, setSortViewDropdown] = useState(false);
   const [priorityIsActive, setPriorityIsActive] = useState(false);
 
   // 새로운 솔팅 메뉴를 위한 상태
-  const [sortType, setSortType] = useState("todoPriority");
+  const [sortType, setSortType] = useState("priorityId");
   const [ascending, setAscending] = useState(true);
   // const [filterType, setFilterType] = useState("filterAll");
 
@@ -48,55 +48,60 @@ function Todo() {
   let menuRef = useRef();
 
   useEffect(() => {
-   let handler = (e) => {
-    if(!menuRef.current.contains(e.target)){
-      setSortViewDropdown(false);
-    }
-    console.log("menumenu", e.target)
-    console.log("menu222", menuRef.current)
-   }
-    
+    let handler = (e) => {
+      if (!menuRef.current.contains(e.target)) {
+        setSortViewDropdown(false);
+      }
+      console.log("menumenu", e.target);
+      console.log("menu222", menuRef.current);
+    };
+
     document.addEventListener("mousedown", handler);
 
-    return() => {
-      document.removeEventListener("mousedown", handler)
-    }
-  })
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
 
   useEffect(() => {
     let arr1 = [...todos];
-    let arr = arr1.filter(item => item.todoDone === false)
-    if(groupView) {
-      let arr2 = arr.sort((a, b) => a.todoPriority - b.todoPriority);
-        setViewTodos(arr2);
+    let arr = arr1.filter((item) => item.todoDone === false);
+    if (groupView) {
+      let arr2 = arr.sort((a, b) => a.priorityId - b.priorityId);
+      setViewTodos(arr2);
     } else {
       setViewTodos(arr);
     }
-  }, [groupView])
+  }, [groupView]);
 
   // 새로운 상태를 위한 function
   useEffect(() => {
     let arr1 = [...todos];
-    let arr = arr1.filter(item => item.todoDone === false)
+    let arr = arr1.filter((item) => item.todoDone === false);
     if (filterType == "filterAll") {
       sortAction(arr);
-    // } else if (filterType == "filterDone") {
-    //   let arrFilter = arr.filter((item) => item.todoDone);
-    //   sortAction(arrFilter);
-    // } else if (filterType == "filterNotDone") {
-    //   let arrFilter = arr.filter((item) => !item.todoDone);
-    //   sortAction(arrFilter);
+      // } else if (filterType == "filterDone") {
+      //   let arrFilter = arr.filter((item) => item.todoDone);
+      //   sortAction(arrFilter);
+      // } else if (filterType == "filterNotDone") {
+      //   let arrFilter = arr.filter((item) => !item.todoDone);
+      //   sortAction(arrFilter);
     } else if (filterType == "filterP1") {
-      let arrFilter = arr.filter((item) => item.todoPriority == "1");
+      let arrFilter = arr.filter((item) => item.priorityId == "1");
       sortAction(arrFilter);
     } else if (filterType == "filterP2") {
-      let arrFilter = arr.filter((item) => item.todoPriority == "2");
+      let arrFilter = arr.filter((item) => item.priorityId == "2");
       sortAction(arrFilter);
     } else if (filterType == "filterP3") {
-      let arrFilter = arr.filter((item) => item.todoPriority == "3");
+      let arrFilter = arr.filter((item) => item.priorityId == "3");
       sortAction(arrFilter);
     } else if (filterType == "filterP4") {
-      let arrFilter = arr.filter((item) => item.todoPriority == "4");
+      let arrFilter = arr.filter((item) => item.priorityId == "4");
+      sortAction(arrFilter);
+    } else if (filterType == "filterP5") {
+      let arrFilter = arr.filter(
+        (item) => item.priorityId == "5" && item.priorityId == ""
+      );
       sortAction(arrFilter);
     }
   }, [sortType, ascending, todos, filterType]);
@@ -104,13 +109,13 @@ function Todo() {
   const sortAction = (arr) => {
     console.log("SUPER", arr);
     if (ascending) {
-      if (sortType == "todoPriority") {
-        let arr2 = arr.sort((a, b) => a.todoPriority - b.todoPriority);
+      if (sortType == "priorityId") {
+        let arr2 = arr.sort((a, b) => a.priorityId - b.priorityId);
         setViewTodos(arr2);
-      // } else if (sortType == "todoDone") {
-      //   let arr2 = arr.sort((a, b) => b.todoDone - a.todoDone);
-      //   setViewTodos(arr2);
-      // } 
+        // } else if (sortType == "todoDone") {
+        //   let arr2 = arr.sort((a, b) => b.todoDone - a.todoDone);
+        //   setViewTodos(arr2);
+        // }
       } else if (sortType == "todoDueDate") {
         let arr2 = arr.sort(
           (a, b) => Date.parse(a.todoDueDate) - Date.parse(b.todoDueDate)
@@ -123,12 +128,12 @@ function Todo() {
         setViewTodos(arr2);
       }
     } else {
-      if (sortType == "todoPriority") {
-        let arr2 = arr.sort((a, b) => b.todoPriority - a.todoPriority);
+      if (sortType == "priorityId") {
+        let arr2 = arr.sort((a, b) => b.priorityId - a.priorityId);
         setViewTodos(arr2);
-      // } else if (sortType == "todoDone") {
-      //   let arr2 = arr.sort((a, b) => a.todoDone - b.todoDone);
-      //   setViewTodos(arr2);
+        // } else if (sortType == "todoDone") {
+        //   let arr2 = arr.sort((a, b) => a.todoDone - b.todoDone);
+        //   setViewTodos(arr2);
       } else if (sortType == "todoDueDate") {
         let arr2 = arr.sort(
           (a, b) => Date.parse(b.todoDueDate) - Date.parse(a.todoDueDate)
@@ -141,7 +146,6 @@ function Todo() {
         setViewTodos(arr2);
       }
     }
-    
   };
 
   useEffect(() => {
@@ -155,18 +159,18 @@ function Todo() {
   const clearAllTodo = () => {
     // setTodos([]);
     const filteredArray = todos.filter((item) => {
-      return !viewTodos.some(obj => obj.todoId === item.todoId)
-    })
-    console.log("todos 1", todos)
-    console.log("viewTodos 1", viewTodos)
-    console.log("filteredArray 1", filteredArray)
+      return !viewTodos.some((obj) => obj.todoId === item.todoId);
+    });
+    console.log("todos 1", todos);
+    console.log("viewTodos 1", viewTodos);
+    console.log("filteredArray 1", filteredArray);
 
-    setTodos(filteredArray)
-  }
+    setTodos(filteredArray);
+  };
 
   const selectAlltodo = () => {
-   //
-  }
+    //
+  };
 
   return (
     <div className={styles.todoContainer}>
@@ -180,25 +184,24 @@ function Todo() {
             Add
           </button>
           <div>
-            <button 
-            className={styles.todoAddButton}
-            onClick={() => setGroupView(!groupView)}>Group View</button>
+            <button
+              className={styles.todoAddButton}
+              onClick={() => setGroupView(!groupView)}
+            >
+              Group View
+            </button>
           </div>
-         
+
           <div className={styles.sortDropdownContainer}>
             <button
               className={styles.todoAddButton}
               onClick={() => setSortViewDropdown(!sortViewDropdown)}
             >
-              <MdFilterAlt  />
-               Filter
+              <MdFilterAlt />
+              Filter
             </button>
             {sortViewDropdown && (
-              <div
-                className={styles.sortDropdownContent}
-                ref={menuRef}
-                
-              >
+              <div className={styles.sortDropdownContent} ref={menuRef}>
                 <div className={styles.sortMenuHeader}>Filter</div>
                 <div
                   className={styles.sortMenuItem}
@@ -239,25 +242,31 @@ function Todo() {
                       className={styles.sortMenuPItem}
                       onClick={() => setFilterType("filterP1")}
                     >
-                      Priority1 {filterType == "filterP1" && <MdCheck />}
+                      Urgent {filterType == "filterP1" && <MdCheck />}
                     </div>
                     <div
                       className={styles.sortMenuPItem}
                       onClick={() => setFilterType("filterP2")}
                     >
-                      Priority2 {filterType == "filterP2" && <MdCheck />}
+                      High {filterType == "filterP2" && <MdCheck />}
                     </div>
                     <div
                       className={styles.sortMenuPItem}
                       onClick={() => setFilterType("filterP3")}
                     >
-                      Priority3 {filterType == "filterP3" && <MdCheck />}
+                      Medium {filterType == "filterP3" && <MdCheck />}
                     </div>
                     <div
                       className={styles.sortMenuPItem}
                       onClick={() => setFilterType("filterP4")}
                     >
-                      Priority4 {filterType == "filterP4" && <MdCheck />}
+                      Low {filterType == "filterP4" && <MdCheck />}
+                    </div>
+                    <div
+                      className={styles.sortMenuPItem}
+                      onClick={() => setFilterType("filterP5")}
+                    >
+                      No priority {filterType == "filterP5" && <MdCheck />}
                     </div>
                   </div>
                 )}
@@ -265,9 +274,9 @@ function Todo() {
                 <div className={styles.sortMenuHeader}>Sort</div>
                 <div
                   className={styles.sortMenuItem}
-                  onClick={() => setSortType("todoPriority")}
+                  onClick={() => setSortType("priorityId")}
                 >
-                  Priority {sortType == "todoPriority" && <MdCheck />}
+                  Priority {sortType == "priorityId" && <MdCheck />}
                 </div>
                 {/* <div
                   className={styles.sortMenuItem}
@@ -308,9 +317,7 @@ function Todo() {
           </div>
         </div>
 
-
-        <TodoView 
-        groupView={groupView} setGroupView={setGroupView}/>
+        <TodoView groupView={groupView} setGroupView={setGroupView} />
         <div>
           <button onClick={selectAlltodo}>모두 선택</button>
           <button onClick={clearAllTodo}>모두 삭제</button>

@@ -30,18 +30,19 @@ function SingleTodoItem({item}) {
 
   const navigate = useNavigate();
 
-  // const handleModalContents = (id, e) => {
-  //   if( (e.target.id !="todoDone1") && (e.target.id !="todoDone2") && (e.target.id !="editBtn") && (e.target.id !="deleteBtn") ){
+  const handleModalContents = ( e) => {
+    if( (e.target.id !="todoDone1") && (e.target.id !="todoDone2") && (e.target.id !="editBtn") && (e.target.id !="deleteBtn") ){
 
-  //     console.log("modal will be opened", id, e.target.id)
-  //   const targetTodo = todos.find((item) => item.todoId === id)
-  //   console.log("targetTodomodal", targetTodo, id)
-  //   setOpenModal(true)
-  //   setTargetTodoGlobal(targetTodo);
-  //   setIsEditingTodo(true)
-  //   }
+     navigate(`/todo/${item.todoId}`)
+    //   console.log("modal will be opened", id, e.target.id)
+    // const targetTodo = todos.find((item) => item.todoId === id)
+    // console.log("targetTodomodal", targetTodo, id)
+    // setOpenModal(true)
+    // setTargetTodoGlobal(targetTodo);
+    // setIsEditingTodo(true)
+    }
     
-  // }
+  }
 
 
 
@@ -72,16 +73,20 @@ function SingleTodoItem({item}) {
     setTodos(arr);
   };
 
-  const todoDonePrioritySelector = (priority) => {
-    if (priority == 1) {
+  const todoDonePrioritySelector = (priorityId) => {
+    if (priorityId == "1") {
       return "todoview_priority1";
-    } else if (priority == 2) {
+    } else if (priorityId == "2") {
       return "todoview_priority2";
-    } else if (priority == 3) {
+    } else if (priorityId == "3") {
       return "todoview_priority3";
-    } else if (priority == 4) {
+    } else if (priorityId == "4") {
       return "todoview_priority4";
-    }
+    } else if (priorityId == "5" ) {
+      return "todoview_priority5";
+    } else if (priorityId == "" ) {
+      return "todoview_priority5";
+    } 
   };
 
   // 날짜 갭 계산
@@ -127,14 +132,14 @@ function SingleTodoItem({item}) {
   // }
 
   return (
-          <div onClick={() => navigate(`/todo/${item.todoId}`)}
+          <div onClick={(e) => handleModalContents(e)}
             className={
               item.todoDone ? styles.todoViewCardDone : styles.todoViewCard
             }
           >
             <div className={styles.todoCardContent} >
               <div
-                className={todoDonePrioritySelector(item.todoPriority)}
+                className={todoDonePrioritySelector(item.priorityId)}
                 onClick={() => handleTodoDone(item.todoId)}
               >
                 {item.todoDone ? (
@@ -145,11 +150,10 @@ function SingleTodoItem({item}) {
               </div>
               <div className={styles.todoCardBody}>
                 <div className={styles.todoCardTitle}>{item.todoTitle}</div>
-                <div className={styles.todoCardDescription}>
+                {/* <div className={styles.todoCardDescription}>
                   {item.todoDescription}
-                </div>
-                {/* <div className={styles.todoCardPriority}>{item.todoPriority}</div> */}
-                <div className={styles.todoCardDateview}>
+                </div> */}
+                {/* <div className={styles.todoCardDateview}>
                   <div className={styles.todoCardDueDate}>
                     <div className={styles.dueDateIcon}>
                       <MdCalendarToday />
@@ -165,17 +169,16 @@ function SingleTodoItem({item}) {
                       {dateDifference(item.todoDueDate)}
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
-            <div className={styles.todoCardButtons}>
-              {/* <div ><button id="deleteBtn" onClick={() => navigate(`/todo/${item.todoId}`)}>page button</button></div> */}
-              <div id="editBtn"
+            <div className={styles.todoCardButtons} id="deleteBtn">
+              {/* <div id="editBtn"
                 className={styles.todoCardEditButton}
                 onClick={() => handleEditTodo(item.todoId)}
               >
                 <MdOutlineEdit id="editBtn"/>
-              </div>
+              </div> */}
               <div id="deleteBtn"
                 className={styles.todoCardDeleteButton}
                 onClick={() => handleDeleteTodo(item.todoId)}

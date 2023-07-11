@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./TodoSinglePage.module.css";
@@ -16,6 +16,8 @@ import {
   MdAdd,
   MdKeyboardArrowDown,
   MdCheck,
+  MdKeyboardArrowLeft,
+  MdVerticalSplit,
 } from "react-icons/md";
 import Comments from "../components/Comments";
 
@@ -42,9 +44,11 @@ function TodoSinglePage() {
     setProjectDropdown,
     priority,
     setPriority,
+    openSideModal, setOpenSideModal, 
   } = useGlobalContext();
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const getTodo = () => {
     let todo = todos.filter((item) => item.todoId == id);
@@ -108,9 +112,9 @@ function TodoSinglePage() {
   const [editingSubtaskId, setEditingSubtaskId] = useState("");
   const [editSubtaskValue, setEditSubtaskValue] = useState(""); // 저장된 subtaskText 값을 수정할 때 change되는 값 저장
 
-
   // comment inputbox cursor 상태
   const [commentIsFocused, setCommentIsFocused] = useState(false);
+
 
   useEffect(() => {
     // console.log("todopathIdcheck", id);
@@ -323,6 +327,7 @@ function TodoSinglePage() {
         commentUpdateTime: "",
         commentIsReply: false,
         postId: "",
+        likeNum: 0 , 
       });
     }
   }, [commentsForm]);
@@ -376,7 +381,6 @@ function TodoSinglePage() {
     testArray.splice(todoEditIndex, 1, todo);
     setTodos(testArray);
     setPriorityDropdown(false);
-
   };
 
   const handleProjectMenuChange = (option) => {
@@ -434,76 +438,19 @@ function TodoSinglePage() {
   return (
     <div className={styles.singlePageContainer}>
       <div className={styles.singlePageBody}>
-        <div className={styles.singlePageBodyTitle}>Detail page</div>
-        <div className={styles.singlePageMain}>
-          <div className={styles.textBoxIcons}>
-            <button
-              className={styles.textBoxIconsingle}
-              onClick={() => setPriorityDropdown(!priorityDropdown)}
-            >
-              <MdOutlinedFlag />{" "}
-              {todoForm.priorityTitle == "" ? (
-                <span>Priority</span>
-              ) : (
-                <span>{todoForm.priorityTitle}</span>
-              )}
-            </button>
-            {priorityDropdown && (
-              <div className={styles.priorityDropdownContent} ref={priorityRef}>
-                {priority.map((option) => (
-                  <div
-                    className={styles.priorityDropdownContentItem}
-                    key={option.priorityId}
-                    value={option.priorityId}
-                    onClick={() => handlePriorityMenuChange(option)}
-                  >
-                    {option.priorityTitle}{" "}
-                    {todoForm.priorityId == option.priorityId && <MdCheck />}
-                  </div>
-                ))}
-              </div>
-            )}
-            <button
-              className={styles.textBoxIconsingle}
-              onClick={() => setDueDateDropdown(!dueDateDropdown)}
-              key={todoForm.todoDueDate}
-              value={todoForm.todoDueDate}
-            >
-              <MdCalendarToday /> {todoForm.todoDueDate}
-            </button>
-            {dueDateDropdown && (
-              <input
-                ref={dueDateRef}
-                className={styles.dueDateDropdownContent}
-                type="date"
-                value={todoDueDate}
-                name="todoDueDate"
-                onChange={handleTodoChange}
-              />
-            )}
-            <button
-              className={styles.textBoxIconsingle}
-              onClick={() => setProjectDropdown(!projectDropdown)}
-            >
-              <MdGridView /> {todoForm.projectTitle}
-            </button>
-            {projectDropdown && (
-              <div className={styles.projectDropdownContent} ref={projectRef}>
-                {projects.length > 0 &&
-                  projects.map((option) => (
-                    <div
-                      className={styles.projectDropdownItem}
-                      key={option.projectId}
-                      value={option.projectId}
-                      onClick={() => handleProjectMenuChange(option)}
-                    >
-                      {option.projectTitle}{" "}
-                      {todoForm.projectId == option.projectId && <MdCheck />}
-                    </div>
-                  ))}
-              </div>
-            )}
+        <div className={styles.singlePageBodyTitle}>
+          <button 
+            className={styles.singlePageBackButton}
+            onClick={() => navigate(-1)}>
+            <MdKeyboardArrowLeft />
+          </button>
+          Detail page
+          <div>
+            <button onClick={() => setOpenSideModal(!openSideModal)}><MdVerticalSplit /> </button>
           </div>
+        </div>
+
+        <div className={styles.singlePageMain}>
           <div className={styles.singlePageInput}>
             <input
               className={styles.singlePageInputTitle}
@@ -525,6 +472,84 @@ function TodoSinglePage() {
               onBlur={handleBlur}
               onChange={handleTodoChange}
             />
+          </div>
+          <div className={styles.textBoxIcons}>
+            <button
+              className={styles.textBoxIconsingle}
+              onClick={() => setPriorityDropdown(!priorityDropdown)}
+            >
+              <MdOutlinedFlag />
+              {todoForm.priorityTitle == "" ? (
+                <span>Priority</span>
+              ) : (
+                <span>{todoForm.priorityTitle}</span>
+              )}
+            </button>
+            {priorityDropdown && (
+              <div className={styles.priorityDropdownContent} ref={priorityRef}>
+                {priority.map((option) => (
+                  <div
+                    className={styles.priorityDropdownContentItem}
+                    key={option.priorityId}
+                    value={option.priorityId}
+                    onClick={() => handlePriorityMenuChange(option)}
+                  >
+                    {option.priorityTitle}
+                    {todoForm.priorityId == option.priorityId && <MdCheck />}
+                  </div>
+                ))}
+              </div>
+            )}
+            <button
+              className={styles.textBoxIconsingle}
+              onClick={() => setDueDateDropdown(!dueDateDropdown)}
+              key={todoForm.todoDueDate}
+              value={todoForm.todoDueDate}
+            >
+              <MdCalendarToday />{" "}
+              {todoForm.todoDueDate == "" ? (
+                <span>Date</span>
+              ) : (
+                <span>{todoForm.todoDueDate}</span>
+              )}
+            </button>
+            {dueDateDropdown && (
+              <input
+                ref={dueDateRef}
+                className={styles.dueDateDropdownContent}
+                type="date"
+                value={todoDueDate}
+                name="todoDueDate"
+                onChange={handleTodoChange}
+              />
+            )}
+            <button
+              className={styles.textBoxIconsingle}
+              onClick={() => setProjectDropdown(!projectDropdown)}
+            >
+              <MdGridView />{" "}
+              {todoForm.projectTitle == "No project" ? (
+                <span>No project</span>
+              ) : (
+                <span>{todoForm.projectTitle}</span>
+              )}
+            </button>
+            {projectDropdown && (
+              <div className={styles.projectDropdownContent} ref={projectRef}>
+                {projects.length > 0 &&
+                  projects.map((option) => (
+                    <div
+                      className={styles.projectDropdownItem}
+                      key={option.projectId}
+                      value={option.projectId}
+                      onClick={() => handleProjectMenuChange(option)}
+                    >
+                      {option.projectTitle}{" "}
+                      {todoForm.projectId == option.projectId && <MdCheck />}
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

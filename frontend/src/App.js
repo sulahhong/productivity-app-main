@@ -12,13 +12,14 @@ import ProjectModal from "./components/ProjectModal";
 import Archive from "./routes/Archive";
 import EmptyProjectModal from "./components/EmptyProjectModal";
 import TodoSinglePage from "./page/TodoSinglePage";
+import SideOptionModal from "./components/SideOptionModal";
 
 
 
 
 function App() {
 
-  const { todos, setTodos, openModal, setOpenModal, openModalProject, setOpenModalProject, projectIsActive, projects, } = useGlobalContext();
+  const { todos, setTodos, openModal, setOpenModal, openModalProject, setOpenModalProject, projectIsActive, projects, openSideModal} = useGlobalContext();
 
   return (
     <BrowserRouter>
@@ -26,6 +27,7 @@ function App() {
       <NavbarSide />
       {openModal && <TodoModal />}
       {openModalProject && <ProjectModal /> }
+      {openSideModal && <SideOptionModal />}
       {(projectIsActive && projects.length == 1) && <EmptyProjectModal/> }
       <Routes>
         <Route path="/" element={<Home />} />

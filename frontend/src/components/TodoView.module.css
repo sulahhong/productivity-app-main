@@ -5,9 +5,33 @@
   gap: 1rem;
   align-items: center;
   margin: 1rem 0;
+  width: 100%;
 }
 
 .todoViewCard {
+  background-color: white;
+  border-bottom: 1px solid rgb(216, 216, 216);
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: 80%;
+}
+
+.todoViewCardDone {
+  background-color: rgb(224, 224, 224);
+  border: 1px solid rgb(216, 216, 216);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: 80%;
+}
+
+/* .todoViewCard {
   background-color: white;
   border: 1px solid rgb(216, 216, 216);
   border-radius: 0.5rem;
@@ -17,10 +41,9 @@
   justify-content: space-between;
   position: relative;
   width: 80%;
-}
+} */
 
-
-.todoViewCardDone {
+/* .todoViewCardDone {
   background-color: rgb(224, 224, 224);
   border: 1px solid rgb(216, 216, 216);
   border-radius: 0.5rem;
@@ -30,7 +53,10 @@
   justify-content: space-between;
   position: relative;
   width: 80%;
-}
+} */
+
+
+
 
 .todoViewGroupContainer {
   display: flex;
@@ -78,11 +104,11 @@
 .todoCardButtons {
 
   display: flex;
-  justify-content: end;
-  align-items: end;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   font-size: 1.2rem;
-  top: 1rem;
+  /* top: 1rem; */
   right: 1rem;
 }
 

@@ -10,10 +10,7 @@
     padding: 1rem;
 }
 
-.singlePageBodyTitle {
-    padding-bottom: 1rem;
-    border-bottom: 1px solid rgb(209, 206, 206);
-}
+
 
 .singlePageMain {
     padding-top: 1rem;
@@ -113,7 +110,6 @@
 }
 
 .priorityDropdownContent {
-    top: 8.8rem;
     left: 16.5rem;
     position: absolute;
     background-color: #fff;
@@ -145,8 +141,8 @@
 }
 
 .projectDropdownContent {
-    top: 8.8rem;
-    left: 26rem;
+    
+    left: 25.7rem;
     position: absolute;
     background-color: #fff;
     box-shadow: 0 1px 8px 0 rgb(0 0 0 / 8%);
@@ -175,8 +171,8 @@
 
 
 .dueDateDropdownContent {
-    top: 8.5rem;
-    left: 21.8rem;
+    top: 25rem;
+    left: 21.5rem;
     position: absolute;
     background-color: #fff;
     box-shadow: 0 1px 8px 0 rgb(0 0 0 / 8%);
@@ -333,4 +329,22 @@
 
 .todoSubtaskBtn {
     color: gray;
+}
+
+.singlePageBodyTitle {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgb(209, 206, 206);
+    display: flex;
+    align-items: center;
+}
+
+.singlePageBackButton {
+    border: none;
+    background-color: white;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: gray;
+    cursor: pointer;
 }

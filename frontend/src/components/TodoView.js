@@ -54,17 +54,7 @@ function TodoView({ groupView, setGroupView }) {
     setTodos(arr);
   };
 
-  const todoDonePrioritySelector = (priority) => {
-    if (priority == 1) {
-      return "todoview_priority1";
-    } else if (priority == 2) {
-      return "todoview_priority2";
-    } else if (priority == 3) {
-      return "todoview_priority3";
-    } else if (priority == 4) {
-      return "todoview_priority4";
-    }
-  };
+
 
   // 날짜 갭 계산
   // useEffect(() => {
@@ -112,37 +102,46 @@ function TodoView({ groupView, setGroupView }) {
     <div className={styles.todoViewContainer}>
       {viewTodos.length > 0 && groupView ? (
         <div className={styles.todoViewGroupContainer}>
-          {viewTodos.find((item) => item.todoPriority === "1") && (
-            <div className={styles.todoViewGroupTitle}>P1</div>
+          {viewTodos.find((item) => item.priorityId === "1") && (
+            <div className={styles.todoViewGroupTitle}>Urgent</div>
           )}
 
           {viewTodos
-            .filter((item) => item.todoPriority == "1")
+            .filter((item) => item.priorityId === "1")
             .map((item) => (
               <SingleTodoItem item={item} />
             ))}
-          {viewTodos.find((item) => item.todoPriority === "2") && (
-            <div className={styles.todoViewGroupTitle}>P2</div>
+          {viewTodos.find((item) => item.priorityId === "2") && (
+            <div className={styles.todoViewGroupTitle}>High</div>
           )}
           {viewTodos
-            .filter((item) => item.todoPriority == "2")
+            .filter((item) => item.priorityId === "2")
             .map((item) => (
               <SingleTodoItem item={item} />
             ))}
-          {viewTodos.find((item) => item.todoPriority === "3") && (
-            <div className={styles.todoViewGroupTitle}>P3</div>
+          {viewTodos.find((item) => item.priorityId === "3") && (
+            <div className={styles.todoViewGroupTitle}>Medium</div>
           )}
           {viewTodos
-            .filter((item) => item.todoPriority == "3")
+            .filter((item) => item.priorityId === "3")
             .map((item) => (
               <SingleTodoItem item={item} />
             ))}
-          {viewTodos.find((item) => item.todoPriority === "4") && (
-            <div className={styles.todoViewGroupTitle}>P4</div>
+          {viewTodos.find((item) => item.priorityId === "4") && (
+            <div className={styles.todoViewGroupTitle}>Low</div>
           )}
 
           {viewTodos
-            .filter((item) => item.todoPriority == "4")
+            .filter((item) => item.priorityId === "4")
+            .map((item) => (
+              <SingleTodoItem item={item} />
+            ))}
+
+             {viewTodos.find((item) => item.priorityId === "5") && (
+            <div className={styles.todoViewGroupTitle}>No priority</div>
+          )}
+          {viewTodos
+            .filter((item) => item.priorityId == "5")
             .map((item) => (
               <SingleTodoItem item={item} />
             ))}

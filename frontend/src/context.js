@@ -83,6 +83,9 @@ const AppProvider = ({ children }) => {
   const [reply, setReply] = useState(getLocalStorageReply());
   const [subtask, setSubtask] = useState(getLocalStorageSubtask());
   // const [onSubtask, setOnSubtask] = useState(false);
+  
+  //SideOptionModal 상태 
+  const [openSideModal, setOpenSideModal] = useState(false)
 
   const [user, setUser] = useState({
     userId: "8888",
@@ -208,6 +211,7 @@ const AppProvider = ({ children }) => {
         setDueDateDropdown,
         projectDropdown,
         setProjectDropdown,
+        openSideModal, setOpenSideModal, 
       }}
     >
       {children}
