@@ -335,6 +335,12 @@
     padding-bottom: 1rem;
     border-bottom: 1px solid rgb(209, 206, 206);
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.singlePageBodyTitle2 {
+    display: flex;
     align-items: center;
 }
 

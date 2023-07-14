@@ -439,14 +439,19 @@ function TodoSinglePage() {
     <div className={styles.singlePageContainer}>
       <div className={styles.singlePageBody}>
         <div className={styles.singlePageBodyTitle}>
+          <div className={styles.singlePageBodyTitle2}>
           <button 
             className={styles.singlePageBackButton}
             onClick={() => navigate(-1)}>
             <MdKeyboardArrowLeft />
           </button>
-          Detail page
+          <span>Detail page</span>
+          </div>
           <div>
-            <button onClick={() => setOpenSideModal(!openSideModal)}><MdVerticalSplit /> </button>
+            <button 
+            className={styles.singlePageBackButton}
+            onClick={() => setOpenSideModal(!openSideModal)}>
+              <MdVerticalSplit /> </button>
           </div>
         </div>
 
