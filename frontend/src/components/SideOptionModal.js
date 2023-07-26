@@ -1,7 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from "./SideOptionModal.module.css"
+import { useGlobalContext } from "../context";
 
-function SideOptionModal() {
+function SideOptionModal({id, todoForm}) {
+  const {
+    todos,
+    setTodos,
+    openModal,
+    setOpenModal,
+    targetTodoGlobal,
+    setTargetTodoGlobal,
+    setIsEditingTodo,
+    isEditingTodo,
+    viewTodos,
+    setViewTodos,
+    projects,
+    setProjects,
+  } = useGlobalContext();
+
+
+
+  useEffect(() => {
+    console.log("todotodoId", id, todoForm )
+  }, [])
+
   return (
       <div className={styles.sideModalContainer}>
         <div className={styles.sideModalContent}>

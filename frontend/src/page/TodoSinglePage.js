@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
+import { CircularProgressbar } from 'react-circular-progressbar';
 import styles from "./TodoSinglePage.module.css";
 import {
   MdOutlineClose,
@@ -20,6 +21,7 @@ import {
   MdVerticalSplit,
 } from "react-icons/md";
 import Comments from "../components/Comments";
+import SideOptionModal from "../components/SideOptionModal";
 
 function TodoSinglePage() {
   const {
@@ -452,6 +454,7 @@ function TodoSinglePage() {
             className={styles.singlePageBackButton}
             onClick={() => setOpenSideModal(!openSideModal)}>
               <MdVerticalSplit /> </button>
+              {openSideModal && <SideOptionModal id={id} todoForm={todoForm} />}
           </div>
         </div>
 

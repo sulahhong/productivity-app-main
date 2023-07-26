@@ -153,7 +153,7 @@ function SingleTodoItem({item}) {
                 {/* <div className={styles.todoCardDescription}>
                   {item.todoDescription}
                 </div> */}
-                {/* <div className={styles.todoCardDateview}>
+                <div className={styles.todoCardDateview}> 
                   <div className={styles.todoCardDueDate}>
                     <div className={styles.dueDateIcon}>
                       <MdCalendarToday />
@@ -169,7 +169,7 @@ function SingleTodoItem({item}) {
                       {dateDifference(item.todoDueDate)}
                     </div>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
             <div className={styles.todoCardButtons} id="deleteBtn">
