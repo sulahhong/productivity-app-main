@@ -58,7 +58,7 @@ function ProjectModal() {
   const createNewProject = () => {
     console.log("gg", projectForm);
 
-    setProjects([projectForm, ...projects]);
+    setProjects([ ...projects, projectForm]);
     setOpenModalProject(false);
   };
 

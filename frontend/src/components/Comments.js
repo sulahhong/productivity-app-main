@@ -25,7 +25,7 @@ function Comments({ item }) {
     commentUpdateTime: "",
     commentIsReply: false,
     postId: "",
-    likeNum: "0",
+    likeNum: 0,
   });
 
   const {

@@ -82,6 +82,7 @@ function TodoSinglePage() {
     commentUpdateTime: "",
     commentIsReply: false,
     postId: "",
+    likeNum: 0,
   });
   const {
     commentId,
@@ -91,6 +92,7 @@ function TodoSinglePage() {
     commentUpdateTime,
     commentIsReply,
     postId,
+    likeNum,
   } = commentsForm;
 
   const [subtaskForm, setSubtaskForm] = useState({
@@ -454,6 +456,8 @@ function TodoSinglePage() {
             className={styles.singlePageBackButton}
             onClick={() => setOpenSideModal(!openSideModal)}>
               <MdVerticalSplit /> </button>
+              {console.log("conconcon", id, todoForm)}
+
               {openSideModal && <SideOptionModal id={id} todoForm={todoForm} />}
           </div>
         </div>

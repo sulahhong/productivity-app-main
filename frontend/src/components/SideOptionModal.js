@@ -29,7 +29,7 @@ function SideOptionModal({id, todoForm}) {
         <div className={styles.sideModalContent}>
             <div className={styles.sideModalBody}>  
             <div className={styles.sideModalTitle}>
-                <div className={styles.sideModalTitleItem}>Priority</div>
+                <div className={styles.sideModalTitleItem}>Priority {todoForm?.priorityTitle}</div>
                 <div className={styles.sideModalTitleItem}>Date</div>
                 <div className={styles.sideModalTitleItem}>Project</div>
             </div>
