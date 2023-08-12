@@ -318,6 +318,7 @@ function Todo() {
         </div>
 
         <TodoView groupView={groupView} setGroupView={setGroupView} />
+        {/* {sortType=="original" ? <></>: <TodoView groupView={groupView} setGroupView={setGroupView} />} */}
         <div>
           <button onClick={selectAlltodo}>모두 선택</button>
           <button onClick={clearAllTodo}>모두 삭제</button>

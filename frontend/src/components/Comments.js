@@ -25,7 +25,7 @@ function Comments({ item }) {
     commentUpdateTime: "",
     commentIsReply: false,
     postId: "",
-    likeNum: 0,
+    like: [],
   });
 
   const {
@@ -36,7 +36,7 @@ function Comments({ item }) {
     commentUpdateTime,
     commentIsReply,
     postId,
-    likeNum,
+    like,
   } = commentsForm;
 
   const [replyForm, setReplyForm] = useState({
@@ -178,20 +178,20 @@ function Comments({ item }) {
   };
 
   //LikeNum counter 함수 , decresement 함수는 아직 
-  const incrementCounter = (id) => {
-    setComments(preComments => {
-      return preComments.map(comment => {
-        if(comment.commentId === id) {
-          return {
-            ...comment, 
-            likeNum: comment.likeNum +1
-          }
-        }
-        return comment
-      })
-    })
+  // const incrementCounter = (id) => {
+  //   setComments(preComments => {
+  //     return preComments.map(comment => {
+  //       if(comment.commentId === id) {
+  //         return {
+  //           ...comment, 
+  //           likeNum: comment.likeNum +1
+  //         }
+  //       }
+  //       return comment
+  //     })
+  //   })
 
-  }
+  // }
 
   return (
     <>
@@ -199,7 +199,7 @@ function Comments({ item }) {
         <div className={styles.commentUser}>
           <div className={styles.commentFirstPart}>
             <div className={styles.commentLikeBox}
-              onClick={() => incrementCounter(item.commentId)}
+              // onClick={() => incrementCounter(item.commentId)}
               >
               <MdThumbUp />
               {item.likeNum}

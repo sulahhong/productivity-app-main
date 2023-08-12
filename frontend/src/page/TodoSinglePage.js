@@ -82,7 +82,7 @@ function TodoSinglePage() {
     commentUpdateTime: "",
     commentIsReply: false,
     postId: "",
-    likeNum: 0,
+    like: [],
   });
   const {
     commentId,
@@ -92,7 +92,7 @@ function TodoSinglePage() {
     commentUpdateTime,
     commentIsReply,
     postId,
-    likeNum,
+    like,
   } = commentsForm;
 
   const [subtaskForm, setSubtaskForm] = useState({
@@ -331,7 +331,7 @@ function TodoSinglePage() {
         commentUpdateTime: "",
         commentIsReply: false,
         postId: "",
-        likeNum: 0 , 
+        likeNum: [] , 
       });
     }
   }, [commentsForm]);
