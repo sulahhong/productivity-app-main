@@ -2,8 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
-import { CircularProgressbar } from 'react-circular-progressbar';
 import styles from "./TodoSinglePage.module.css";
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import {
   MdOutlineClose,
   MdCalendarToday,
@@ -119,6 +120,21 @@ function TodoSinglePage() {
   // comment inputbox cursor 상태
   const [commentIsFocused, setCommentIsFocused] = useState(false);
 
+  const [completedSubtask, setCompletedSubtask] = useState(0)
+  const [totalSubtask, setTotalSubtask] = useState(0)
+
+  useEffect(() => {
+    let total = subtask.filter((item) => item.subtaskPostId == todoId).length
+
+    console.log("tttoooddd", total)
+    setTotalSubtask(total)
+
+    let completed = subtask.filter((item) => item.subtaskPostId == todoId).filter((item) => item.subtaskDone == true).length
+
+    setCompletedSubtask(completed)
+
+
+  }, [subtask])
 
   useEffect(() => {
     // console.log("todopathIdcheck", id);
@@ -439,6 +455,8 @@ function TodoSinglePage() {
     };
   });
 
+
+
   return (
     <div className={styles.singlePageContainer}>
       <div className={styles.singlePageBody}>
@@ -595,7 +613,8 @@ function TodoSinglePage() {
               className={styles.todoSubtaskBtn}
               onClick={() => setOnSubtask(true)}
             >
-              <MdAdd /> Sub task
+              <MdAdd /> Sub task 
+              <CircularProgressbar value={completedSubtask} maxValue={totalSubtask} text={`${completedSubtask}/${totalSubtask}`} />
             </div>
           )}
         </div>
