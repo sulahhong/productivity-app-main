@@ -18,6 +18,7 @@ import { getStringDate } from "../utill/date";
 import styles from "./TodoModal.module.css";
 import Comments from "./Comments";
 import { MdKeyboardArrowDown, MdAdd } from "react-icons/md";
+import PriorityDropdown from "./PriorityDropdown";
 
 function TodoModal() {
   const {
@@ -495,6 +496,7 @@ function TodoModal() {
                 ))}
               </div>
             )}
+            <PriorityDropdown todoForm={todoForm} setTodoForm={setTodoForm} todoId={todoId}/>
             <button
               className={styles.textBoxIconsingle}
               onClick={() => setDueDateDropdown(!dueDateDropdown)}

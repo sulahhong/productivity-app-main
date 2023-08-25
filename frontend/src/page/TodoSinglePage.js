@@ -23,6 +23,11 @@ import {
 } from "react-icons/md";
 import Comments from "../components/Comments";
 import SideOptionModal from "../components/SideOptionModal";
+import PriorityDropdown from "../components/PriorityDropdown";
+import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
+import '@szhsin/react-menu/dist/transitions/slide.css';
+
 
 function TodoSinglePage() {
   const {
@@ -395,6 +400,7 @@ function TodoSinglePage() {
     };
 
     setTodoForm(todo);
+    console.log("CHNAGE PRIO: " , todo)
 
     const todoEditIndex = todos.findIndex((item) => item.todoId == todoId);
     const testArray = [...todos];
@@ -412,24 +418,24 @@ function TodoSinglePage() {
     setProjectDropdown(false);
   };
 
-  let priorityRef = useRef();
+  let priorityRef = useRef(null);
   let dueDateRef = useRef();
   let projectRef = useRef();
 
-  useEffect(() => {
-    let handler = (e) => {
-      if (!priorityRef.current.contains(e.target)) {
-        setPriorityDropdown(false);
-      }
-      console.log("ppppmmmm", e.target);
-      console.log("ppmmm2222", priorityRef.current);
-    };
-    document.addEventListener("mousedown", handler);
+  // useEffect(() => {
+  //   let handler = (e) => {
+  //     if (!priorityRef.current.contains(e.target)) {
+  //       setPriorityDropdown(false);
+  //     }
+  //     console.log("ppppmmmm", e.target);
+  //     console.log("ppmmm2222", priorityRef.current);
+  //   };
+  //   document.addEventListener("mousedown", handler);
 
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
+  //   return () => {
+  //     document.removeEventListener("mousedown", handler);
+  //   };
+  // });
   useEffect(() => {
     let handler = (e) => {
       if (!dueDateRef.current.contains(e.target)) {
@@ -476,10 +482,10 @@ function TodoSinglePage() {
               <MdVerticalSplit /> </button>
               {console.log("conconcon", id, todoForm)}
 
-              {openSideModal && <SideOptionModal id={id} todoForm={todoForm} />}
+              {openSideModal && <SideOptionModal id={id} todoForm={todoForm} setTodoForm={setTodoForm}/>}
           </div>
         </div>
-
+        
         <div className={styles.singlePageMain}>
           <div className={styles.singlePageInput}>
             <input
@@ -504,7 +510,7 @@ function TodoSinglePage() {
             />
           </div>
           <div className={styles.textBoxIcons}>
-            <button
+            {/* <button
               className={styles.textBoxIconsingle}
               onClick={() => setPriorityDropdown(!priorityDropdown)}
             >
@@ -529,7 +535,15 @@ function TodoSinglePage() {
                   </div>
                 ))}
               </div>
-            )}
+            )} */}
+   <Menu menuButton={<MenuButton>Menu</MenuButton>} transition>
+      <MenuItem>Cut</MenuItem>
+      <MenuItem>Copy</MenuItem>
+      <MenuItem>Paste</MenuItem>
+    </Menu>
+
+            <PriorityDropdown todoForm={todoForm} setTodoForm={setTodoForm} todoId={todoId} />
+
             <button
               className={styles.textBoxIconsingle}
               onClick={() => setDueDateDropdown(!dueDateDropdown)}
@@ -613,8 +627,10 @@ function TodoSinglePage() {
               className={styles.todoSubtaskBtn}
               onClick={() => setOnSubtask(true)}
             >
-              <MdAdd /> Sub task 
+              <div className={styles.subtaskTitle}><MdAdd /> Sub task </div>
+              {<div className={styles.SubtaskProgressbar} >
               <CircularProgressbar value={completedSubtask} maxValue={totalSubtask} text={`${completedSubtask}/${totalSubtask}`} />
+              </div>}
             </div>
           )}
         </div>

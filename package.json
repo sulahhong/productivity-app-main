@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@radix-ui/react-icons": "^1.1.1",
+    "@szhsin/react-menu": "^4.0.3",
+    "rc-menu": "^9.11.1",
     "react-circular-progressbar": "^2.1.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1"

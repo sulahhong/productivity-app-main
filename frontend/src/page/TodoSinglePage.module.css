@@ -110,7 +110,8 @@
 }
 
 .priorityDropdownContent {
-    left: 16.5rem;
+    left: 0;
+    
     position: absolute;
     background-color: #fff;
     box-shadow: 0 1px 8px 0 rgb(0 0 0 / 8%);
@@ -120,6 +121,12 @@
     width: 6.5rem;
     padding: 0.2rem ;
     font-size: 0.8rem;
+
+    top: 1.7rem;
+}
+.parent{
+    background-color: red;
+    position: relative;
 }
 
 .priorityDropdownContentItem {
@@ -329,6 +336,9 @@
 
 .todoSubtaskBtn {
     color: gray;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .singlePageBodyTitle {
@@ -353,4 +363,14 @@
     justify-content: center;
     color: gray;
     cursor: pointer;
+}
+
+.SubtaskProgressbar {
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+}
+
+.subtaskTitle {
+  
 }

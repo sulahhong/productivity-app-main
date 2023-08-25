@@ -14,6 +14,7 @@ import styles from "./Todo.module.css";
 import { useGlobalContext } from "../context";
 import TodoView from "../components/TodoView";
 
+
 function Todo() {
   const {
     todos,
@@ -191,6 +192,8 @@ function Todo() {
               Group View
             </button>
           </div>
+
+
 
           <div className={styles.sortDropdownContainer}>
             <button
