@@ -29,6 +29,7 @@ function ProjectDropdown({ todoForm, setTodoForm, todoId, type }) {
       ["projectTitle"]: option.projectTitle,
     }));
     setProjectDropdown(false);
+    
   };
 
   return (

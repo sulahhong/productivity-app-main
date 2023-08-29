@@ -66,6 +66,7 @@ function TodoModal() {
     projectTitle: projects.length > 0 ? projects[0].projectTitle : "",
     priorityId: "",
     priorityTitle: "",
+    label: [],
   });
   const {
     todoId,
@@ -78,6 +79,7 @@ function TodoModal() {
     projectTitle,
     priorityId,
     priorityTitle,
+    label,
   } = todoForm;
 
   const [commentsForm, setCommentsForm] = useState({
@@ -488,7 +490,11 @@ function TodoModal() {
               setTodoForm={setTodoForm}
               todoId={todoId}
             />
-            <LabelDropdown />
+            <LabelDropdown 
+              todoForm={todoForm}
+              setTodoForm={setTodoForm}
+              todoId={todoId}
+            />
           </div>
           <div className={styles.todoModalInput}>
             <input

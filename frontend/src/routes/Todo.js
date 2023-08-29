@@ -322,12 +322,12 @@ function Todo() {
 
         <TodoView groupView={groupView} setGroupView={setGroupView} />
         {/* {sortType=="original" ? <></>: <TodoView groupView={groupView} setGroupView={setGroupView} />} */}
-        <div>
+        {/* <div>
           <button onClick={selectAlltodo}>모두 선택</button>
           <button onClick={clearAllTodo}>모두 삭제</button>
-        </div>
+        </div> */}
       </div>
-      <div className={styles.todoBodyFooter}>this is the footer </div>
+      {/* <div className={styles.todoBodyFooter}>this is the footer </div> */}
     </div>
   );
 }

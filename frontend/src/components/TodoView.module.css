@@ -11,12 +11,12 @@
 .todoViewCard {
   background-color: white;
   border-bottom: 1px solid rgb(216, 216, 216);
-  padding: 0.5rem;
+  padding: 0.2rem ;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
-  width: 80%;
+  width: 100%;
 }
 
 .todoViewCardDone {
@@ -28,7 +28,7 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
-  width: 80%;
+  width: 100%;
 }
 
 /* .todoViewCard {
@@ -249,8 +249,8 @@
 }
 
 @media (max-width: 1080px) {
-  .todoViewCard {width: 90%}
-  .todoViewCardDone {width: 90%}
-  .todoViewEmpty {width: 90%}
+  .todoViewCard {width: 95%}
+  .todoViewCardDone {width: 95%}
+  .todoViewEmpty {width: 95%}
 }
 

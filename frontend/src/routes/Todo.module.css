@@ -11,7 +11,7 @@
 
 .todoAddButton {
     padding: 0.2rem 1rem;
-    font-size: 1rem;
+    font-size: 0.8rem;
     border: none;
     background-color: whitesmoke;
     color: gray;
@@ -27,7 +27,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
 }
 
 .todoBodyButton {
@@ -38,7 +38,7 @@
 }
 
 .todoAddIcon {
-    font-size: 1.5rem;
+    font-size: 0.8rem;
     margin-right: 0.3rem;
 }
 

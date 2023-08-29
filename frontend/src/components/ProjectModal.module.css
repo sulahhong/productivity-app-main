@@ -1,9 +1,9 @@
 .ProjectModalOverlay {
     position: fixed;
-    background-color: rgba(0, 0, 0, 0.848);
+    background-color: rgba(148, 143, 143, 0.848);
     width: 100vw;
     height: 100vh;
-    z-index: 101;
+    z-index: 1003;
     display: flex;
     align-items: center;
     justify-content: center;

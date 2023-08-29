@@ -79,9 +79,9 @@ function TodoSinglePage() {
     projectTitle,
     priorityId,
     priorityTitle,
+    label,
   } = todoForm;
 
-  console.log("!!!q", todoTitle);
 
   const [commentsForm, setCommentsForm] = useState({
     commentId: "",
@@ -174,7 +174,7 @@ function TodoSinglePage() {
     testArray.splice(todoEditIndex, 1, todoForm);
 
     setTodos(testArray);
-  }, [todoPriority, todoDueDate, projectId, projectTitle]);
+  }, [priorityId, priorityTitle, todoDueDate, projectId, projectTitle, label]);
 
   const handleTodoChange = (e) => {
     console.log("TODO ATTRIBUTE", e.target.name);
@@ -484,7 +484,6 @@ function TodoSinglePage() {
             >
               <MdVerticalSplit />{" "}
             </button>
-            {console.log("conconcon", id, todoForm)}
 
             {openSideModal && (
               <SideOptionModal
@@ -552,18 +551,16 @@ function TodoSinglePage() {
       <MenuItem>Paste</MenuItem>
     </Menu> */}
 
-            <LabelDropdown />
-
             <PriorityDropdown
               todoForm={todoForm}
               setTodoForm={setTodoForm}
               todoId={todoId}
             />
 
-            <DuedateDropdown 
-               todoForm={todoForm}
-               setTodoForm={setTodoForm}
-               todoId={todoId}
+            <DuedateDropdown
+              todoForm={todoForm}
+              setTodoForm={setTodoForm}
+              todoId={todoId}
             />
             {/* <button
               className={styles.textBoxIconsingle}
@@ -590,9 +587,15 @@ function TodoSinglePage() {
             )} */}
 
             <ProjectDropdown
-               todoForm={todoForm}
-               setTodoForm={setTodoForm}
-               todoId={todoId}
+              todoForm={todoForm}
+              setTodoForm={setTodoForm}
+              todoId={todoId}
+            />
+
+            <LabelDropdown
+              todoForm={todoForm}
+              setTodoForm={setTodoForm}
+              todoId={todoId}
             />
 
             {/* <button

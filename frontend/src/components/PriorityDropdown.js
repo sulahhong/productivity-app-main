@@ -56,11 +56,11 @@ function PriorityDropdown({ todoForm, setTodoForm, todoId, type }) {
     setTodoForm(todo);
     console.log("CHNAGE PRIO: ", todo);
 
-    const todoEditIndex = todos.findIndex((item) => item.todoId == todoId);
-    const testArray = [...todos];
-    testArray.splice(todoEditIndex, 1, todo);
-    setTodos(testArray);
-    setPriorityDropdown(false);
+    // const todoEditIndex = todos.findIndex((item) => item.todoId == todoId);
+    // const testArray = [...todos];
+    // testArray.splice(todoEditIndex, 1, todo);
+    // setTodos(testArray);
+    // setPriorityDropdown(false);
   };
 
   return (

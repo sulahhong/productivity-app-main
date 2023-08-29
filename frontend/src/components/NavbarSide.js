@@ -14,7 +14,14 @@ import {
   MdOutlineDelete,
   MdOutlineArchive,
 } from "react-icons/md";
-import { FaRegCalendarAlt, FaRegListAlt } from "react-icons/fa";
+import {
+  FaRegCalendarAlt,
+  FaRegListAlt,
+  FaUserCircle,
+  FaRegStar,
+  FaRegEdit,
+  FaSearch,
+} from "react-icons/fa";
 
 function NavbarSide() {
   const {
@@ -54,8 +61,8 @@ function NavbarSide() {
   };
 
   const goArchive = () => {
-    navigate("/archive")
-  }
+    navigate("/archive");
+  };
 
   const handleProjectView = (item) => {
     console.log("projectView", item.projectId);
@@ -72,7 +79,6 @@ function NavbarSide() {
   const projectHandler = () => {
     setProjectIsActive(!projectIsActive);
     setViewTodos(todos);
-    
   };
 
   const handleEditProject = (id) => {
@@ -85,8 +91,8 @@ function NavbarSide() {
   };
 
   const handleDeleteProject = (id) => {
-    if(projects.length ===2){
-      setProjectIsActive(false)
+    if (projects.length === 2) {
+      setProjectIsActive(false);
     }
     console.log("DEL project id", id);
     const newArray = projects.filter((item) => item.projectId !== id);
@@ -115,6 +121,23 @@ function NavbarSide() {
           : styles.navbarSideContainer
       }
     >
+      <div className={styles.navbarSideTopPart}>
+        <div className={styles.navbarSideUserInfo}>
+          <div className={styles.navbarSideUserWorkplace}>
+            <div className={styles.UserWorkplaceIcon}>
+              <FaRegStar />
+            </div>
+            <div className={styles.UserWorkplaceName}>work space</div>
+          </div>
+          <div className={styles.navbarSideUserProfile}>
+            <FaUserCircle />
+          </div>
+        </div>
+        <div className={styles.navbarSideNewIssueBar}>
+          <button className={styles.newIssuePart1}><FaRegEdit /> New Issue</button>
+          <button className={styles.newIssuePart2}><FaSearch /> </button>
+        </div>
+      </div>
       <div className={styles.navbarSideContents}>
         <div className={styles.navbarSideItems} onClick={goHome}>
           <MdSpaceDashboard className={styles.navbarSideIcons} /> Dashboard
@@ -162,15 +185,21 @@ function NavbarSide() {
                   onClick={() => handleProjectView(item)}
                   className={styles.navbarProjectMenu}
                 >
-                  <div>
-                    <MdLens className={styles.navbarSideIcons2} />
-                    {item.projectTitle}{" "}
+                  <div className={styles.projectLeftPart}>
+                    <div className={styles.projectLeftPart1}>
+                      <MdLens />
+                    </div>
+                    <div className={styles.projectLeftPart2}>
+                      {item.projectTitle}
+                    </div>
                   </div>
-                  <div onClick={() => handleEditProject(item.projectId)}>
-                    <MdOutlineEdit />
-                  </div>
-                  <div onClick={() => handleDeleteProject(item.projectId)}>
-                    <MdOutlineDelete />
+                  <div className={styles.projectLeftPart}>
+                    <div onClick={() => handleEditProject(item.projectId)}>
+                      <MdOutlineEdit />
+                    </div>
+                    <div onClick={() => handleDeleteProject(item.projectId)}>
+                      <MdOutlineDelete />
+                    </div>
                   </div>
                 </div>
               );
