@@ -125,7 +125,7 @@
     top: 1.7rem;
 }
 .parent{
-    background-color: red;
+    /* background-color: red; */
     position: relative;
 }
 
@@ -196,7 +196,15 @@
 .textBoxIcons {
     border: none;
     padding-bottom: 1rem;
-    
+    display: flex;
+
+}
+
+.optionContainer {
+    border: none;
+    padding-bottom: 1rem;
+    display: flex;
+
 }
 
 .textBoxIconsingle {
@@ -207,7 +215,10 @@
 
     color: gray;
     cursor: pointer;
-
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.2rem 0.7rem;
 }
 
 .textBoxIconsingle:hover {

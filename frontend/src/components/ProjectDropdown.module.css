@@ -1,0 +1,46 @@
+.parent{
+    position: relative;
+}
+
+.textBoxIconsingle {
+    background-color: white;
+    border: 1px solid rgb(223, 225, 228);
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 1px;
+    margin-right: 0.5rem;
+
+    color: gray;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.2rem 0.7rem;
+}
+
+.projectDropdownContent {
+    
+    left: 0;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 1px 8px 0 rgb(0 0 0 / 8%);
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    z-index: 2;
+    width: 6.5rem;
+    padding: 0.2rem ;
+    font-size: 0.8rem;
+}
+
+.projectDropdownItem {
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+
+    border-radius: 0.2rem;
+    transition: background-color 0.3s ease;
+}
+
+.projectDropdownItem:hover {
+    background-color: rgb(231, 230, 230);   
+}

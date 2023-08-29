@@ -13,7 +13,6 @@
 .todoModalContainer{
     background-color: white;
     width: 70%;
-    height: 35%;
     max-width: 800px;
     border-radius: 5px;
     margin: auto 0;
@@ -154,6 +153,15 @@
     border: none;
     padding-bottom: 0.5rem;
     
+}
+
+.optionContainer {
+    border: none;
+    padding-bottom: 1rem;
+    display: flex;
+    color: gray;
+    cursor: pointer;
+
 }
 
 .textBoxIconsingle {

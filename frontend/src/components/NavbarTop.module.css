@@ -8,6 +8,7 @@
     height: var(--navTopHeight);
     background-color: var(--navTopColor);
     z-index: 1001;
+    border-bottom: 1px solid var(--borderLineColor) ;
 }
 
 .navbarTopLeft {

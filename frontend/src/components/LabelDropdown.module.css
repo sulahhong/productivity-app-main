@@ -1,0 +1,22 @@
+.circle {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: red;
+}
+
+.labelItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.optionContainer {
+    border: none;
+    padding-bottom: 1rem;
+    display: flex;
+    color: gray;
+    cursor: pointer;
+    
+}

@@ -49,6 +49,15 @@ const getLocalStorageSubtask = () => {
   }
 };
 
+const getLocalStorageLabels = () => {
+  let storage = localStorage.getItem("labels");
+  if (storage) {
+    return JSON.parse(storage)
+  } else {
+    return []
+  }
+}
+
 const AppProvider = ({ children }) => {
   const [todos, setTodos] = useState(getLocalStorage());
   const [targetTodoGlobal, setTargetTodoGlobal] = useState({});
@@ -87,6 +96,9 @@ const AppProvider = ({ children }) => {
   //SideOptionModal 상태 
   const [openSideModal, setOpenSideModal] = useState(false)
 
+  //labelList
+  const [labels, setLabels] = useState(getLocalStorageLabels());
+
   const [user, setUser] = useState({
     userId: "8888",
     userName: "SA",
@@ -117,6 +129,10 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     window.localStorage.setItem("subtask", JSON.stringify(subtask));
   }, [subtask]);
+
+  useEffect(() => {
+    window.localStorage.setItem("labels", JSON.stringify(labels))
+  }, [labels])
 
   useEffect(() => {
     // let arr = [...todos];
@@ -211,7 +227,7 @@ const AppProvider = ({ children }) => {
         setDueDateDropdown,
         projectDropdown,
         setProjectDropdown,
-        openSideModal, setOpenSideModal, 
+        openSideModal, setOpenSideModal, labels, setLabels
       }}
     >
       {children}

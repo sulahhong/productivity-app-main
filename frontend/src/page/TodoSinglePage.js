@@ -3,8 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./TodoSinglePage.module.css";
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 import {
   MdOutlineClose,
   MdCalendarToday,
@@ -24,10 +24,12 @@ import {
 import Comments from "../components/Comments";
 import SideOptionModal from "../components/SideOptionModal";
 import PriorityDropdown from "../components/PriorityDropdown";
-import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
-import '@szhsin/react-menu/dist/index.css';
-import '@szhsin/react-menu/dist/transitions/slide.css';
-
+import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
+import "@szhsin/react-menu/dist/index.css";
+import "@szhsin/react-menu/dist/transitions/slide.css";
+import LabelDropdown from "../components/LabelDropdown";
+import DuedateDropdown from "../components/DuedateDropdown";
+import ProjectDropdown from "../components/ProjectDropdown";
 
 function TodoSinglePage() {
   const {
@@ -52,7 +54,8 @@ function TodoSinglePage() {
     setProjectDropdown,
     priority,
     setPriority,
-    openSideModal, setOpenSideModal, 
+    openSideModal,
+    setOpenSideModal,
   } = useGlobalContext();
 
   const { id } = useParams();
@@ -125,21 +128,21 @@ function TodoSinglePage() {
   // comment inputbox cursor 상태
   const [commentIsFocused, setCommentIsFocused] = useState(false);
 
-  const [completedSubtask, setCompletedSubtask] = useState(0)
-  const [totalSubtask, setTotalSubtask] = useState(0)
+  const [completedSubtask, setCompletedSubtask] = useState(0);
+  const [totalSubtask, setTotalSubtask] = useState(0);
 
   useEffect(() => {
-    let total = subtask.filter((item) => item.subtaskPostId == todoId).length
+    let total = subtask.filter((item) => item.subtaskPostId == todoId).length;
 
-    console.log("tttoooddd", total)
-    setTotalSubtask(total)
+    console.log("tttoooddd", total);
+    setTotalSubtask(total);
 
-    let completed = subtask.filter((item) => item.subtaskPostId == todoId).filter((item) => item.subtaskDone == true).length
+    let completed = subtask
+      .filter((item) => item.subtaskPostId == todoId)
+      .filter((item) => item.subtaskDone == true).length;
 
-    setCompletedSubtask(completed)
-
-
-  }, [subtask])
+    setCompletedSubtask(completed);
+  }, [subtask]);
 
   useEffect(() => {
     // console.log("todopathIdcheck", id);
@@ -352,7 +355,7 @@ function TodoSinglePage() {
         commentUpdateTime: "",
         commentIsReply: false,
         postId: "",
-        likeNum: [] , 
+        likeNum: [],
       });
     }
   }, [commentsForm]);
@@ -400,7 +403,7 @@ function TodoSinglePage() {
     };
 
     setTodoForm(todo);
-    console.log("CHNAGE PRIO: " , todo)
+    console.log("CHNAGE PRIO: ", todo);
 
     const todoEditIndex = todos.findIndex((item) => item.todoId == todoId);
     const testArray = [...todos];
@@ -461,31 +464,38 @@ function TodoSinglePage() {
     };
   });
 
-
-
   return (
     <div className={styles.singlePageContainer}>
       <div className={styles.singlePageBody}>
         <div className={styles.singlePageBodyTitle}>
           <div className={styles.singlePageBodyTitle2}>
-          <button 
-            className={styles.singlePageBackButton}
-            onClick={() => navigate(-1)}>
-            <MdKeyboardArrowLeft />
-          </button>
-          <span>Detail page</span>
+            <button
+              className={styles.singlePageBackButton}
+              onClick={() => navigate(-1)}
+            >
+              <MdKeyboardArrowLeft />
+            </button>
+            <span>Detail page</span>
           </div>
           <div>
-            <button 
-            className={styles.singlePageBackButton}
-            onClick={() => setOpenSideModal(!openSideModal)}>
-              <MdVerticalSplit /> </button>
-              {console.log("conconcon", id, todoForm)}
+            <button
+              className={styles.singlePageBackButton}
+              onClick={() => setOpenSideModal(!openSideModal)}
+            >
+              <MdVerticalSplit />{" "}
+            </button>
+            {console.log("conconcon", id, todoForm)}
 
-              {openSideModal && <SideOptionModal id={id} todoForm={todoForm} setTodoForm={setTodoForm}/>}
+            {openSideModal && (
+              <SideOptionModal
+                id={id}
+                todoForm={todoForm}
+                setTodoForm={setTodoForm}
+              />
+            )}
           </div>
         </div>
-        
+
         <div className={styles.singlePageMain}>
           <div className={styles.singlePageInput}>
             <input
@@ -509,7 +519,7 @@ function TodoSinglePage() {
               onChange={handleTodoChange}
             />
           </div>
-          <div className={styles.textBoxIcons}>
+          <div className={styles.optionContainer}>
             {/* <button
               className={styles.textBoxIconsingle}
               onClick={() => setPriorityDropdown(!priorityDropdown)}
@@ -536,15 +546,26 @@ function TodoSinglePage() {
                 ))}
               </div>
             )} */}
-   <Menu menuButton={<MenuButton>Menu</MenuButton>} transition>
+            {/* <Menu menuButton={<MenuButton>Menu</MenuButton>} transition>
       <MenuItem>Cut</MenuItem>
       <MenuItem>Copy</MenuItem>
       <MenuItem>Paste</MenuItem>
-    </Menu>
+    </Menu> */}
 
-            <PriorityDropdown todoForm={todoForm} setTodoForm={setTodoForm} todoId={todoId} />
+            <LabelDropdown />
 
-            <button
+            <PriorityDropdown
+              todoForm={todoForm}
+              setTodoForm={setTodoForm}
+              todoId={todoId}
+            />
+
+            <DuedateDropdown 
+               todoForm={todoForm}
+               setTodoForm={setTodoForm}
+               todoId={todoId}
+            />
+            {/* <button
               className={styles.textBoxIconsingle}
               onClick={() => setDueDateDropdown(!dueDateDropdown)}
               key={todoForm.todoDueDate}
@@ -566,8 +587,15 @@ function TodoSinglePage() {
                 name="todoDueDate"
                 onChange={handleTodoChange}
               />
-            )}
-            <button
+            )} */}
+
+            <ProjectDropdown
+               todoForm={todoForm}
+               setTodoForm={setTodoForm}
+               todoId={todoId}
+            />
+
+            {/* <button
               className={styles.textBoxIconsingle}
               onClick={() => setProjectDropdown(!projectDropdown)}
             >
@@ -593,7 +621,7 @@ function TodoSinglePage() {
                     </div>
                   ))}
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>
@@ -627,10 +655,18 @@ function TodoSinglePage() {
               className={styles.todoSubtaskBtn}
               onClick={() => setOnSubtask(true)}
             >
-              <div className={styles.subtaskTitle}><MdAdd /> Sub task </div>
-              {<div className={styles.SubtaskProgressbar} >
-              <CircularProgressbar value={completedSubtask} maxValue={totalSubtask} text={`${completedSubtask}/${totalSubtask}`} />
-              </div>}
+              <div className={styles.subtaskTitle}>
+                <MdAdd /> Sub task{" "}
+              </div>
+              {
+                <div className={styles.SubtaskProgressbar}>
+                  <CircularProgressbar
+                    value={completedSubtask}
+                    maxValue={totalSubtask}
+                    text={`${completedSubtask}/${totalSubtask}`}
+                  />
+                </div>
+              }
             </div>
           )}
         </div>

@@ -1,10 +1,11 @@
 body {
-    --navSideColor: rgb(248, 248, 248);
-    --navTopColor: #bbbdf6;
+    --navSideColor: white;
+    --navTopColor: white;
     --navHoverColor: #d9dafa;
     --navSideWidth: 250px;
     --navTopHeight: 44px;
     --navSideIconColor: rgb(165, 161, 161);
+    --borderLineColor: rgb(216, 216, 216);
 }
 
 .navbarSideContainer {
@@ -14,8 +15,9 @@ body {
     width: var(--navSideWidth);
     height: 100%;
     background-color: var(--navSideColor);
-    z-index: 0;
+    z-index: 1002 ;
     padding: var(--navTopHeight) 0;
+    border-right: 1px solid var(--borderLineColor);
 }
 
 
