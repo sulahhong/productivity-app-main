@@ -22,29 +22,10 @@ import {
 function DuedateDropdown({todoForm, setTodoForm, todoId, type}) {
 
     const {
-        todos,
-        setTodos,
         projects,
-        targetTodoGlobal,
-        setTargetTodoGlobal,
-        comments,
-        setComments,
-        reply,
-        setReply,
-        subtask,
-        setSubtask,
-        user,
-        setUser,
-        priorityDropdown,
-        setPriorityDropdown,
         dueDateDropdown,
         setDueDateDropdown,
-        projectDropdown,
-        setProjectDropdown,
-        priority,
-        setPriority,
-        openSideModal,
-        setOpenSideModal,
+  
       } = useGlobalContext();
 
       let dueDateRef = useRef();

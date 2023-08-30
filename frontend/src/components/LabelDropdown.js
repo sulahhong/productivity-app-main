@@ -127,7 +127,6 @@ const SubMenu = (props) => (
           <MenuItem
             type="checkbox"
             checked={checker(item)}
-            
             onClick={() => handleAddLabel(item)}
           >
             <div

@@ -55,7 +55,7 @@ function TodoSinglePage() {
     priority,
     setPriority,
     openSideModal,
-    setOpenSideModal,
+    setOpenSideModal,labels, setLabels,
   } = useGlobalContext();
 
   const { id } = useParams();
@@ -519,37 +519,6 @@ function TodoSinglePage() {
             />
           </div>
           <div className={styles.optionContainer}>
-            {/* <button
-              className={styles.textBoxIconsingle}
-              onClick={() => setPriorityDropdown(!priorityDropdown)}
-            >
-              <MdOutlinedFlag />
-              {todoForm.priorityTitle == "" ? (
-                <span>Priority</span>
-              ) : (
-                <span>{todoForm.priorityTitle}</span>
-              )}
-            </button>
-            {priorityDropdown && (
-              <div className={styles.priorityDropdownContent} ref={priorityRef}>
-                {priority.map((option) => (
-                  <div
-                    className={styles.priorityDropdownContentItem}
-                    key={option.priorityId}
-                    value={option.priorityId}
-                    onClick={() => handlePriorityMenuChange(option)}
-                  >
-                    {option.priorityTitle}
-                    {todoForm.priorityId == option.priorityId && <MdCheck />}
-                  </div>
-                ))}
-              </div>
-            )} */}
-            {/* <Menu menuButton={<MenuButton>Menu</MenuButton>} transition>
-      <MenuItem>Cut</MenuItem>
-      <MenuItem>Copy</MenuItem>
-      <MenuItem>Paste</MenuItem>
-    </Menu> */}
 
             <PriorityDropdown
               todoForm={todoForm}
@@ -562,29 +531,6 @@ function TodoSinglePage() {
               setTodoForm={setTodoForm}
               todoId={todoId}
             />
-            {/* <button
-              className={styles.textBoxIconsingle}
-              onClick={() => setDueDateDropdown(!dueDateDropdown)}
-              key={todoForm.todoDueDate}
-              value={todoForm.todoDueDate}
-            >
-              <MdCalendarToday />{" "}
-              {todoForm.todoDueDate == "" ? (
-                <span>Date</span>
-              ) : (
-                <span>{todoForm.todoDueDate}</span>
-              )}
-            </button>
-            {dueDateDropdown && (
-              <input
-                ref={dueDateRef}
-                className={styles.dueDateDropdownContent}
-                type="date"
-                value={todoDueDate}
-                name="todoDueDate"
-                onChange={handleTodoChange}
-              />
-            )} */}
 
             <ProjectDropdown
               todoForm={todoForm}
@@ -598,33 +544,11 @@ function TodoSinglePage() {
               todoId={todoId}
             />
 
-            {/* <button
-              className={styles.textBoxIconsingle}
-              onClick={() => setProjectDropdown(!projectDropdown)}
-            >
-              <MdGridView />{" "}
-              {todoForm.projectTitle == "No project" ? (
-                <span>No project</span>
-              ) : (
-                <span>{todoForm.projectTitle}</span>
-              )}
-            </button>
-            {projectDropdown && (
-              <div className={styles.projectDropdownContent} ref={projectRef}>
-                {projects.length > 0 &&
-                  projects.map((option) => (
-                    <div
-                      className={styles.projectDropdownItem}
-                      key={option.projectId}
-                      value={option.projectId}
-                      onClick={() => handleProjectMenuChange(option)}
-                    >
-                      {option.projectTitle}{" "}
-                      {todoForm.projectId == option.projectId && <MdCheck />}
-                    </div>
-                  ))}
-              </div>
-            )} */}
+          </div>
+          <div className={styles.displayLabels}>
+              {
+                
+              }
           </div>
         </div>
       </div>
