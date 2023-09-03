@@ -30,18 +30,15 @@ import "@szhsin/react-menu/dist/transitions/slide.css";
 import LabelDropdown from "../components/LabelDropdown";
 import DuedateDropdown from "../components/DuedateDropdown";
 import ProjectDropdown from "../components/ProjectDropdown";
+import StatusDropdown from "../components/StatusDropdown";
 
 function TodoSinglePage() {
   const {
     todos,
     setTodos,
     projects,
-    targetTodoGlobal,
-    setTargetTodoGlobal,
     comments,
     setComments,
-    reply,
-    setReply,
     subtask,
     setSubtask,
     user,
@@ -55,7 +52,11 @@ function TodoSinglePage() {
     priority,
     setPriority,
     openSideModal,
-    setOpenSideModal,labels, setLabels,
+    setOpenSideModal,
+    labels,
+    setLabels,
+    status,
+    setStatus,
   } = useGlobalContext();
 
   const { id } = useParams();
@@ -72,7 +73,6 @@ function TodoSinglePage() {
     todoTitle,
     todoDescription,
     todoDone,
-    todoPriority,
     todoCreateDate,
     todoDueDate,
     projectId,
@@ -80,8 +80,9 @@ function TodoSinglePage() {
     priorityId,
     priorityTitle,
     label,
+    statusId,
+    statusTitle,
   } = todoForm;
-
 
   const [commentsForm, setCommentsForm] = useState({
     commentId: "",
@@ -134,7 +135,6 @@ function TodoSinglePage() {
   useEffect(() => {
     let total = subtask.filter((item) => item.subtaskPostId == todoId).length;
 
-    console.log("tttoooddd", total);
     setTotalSubtask(total);
 
     let completed = subtask
@@ -174,7 +174,7 @@ function TodoSinglePage() {
     testArray.splice(todoEditIndex, 1, todoForm);
 
     setTodos(testArray);
-  }, [priorityId, priorityTitle, todoDueDate, projectId, projectTitle, label]);
+  }, [priorityId, priorityTitle, todoDueDate, projectId, projectTitle, label, statusId, statusTitle]);
 
   const handleTodoChange = (e) => {
     console.log("TODO ATTRIBUTE", e.target.name);
@@ -519,6 +519,11 @@ function TodoSinglePage() {
             />
           </div>
           <div className={styles.optionContainer}>
+            <StatusDropdown 
+              todoForm={todoForm}
+              setTodoForm={setTodoForm}
+              todoId={todoId}
+            />
 
             <PriorityDropdown
               todoForm={todoForm}
@@ -543,13 +548,8 @@ function TodoSinglePage() {
               setTodoForm={setTodoForm}
               todoId={todoId}
             />
-
           </div>
-          <div className={styles.displayLabels}>
-              {
-                
-              }
-          </div>
+          <div className={styles.displayLabels}>{}</div>
         </div>
       </div>
       <div className={styles.subtaskMainContainer}>

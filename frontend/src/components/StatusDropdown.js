@@ -1,0 +1,108 @@
+import React, { useEffect, useState, useRef } from "react";
+import { useGlobalContext } from "../context";
+import styles from "./StatusDropdown.module.css";
+import {
+  MdOutlineClose,
+  MdCalendarToday,
+  MdOutlinedFlag,
+  MdSort,
+  MdGridView,
+  MdRadioButtonUnchecked,
+  MdOutlineCheckCircleOutline,
+  MdDelete,
+  MdModeEdit,
+  MdAdd,
+  MdKeyboardArrowDown,
+  MdCheck,
+  MdKeyboardArrowLeft,
+  MdVerticalSplit,
+} from "react-icons/md";
+
+function StatusDropdown({ todoForm, setTodoForm, todoId, type }) {
+  const {
+    status,
+    setStatus,
+    todos,
+    setTodos,
+    statusDropdown,
+    setStatusDropdown,
+  } = useGlobalContext();
+
+  let statusRef = useRef(null);
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!statusRef.current?.contains(e.target)) {
+        setStatusDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
+
+  const handleStatusChange = (option) => {
+    console.log("Status change check", option);
+
+    let todo = {
+      ...todoForm,
+      ["statusId"]: option.statusId,
+      ["statusTitle"]: option.statusTitle,
+    };
+
+    setTodoForm(todo);
+    setStatusDropdown(false);
+  };
+
+  const getMenuItem = (statusId) => {
+    switch (statusId) {
+      case "1":
+        return <MdSort />;
+      case "2":
+        return <MdGridView />;
+        case "3":
+            return <MdDelete />;
+          case "4":
+            return <MdCalendarToday />;
+            case "5":
+        return <MdModeEdit />;
+        default:
+            return null;
+    }
+  };
+
+  return (
+    <div className={styles.parent}>
+      <button
+        className={styles.textBoxIconsingle}
+        onClick={() => setStatusDropdown(!statusDropdown)}
+      >
+        {todoForm?.statusTitle == "" ? (
+          <span>Status</span>
+        ) : (
+          <span>{getMenuItem(todoForm.statusId)}{todoForm?.statusTitle}</span>
+        )}
+      </button>
+      {statusDropdown && (
+        <div className={styles.statusDropdownContent} ref={statusRef}>
+          {status.map((option) => (
+            <div
+              className={styles.statusDropdownContentItem}
+              key={option.statusId}
+              value={option.statusId}
+              onClick={() => handleStatusChange(option)}
+            >
+              {getMenuItem(option.statusId)}
+              {option.statusTitle}
+              {todoForm?.statusId == option.statusId && <MdCheck />}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default StatusDropdown;

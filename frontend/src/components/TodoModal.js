@@ -22,6 +22,8 @@ import PriorityDropdown from "./PriorityDropdown";
 import DuedateDropdown from "./DuedateDropdown";
 import ProjectDropdown from "./ProjectDropdown";
 import LabelDropdown from "./LabelDropdown";
+import StatusDropdown from "./StatusDropdown";
+import toast, { Toaster } from 'react-hot-toast';
 
 function TodoModal() {
   const {
@@ -54,6 +56,8 @@ function TodoModal() {
     setDueDateDropdown,
     projectDropdown,
     setProjectDropdown,
+    status,
+    setStatus,
   } = useGlobalContext();
   const [todoForm, setTodoForm] = useState({
     todoId: "",
@@ -67,6 +71,8 @@ function TodoModal() {
     priorityId: "",
     priorityTitle: "",
     label: [],
+    statusId: "",
+    statusTitle: "",
   });
   const {
     todoId,
@@ -80,6 +86,8 @@ function TodoModal() {
     priorityId,
     priorityTitle,
     label,
+    statusId,
+    statusTitle,
   } = todoForm;
 
   const [commentsForm, setCommentsForm] = useState({
@@ -189,6 +197,7 @@ function TodoModal() {
     setViewCategory("all");
   };
 
+  //아래 코드 삭제 예정 
   const handleEditTodoModal = () => {
     const todoEditIndex = todos.findIndex((item) => item.todoId == todoId);
     console.log("index", todoEditIndex);
@@ -226,6 +235,8 @@ function TodoModal() {
 
     setTodos([todoForm, ...todos]);
     setOpenModal(false);
+
+    toast.success('Successfully created!');
   };
 
   useEffect(() => {
@@ -475,6 +486,13 @@ function TodoModal() {
         </div>
         <div className={styles.todoModalBody}>
           <div className={styles.optionContainer}>
+
+            <StatusDropdown 
+            todoForm={todoForm}
+            setTodoForm={setTodoForm}
+            todoId={todoId}
+            />
+
             <PriorityDropdown
               todoForm={todoForm}
               setTodoForm={setTodoForm}

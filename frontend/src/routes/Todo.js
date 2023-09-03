@@ -13,6 +13,8 @@ import {
 import styles from "./Todo.module.css";
 import { useGlobalContext } from "../context";
 import TodoView from "../components/TodoView";
+import toast, { Toaster } from 'react-hot-toast';
+
 
 
 function Todo() {
@@ -175,6 +177,7 @@ function Todo() {
 
   return (
     <div className={styles.todoContainer}>
+      <Toaster position="	top-right"   duration="4000" />
       <div className={styles.todoBody}>
         <div className={styles.todoBodyTitle}>
           <button

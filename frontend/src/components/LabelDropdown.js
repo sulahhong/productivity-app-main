@@ -12,6 +12,7 @@ import { Modal } from "react-responsive-modal";
 import { HexColorPicker } from "react-colorful";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./LabelDropdown.module.css";
+import { MdGridView, MdCheck } from "react-icons/md";
 
 function LabelDropdown({ todoForm, setTodoForm, todoId, type }) {
   const { labels, setLabels, todos, setTodos } = useGlobalContext();
@@ -42,7 +43,7 @@ function LabelDropdown({ todoForm, setTodoForm, todoId, type }) {
   };
 
   const handleAddLabel = (selectedLabel) => {
-    console.log("labelbbbbbb", selectedLabel);
+    console.log("check selectedLabel", selectedLabel);
 
     const selectedLabelObject = labels.find(
       (item) => item.labelId === selectedLabel.labelId
@@ -123,6 +124,9 @@ const SubMenu = (props) => (
         menuButton={<MenuButton className={styles.menuButton}>Label</MenuButton>}
         menuClassName={menuClassName}
       >
+        <input 
+          placeholder="search label here"
+        />
         {labels.map((item) => (
           <MenuItem
             type="checkbox"
@@ -134,6 +138,7 @@ const SubMenu = (props) => (
               style={{ backgroundColor: item.labelColor }}
             ></div>
             <div>{item.labelName}</div>
+            <div>{checker(item) && <MdCheck/>}</div>
           </MenuItem>
         ))}
         <MenuItem onClick={onOpenModal}>Create Label</MenuItem>
@@ -148,7 +153,9 @@ const SubMenu = (props) => (
         />
         <button onClick={createLabel}>입력</button>
       </Modal>
-    </div>
+      <div>{console.log("check todoForm.label",todoForm.label)}</div>
+      <div>{todoForm.label.length>0 && todoForm.label.map((item)=>(<div>{item.labelName}</div>))}</div>
+      </div>
   );
 }
 

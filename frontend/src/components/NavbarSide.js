@@ -44,7 +44,11 @@ function NavbarSide() {
     setTargetProjectGlobal,
     isEditingProject,
     setIsEditingProject,
+    user, 
   } = useGlobalContext();
+
+  const [openUserWorkplace, setOpenUserWorkplace] = useState(false);
+  const [openUserProfile, setOpenUserProfile] = useState(false);
 
   const navigate = useNavigate();
 
@@ -113,6 +117,7 @@ function NavbarSide() {
     setTodos(arr);
   };
 
+
   return (
     <div
       className={
@@ -123,15 +128,40 @@ function NavbarSide() {
     >
       <div className={styles.navbarSideTopPart}>
         <div className={styles.navbarSideUserInfo}>
-          <div className={styles.navbarSideUserWorkplace}>
+          <div className={styles.navbarSideUserWorkplace}
+            onClick={() => setOpenUserWorkplace(!openUserWorkplace)}
+          >
             <div className={styles.UserWorkplaceIcon}>
               <FaRegStar />
             </div>
             <div className={styles.UserWorkplaceName}>work space</div>
           </div>
-          <div className={styles.navbarSideUserProfile}>
+          {openUserWorkplace && (
+            <div className={styles.userWorlplaceContent} >
+              <div className={styles.userWorkplaceContentItem}>Work Place :{user.userEmail}</div>
+              <div className={styles.userWorkplaceContentItem}>Setting Work Place</div>
+              <div className={styles.userWorkplaceContentItem}>Logout</div>
+            </div>
+          )}
+          <div className={styles.navbarSideUserProfile} 
+            onClick={() => setOpenUserProfile(!openUserProfile)}
+          >
             <FaUserCircle />
-          </div>
+          </div> 
+          {openUserProfile && (
+            <div className={styles.userProfileContent}>
+              <div className={styles.userProfileContentItem1}>
+              <div className={styles.userProfileContentItem1}><FaUserCircle /></div>
+              <div className={styles.userProfileContentItem1}>{user.userName}</div>
+              </div>
+            
+              <div className={styles.userProfileContentItem}>View profile</div>
+              <div className={styles.userProfileContentItem}>Logout</div>
+            </div>
+            
+          )
+
+          }
         </div>
         <div className={styles.navbarSideNewIssueBar}>
           <button className={styles.newIssuePart1}><FaRegEdit /> New Issue</button>

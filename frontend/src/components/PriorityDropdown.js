@@ -60,7 +60,7 @@ function PriorityDropdown({ todoForm, setTodoForm, todoId, type }) {
     // const testArray = [...todos];
     // testArray.splice(todoEditIndex, 1, todo);
     // setTodos(testArray);
-    // setPriorityDropdown(false);
+    setPriorityDropdown(false);
   };
 
   return (

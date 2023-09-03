@@ -52,11 +52,11 @@ const getLocalStorageSubtask = () => {
 const getLocalStorageLabels = () => {
   let storage = localStorage.getItem("labels");
   if (storage) {
-    return JSON.parse(storage)
+    return JSON.parse(storage);
   } else {
-    return []
+    return [];
   }
-}
+};
 
 const AppProvider = ({ children }) => {
   const [todos, setTodos] = useState(getLocalStorage());
@@ -81,9 +81,18 @@ const AppProvider = ({ children }) => {
     { priorityId: "5", priorityTitle: "No priority" },
   ]);
 
+  const [status, setStatus] = useState([
+    { statusId: "1", statusTitle: "Backlog" },
+    { statusId: "2", statusTitle: "Todo" },
+    { statusId: "3", statusTitle: "In Progress" },
+    { statusId: "4", statusTitle: "Done" },
+    { statusId: "5", statusTitle: "Cancelled" },
+  ]);
+
   const [priorityDropdown, setPriorityDropdown] = useState(false);
   const [dueDateDropdown, setDueDateDropdown] = useState(false);
   const [projectDropdown, setProjectDropdown] = useState(false);
+  const [statusDropdown, setStatusDropdown] = useState(false);
 
   const [comments, setComments] = useState(getLocalStorageComments());
   const [targetCommentGlobal, setTaegetCommentGlobal] = useState({});
@@ -92,9 +101,9 @@ const AppProvider = ({ children }) => {
   const [reply, setReply] = useState(getLocalStorageReply());
   const [subtask, setSubtask] = useState(getLocalStorageSubtask());
   // const [onSubtask, setOnSubtask] = useState(false);
-  
-  //SideOptionModal 상태 
-  const [openSideModal, setOpenSideModal] = useState(false)
+
+  //SideOptionModal 상태
+  const [openSideModal, setOpenSideModal] = useState(false);
 
   //labelList
   const [labels, setLabels] = useState(getLocalStorageLabels());
@@ -131,8 +140,8 @@ const AppProvider = ({ children }) => {
   }, [subtask]);
 
   useEffect(() => {
-    window.localStorage.setItem("labels", JSON.stringify(labels))
-  }, [labels])
+    window.localStorage.setItem("labels", JSON.stringify(labels));
+  }, [labels]);
 
   useEffect(() => {
     // let arr = [...todos];
@@ -227,7 +236,14 @@ const AppProvider = ({ children }) => {
         setDueDateDropdown,
         projectDropdown,
         setProjectDropdown,
-        openSideModal, setOpenSideModal, labels, setLabels
+        openSideModal,
+        setOpenSideModal,
+        labels,
+        setLabels,
+        status,
+        setStatus,
+        statusDropdown,
+        setStatusDropdown, 
       }}
     >
       {children}
