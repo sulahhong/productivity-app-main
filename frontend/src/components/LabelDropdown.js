@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useGlobalContext } from "../context";
-import {  Menu,
+import {
+  Menu,
   MenuButton,
   MenuDivider,
   MenuItem as MenuItemInner,
-  SubMenu as SubMenuInner} from "@szhsin/react-menu";
+  SubMenu as SubMenuInner,
+} from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import "react-responsive-modal/styles.css";
@@ -20,6 +22,7 @@ function LabelDropdown({ todoForm, setTodoForm, todoId, type }) {
   const [open, setOpen] = useState(false);
   const [color, setColor] = useState("#aabbcc");
   const [labelName, setLabelName] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
@@ -48,10 +51,6 @@ function LabelDropdown({ todoForm, setTodoForm, todoId, type }) {
     const selectedLabelObject = labels.find(
       (item) => item.labelId === selectedLabel.labelId
     );
-
-    console.log("lalalala11", selectedLabelObject);
-
-    console.log("todoForm.label", todoForm.label);
 
     let label = [...todoForm.label];
 
@@ -88,47 +87,59 @@ function LabelDropdown({ todoForm, setTodoForm, todoId, type }) {
     }
   };
 
+  const searchLabels = () => {
+    return labels.filter((item) =>
+      item.labelName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
+
   const menuClassName = ({ state }) =>
-  state === "opening"
-    ? styles.menuOpening
-    : state === "closing"
-    ? styles.menuClosing
-    : styles.menu;
+    state === "opening"
+      ? styles.menuOpening
+      : state === "closing"
+      ? styles.menuClosing
+      : styles.menu;
 
-    const menuItemClassName = ({ hover, disabled }) =>
-  disabled
-    ? styles.menuItemDisabled
-    : hover
-    ? styles.menuItemHover
-    : styles.menuItem;
+  const menuItemClassName = ({ hover, disabled }) =>
+    disabled
+      ? styles.menuItemDisabled
+      : hover
+      ? styles.menuItemHover
+      : styles.menuItem;
 
-const submenuItemClassName = (modifiers) =>
-  `${styles.submenuItem} ${menuItemClassName(modifiers)}`;
+  const submenuItemClassName = (modifiers) =>
+    `${styles.submenuItem} ${menuItemClassName(modifiers)}`;
 
-const MenuItem = (props) => (
-  <MenuItemInner {...props} className={menuItemClassName} />
-);
+  const MenuItem = (props) => (
+    <MenuItemInner {...props} className={menuItemClassName} />
+  );
 
-const SubMenu = (props) => (
-  <SubMenuInner
-    {...props}
-    menuClassName={menuClassName}
-    itemProps={{ className: submenuItemClassName }}
-    offsetY={-7}
-  />
-);
+  const SubMenu = (props) => (
+    <SubMenuInner
+      {...props}
+      menuClassName={menuClassName}
+      itemProps={{ className: submenuItemClassName }}
+      offsetY={-7}
+    />
+  );
 
   return (
     <div>
-      <Menu transition
-        menuButton={<MenuButton className={styles.menuButton}>Label</MenuButton>}
+      <Menu
+        transition
+        menuButton={
+          <MenuButton className={styles.menuButton}>Label</MenuButton>
+        }
         menuClassName={menuClassName}
       >
-        <input 
+        <input
           placeholder="search label here"
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        {labels.map((item) => (
+        {/* 검색기능을 위해 labels 배열을 검색하고 일치하는 라벨만 표시되도록 구현*/}
+        {searchLabels().map((item) => (
           <MenuItem
+            key={item.labelId}
             type="checkbox"
             checked={checker(item)}
             onClick={() => handleAddLabel(item)}
@@ -138,7 +149,7 @@ const SubMenu = (props) => (
               style={{ backgroundColor: item.labelColor }}
             ></div>
             <div>{item.labelName}</div>
-            <div>{checker(item) && <MdCheck/>}</div>
+            <div>{checker(item) && <MdCheck />}</div>
           </MenuItem>
         ))}
         <MenuItem onClick={onOpenModal}>Create Label</MenuItem>
@@ -153,9 +164,17 @@ const SubMenu = (props) => (
         />
         <button onClick={createLabel}>입력</button>
       </Modal>
-      <div>{console.log("check todoForm.label",todoForm.label)}</div>
-      <div>{todoForm.label.length>0 && todoForm.label.map((item)=>(<div>{item.labelName}</div>))}</div>
+      <div>{console.log("check todoForm.label", todoForm.label)}</div>
+      <div>
+        {todoForm.label.length > 0 &&
+          todoForm.label.map((item) => (
+            <div>
+              {item.labelName}
+              <button onClick={() => handleAddLabel(item)}>X</button>
+            </div>
+          ))}
       </div>
+    </div>
   );
 }
 
