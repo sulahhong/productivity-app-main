@@ -10,9 +10,10 @@ import {
   MdOutlineDelete,
   MdOutlineToday,
   MdOutlineInfo,
+  MdMoreHoriz,
 } from "react-icons/md";
 
-function SingleTodoItem({item}) {
+function SingleTodoItem({ item }) {
   const {
     todos,
     setTodos,
@@ -26,25 +27,30 @@ function SingleTodoItem({item}) {
     setViewTodos,
     projects,
     setProjects,
+    labels,
+    status,
+    singleItemSettingDropdown,
+    setSingleItemSettingDropdown,
   } = useGlobalContext();
 
   const navigate = useNavigate();
 
-  const handleModalContents = ( e) => {
-    if( (e.target.id !="todoDone1") && (e.target.id !="todoDone2") && (e.target.id !="editBtn") && (e.target.id !="deleteBtn") ){
-
-     navigate(`/todo/${item.todoId}`)
-    //   console.log("modal will be opened", id, e.target.id)
-    // const targetTodo = todos.find((item) => item.todoId === id)
-    // console.log("targetTodomodal", targetTodo, id)
-    // setOpenModal(true)
-    // setTargetTodoGlobal(targetTodo);
-    // setIsEditingTodo(true)
+  const handleModalContents = (e) => {
+    if (
+      e.target.id != "todoDone1" &&
+      e.target.id != "todoDone2" &&
+      e.target.id != "editBtn" &&
+      e.target.id != "deleteBtn"
+    ) {
+      navigate(`/todo/${item.todoId}`);
+      //   console.log("modal will be opened", id, e.target.id)
+      // const targetTodo = todos.find((item) => item.todoId === id)
+      // console.log("targetTodomodal", targetTodo, id)
+      // setOpenModal(true)
+      // setTargetTodoGlobal(targetTodo);
+      // setIsEditingTodo(true)
     }
-    
-  }
-
-
+  };
 
   const handleEditTodo = (id) => {
     console.log("Edit id", id);
@@ -82,11 +88,11 @@ function SingleTodoItem({item}) {
       return "todoview_priority3";
     } else if (priorityId == "4") {
       return "todoview_priority4";
-    } else if (priorityId == "5" ) {
+    } else if (priorityId == "5") {
       return "todoview_priority5";
-    } else if (priorityId == "" ) {
+    } else if (priorityId == "") {
       return "todoview_priority5";
-    } 
+    }
   };
 
   // 날짜 갭 계산
@@ -125,35 +131,27 @@ function SingleTodoItem({item}) {
     }
   };
 
-  // const todoDoneStatus = (todoDone) => {
-  //   if (todoDone === true) {
-  //     return "todoDoneIsTrue"
-  //   }
-  // }
-
   return (
-          <div onClick={(e) => handleModalContents(e)}
-            className={
-              item.todoDone ? styles.todoViewCardDone : styles.todoViewCard
-            }
-          >
-            <div className={styles.todoCardContent} >
-              <div
-                className={todoDonePrioritySelector(item.priorityId)}
-                onClick={() => handleTodoDone(item.todoId)}
-              >
-                {item.todoDone ? (
-                  <MdOutlineCheckCircleOutline id="todoDone1"/>
-                ) : (
-                  <MdRadioButtonUnchecked id="todoDone2"/>
-                )}
-              </div>
-              <div className={styles.todoCardBody}>
-                <div className={styles.todoCardTitle}>{item.todoTitle}</div>
-                {/* <div className={styles.todoCardDescription}>
-                  {item.todoDescription}
-                </div> */}
-                <div className={styles.todoCardDateview}> 
+    <div
+      onClick={(e) => handleModalContents(e)}
+      className={item.todoDone ? styles.todoViewCardDone : styles.todoViewCard}
+    >
+      <div className={styles.todoCardContent}>
+        <div
+          className={todoDonePrioritySelector(item.priorityId)}
+          onClick={() => handleTodoDone(item.todoId)}
+        >
+          {item.todoDone ? (
+            <MdOutlineCheckCircleOutline id="todoDone1" />
+          ) : (
+            <MdRadioButtonUnchecked id="todoDone2" />
+          )}
+        </div>
+
+        <div className={styles.todoCardBody}>
+          <div className={styles.todoCardTitle}>{item.todoTitle}</div>
+
+          {/* <div className={styles.todoCardDateview}> 
                   <div className={styles.todoCardDueDate}>
                     <div className={styles.dueDateIcon}>
                       <MdCalendarToday />
@@ -169,25 +167,67 @@ function SingleTodoItem({item}) {
                       {dateDifference(item.todoDueDate)}
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div className={styles.todoCardButtons} id="deleteBtn">
-              {/* <div id="editBtn"
-                className={styles.todoCardEditButton}
-                onClick={() => handleEditTodo(item.todoId)}
+                </div> */}
+        </div>
+      </div>
+
+      <div className={styles.todoItemRightSide}>
+        <div className={styles.todoCardDueDate}>
+          {item.todoDueDate && (
+            <MdCalendarToday className={styles.dueDateIcon} />
+          )}
+          <div className={styles.dueDateText}>{item.todoDueDate}</div>
+        </div>
+        <div className={styles.todoProjectTitle}>
+          {item.projectId === "" ? null : (
+            <div className={styles.todoProjectName}>{item.projectTitle}</div>
+          )}
+        </div>
+        <div className={styles.todoCardDday}>
+          <div className={styles.ddayTrackerText}>
+            {item.todoDueDate && dateDifference(item.todoDueDate)}
+          </div>
+        </div>
+        {item.statusId && (
+          <div className={styles.todoStatus}>{item.statusTitle}</div>
+        )}
+        {item.label.length > 0 &&
+          item.label.map((obj) => (
+            <div className={styles.todolabels}>{obj.labelName}</div>
+          ))}
+        <div className={styles.todoDelSide} id="deleteBtn">
+          <div
+            // id="deleteBtn"
+            className={styles.todoCardDeleteButton}
+            onClick={() => setSingleItemSettingDropdown(!singleItemSettingDropdown)}
+          >
+            <MdMoreHoriz />
+          </div>
+        </div>
+        {singleItemSettingDropdown && <div className={styles.settingDropdownContent}>
+          <div className={styles.settingDropdownContentItem}>
+            Edit issue</div>
+          <div id="deleteBtn"
+                className={styles.settingDropdownContentItem}
+                onClick={() => handleDeleteTodo(item.todoId)}
               >
-                <MdOutlineEdit id="editBtn"/>
-              </div> */}
+                {/* < MdOutlineDelete id="deleteBtn"/> */}
+                 Delete issue
+              </div>
+              <div  className={styles.settingDropdownContentItem}>Copy issue link </div>
+          </div>
+          }
+      </div>
+
+      {/* <div className={styles.todoCardButtons} id="deleteBtn">    
               <div id="deleteBtn"
                 className={styles.todoCardDeleteButton}
                 onClick={() => handleDeleteTodo(item.todoId)}
               >
                 < MdOutlineDelete id="deleteBtn"/>
               </div>
-            </div>
-          </div>
-
+            </div> */}
+    </div>
   );
 }
 

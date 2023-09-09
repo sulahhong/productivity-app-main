@@ -221,10 +221,10 @@
     padding: 0.2rem 0.7rem;
 }
 
-.textBoxIconsingle:hover {
+/* .textBoxIconsingle:hover {
     background-color: rgb(227, 227, 227);
 
-}
+} */
 
 .subtaskInputContainer {
     width: 93%;

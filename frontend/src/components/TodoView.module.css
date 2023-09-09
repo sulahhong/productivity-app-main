@@ -73,6 +73,8 @@
 
 .todoCardContent {
   display: flex;
+  align-items: center;
+  position: relative;
 }
 
 .todoCardDone {
@@ -158,8 +160,7 @@
 .todoCardDueDate {
   display: flex;
   align-items: center;
-  margin-bottom: 0.5rem;
-  margin-right: 1rem;
+  justify-content: center;
   font-size: 0.8rem;
   color: rgb(168, 164, 164);
 
@@ -177,7 +178,6 @@
 .todoCardDday {
   display: flex;
   align-items: center;
-  margin-bottom: 0.5rem;
   font-size: 0.8rem;
   color: rgb(168, 164, 164);
 }
@@ -238,15 +238,91 @@
 }
 
 .todoProjectTitle {
-  padding-left: 0.7rem;
+  /* padding-left: 0.7rem; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .todoProjectName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 0.7rem;
   border: 1px solid #8b8b8b;
   border-radius: 0.5rem;
   padding: 0.1rem 0.6rem;
 }
+
+.todoItemRightSide {
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: #8b8b8b;
+
+}
+
+.todoStatus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  border: 1px solid #8b8b8b;
+  border-radius: 0.5rem;
+  padding: 0.1rem 0.6rem;
+}
+
+.todolabels {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  border: 1px solid #8b8b8b;
+  border-radius: 0.5rem;
+  padding: 0.1rem 0.6rem;
+}
+
+.todoDelSide{
+  display: flex;
+  align-items: center;
+}
+
+.settingDropdownContent {
+  right: 0;
+  top: 2rem;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 1px 8px 0 rgb(0 0 0 / 8%);
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  z-index: 2;
+  width: 8rem;
+  padding: 0.3rem ;
+  font-size: 0.8rem;
+  text-align: start;
+}
+
+.settingDropdownContentItem {
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.5rem;
+  
+
+  border-radius: 0.2rem;
+  transition: background-color 0.3s ease;
+
+}
+
+.settingDropdownContentItem:hover {
+  background-color: rgb(231, 230, 230);   
+  /* transition: 0.3s; */
+  
+}
+
 
 @media (max-width: 1080px) {
   .todoViewCard {width: 95%}
