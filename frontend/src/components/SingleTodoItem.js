@@ -29,9 +29,10 @@ function SingleTodoItem({ item }) {
     setProjects,
     labels,
     status,
-    singleItemSettingDropdown,
-    setSingleItemSettingDropdown,
+
   } = useGlobalContext();
+
+  const [singleItemSettingDropdown, setSingleItemSettingDropdown] = useState(false)
 
   const navigate = useNavigate();
 
@@ -133,10 +134,10 @@ function SingleTodoItem({ item }) {
 
   return (
     <div
-      onClick={(e) => handleModalContents(e)}
+     
       className={item.todoDone ? styles.todoViewCardDone : styles.todoViewCard}
     >
-      <div className={styles.todoCardContent}>
+      <div className={styles.todoCardContent}  onClick={(e) => handleModalContents(e)}>
         <div
           className={todoDonePrioritySelector(item.priorityId)}
           onClick={() => handleTodoDone(item.todoId)}
@@ -204,8 +205,8 @@ function SingleTodoItem({ item }) {
             <MdMoreHoriz />
           </div>
         </div>
-        {singleItemSettingDropdown && <div className={styles.settingDropdownContent}>
-          <div className={styles.settingDropdownContentItem}>
+        {singleItemSettingDropdown && <div className={styles.settingDropdownContent} >
+          <div className={styles.settingDropdownContentItem} >
             Edit issue</div>
           <div id="deleteBtn"
                 className={styles.settingDropdownContentItem}

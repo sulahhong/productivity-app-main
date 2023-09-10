@@ -93,7 +93,7 @@ const AppProvider = ({ children }) => {
   const [dueDateDropdown, setDueDateDropdown] = useState(false);
   const [projectDropdown, setProjectDropdown] = useState(false);
   const [statusDropdown, setStatusDropdown] = useState(false);
-  const [singleItemSettingDropdown, setSingleItemSettingDropdown] = useState(false)
+
 
   const [comments, setComments] = useState(getLocalStorageComments());
   const [targetCommentGlobal, setTaegetCommentGlobal] = useState({});
@@ -245,8 +245,6 @@ const AppProvider = ({ children }) => {
         setStatus,
         statusDropdown,
         setStatusDropdown, 
-        singleItemSettingDropdown, 
-        setSingleItemSettingDropdown,
       }}
     >
       {children}
