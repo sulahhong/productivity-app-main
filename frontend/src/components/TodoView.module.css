@@ -4,7 +4,7 @@
   flex-direction: column;
   gap: 1rem;
   align-items: center;
-  margin: 1rem 0;
+  margin: 2rem 0;
   width: 100%;
 }
 
@@ -279,6 +279,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.3rem;
   font-size: 0.7rem;
   border: 1px solid #8b8b8b;
   border-radius: 0.5rem;
@@ -288,6 +289,8 @@
 .todoDelSide{
   display: flex;
   align-items: center;
+  color: gray;
+  font-size: 1rem;
 }
 
 .settingDropdownContent {
@@ -324,6 +327,66 @@
   
 }
 
+.menuButton {
+  background-color: white;
+  /* border: 1px solid var(--borderLineColor); */
+  /* border-radius: 0.5rem; */
+  border: none;
+
+
+  color: gray;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.5rem;
+}
+
+.menuItem {
+  cursor: pointer;
+  border-radius: 6px;
+  /* padding: 0.375rem 4rem; */
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.menuItemHover {
+  composes: menuItem;
+  color: #000000;
+  background-color: #e2e2e2;
+}
+
+.menuItemDisabled {
+  composes: menuItem;
+  cursor: default;
+  color: #aaa;
+}
+
+.menu:focus,
+.menuItem:focus {
+  outline: none;
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: red;
+}
+
+/* .subtaskDisplayNum {
+  display: flex;
+  align-items: center;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--borderLineColor);
+} */
 
 @media (max-width: 1080px) {
   .todoViewCard {width: 95%}

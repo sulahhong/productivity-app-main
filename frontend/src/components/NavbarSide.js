@@ -45,6 +45,7 @@ function NavbarSide() {
     isEditingProject,
     setIsEditingProject,
     user, 
+    openModal, setOpenModal,
   } = useGlobalContext();
 
   const [openUserWorkplace, setOpenUserWorkplace] = useState(false);
@@ -117,6 +118,12 @@ function NavbarSide() {
     setTodos(arr);
   };
 
+  
+  const handleAddNewTodo = () => {
+    setOpenModal(!openModal);
+  };
+
+
 
   return (
     <div
@@ -164,7 +171,10 @@ function NavbarSide() {
           }
         </div>
         <div className={styles.navbarSideNewIssueBar}>
-          <button className={styles.newIssuePart1}><FaRegEdit /> New Issue</button>
+          <button className={styles.newIssuePart1}
+            onClick={()=> handleAddNewTodo()}
+          >
+            <FaRegEdit /> New Issue</button>
           <button className={styles.newIssuePart2}><FaSearch /> </button>
         </div>
       </div>

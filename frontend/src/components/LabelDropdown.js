@@ -14,7 +14,7 @@ import { Modal } from "react-responsive-modal";
 import { HexColorPicker } from "react-colorful";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./LabelDropdown.module.css";
-import { MdGridView, MdCheck } from "react-icons/md";
+import { MdGridView, MdCheck, MdOutlineClose } from "react-icons/md";
 
 function LabelDropdown({ todoForm, setTodoForm, todoId, type }) {
   const { labels, setLabels, todos, setTodos } = useGlobalContext();
@@ -124,7 +124,8 @@ function LabelDropdown({ todoForm, setTodoForm, todoId, type }) {
   );
 
   return (
-    <div>
+    <>
+    <div className={styles.labelMainContainer}>
       <Menu
         transition
         menuButton={
@@ -141,7 +142,7 @@ function LabelDropdown({ todoForm, setTodoForm, todoId, type }) {
           <MenuItem
             key={item.labelId}
             type="checkbox"
-            checked={checker(item)}
+            // checked={checker(item)}
             onClick={() => handleAddLabel(item)}
           >
             <div
@@ -164,17 +165,21 @@ function LabelDropdown({ todoForm, setTodoForm, todoId, type }) {
         />
         <button onClick={createLabel}>입력</button>
       </Modal>
-      <div>{console.log("check todoForm.label", todoForm.label)}</div>
-      <div>
+    </div>
+    {/* <div className={styles.labelListContainer}> 
         {todoForm.label.length > 0 &&
           todoForm.label.map((item) => (
-            <div>
+            <div className={styles.displyedLabel}>
+              <div
+              className={styles.circle}
+              style={{ backgroundColor: item.labelColor }}
+            ></div>
               {item.labelName}
-              <button onClick={() => handleAddLabel(item)}>X</button>
+              <button className={styles.displyedLabelbutton} onClick={() => handleAddLabel(item)}><MdOutlineClose /> </button>
             </div>
           ))}
-      </div>
-    </div>
+      </div> */}
+    </>
   );
 }
 

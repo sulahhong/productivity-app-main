@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import {
   MdAdd,
   MdFilterAlt,
@@ -9,13 +10,15 @@ import {
   MdKeyboardArrowRight,
   MdOutlineNorth,
   MdOutlineSouth,
+  MdKeyboardArrowLeft,
+  MdList,
+  MdGridView,
 } from "react-icons/md";
 import styles from "./Todo.module.css";
 import { useGlobalContext } from "../context";
 import TodoView from "../components/TodoView";
-import toast, { Toaster } from 'react-hot-toast';
-
-
+import toast, { Toaster } from "react-hot-toast";
+import { Navigate } from "react-router-dom";
 
 function Todo() {
   const {
@@ -49,6 +52,8 @@ function Todo() {
   const [groupView, setGroupView] = useState(false);
 
   let menuRef = useRef();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     let handler = (e) => {
@@ -177,45 +182,50 @@ function Todo() {
 
   return (
     <div className={styles.todoContainer}>
-      <Toaster position="	top-right"   duration="4000" />
+      <Toaster position="	top-right" duration="4000" />
       <div className={styles.todoBody}>
-        <div className={styles.todoBodyTitle}>
-          <button
-            className={styles.todoAddButton}
-            onClick={() => handleAddNewTodo()}
-          >
-            <MdAdd className={styles.todoAddIcon} />
-            Add
-          </button>
-          <div>
-            <button
-              className={styles.todoAddButton}
-              onClick={() => setGroupView(!groupView)}
+        <div className={styles.todoGuideBar}>
+          <div className={styles.todoGuideBarLeftside}>
+            <button className={styles.todoGuideBarLeftItem}
+              onClick={() => navigate('/')}
             >
-              Group View
+              <MdKeyboardArrowLeft />
             </button>
+            <span className={styles.todoGuideBarLeftText}>My Todolist</span>
           </div>
-
-
-
-          <div className={styles.sortDropdownContainer}>
-            <button
-              className={styles.todoAddButton}
-              onClick={() => setSortViewDropdown(!sortViewDropdown)}
-            >
-              <MdFilterAlt />
-              Filter
-            </button>
-            {sortViewDropdown && (
-              <div className={styles.sortDropdownContent} ref={menuRef}>
-                <div className={styles.sortMenuHeader}>Filter</div>
-                <div
-                  className={styles.sortMenuItem}
-                  onClick={() => setFilterType("filterAll")}
-                >
-                  All {filterType == "filterAll" && <MdCheck />}
-                </div>
-                {/* <div
+          <div className={styles.todoGuideBarRightside}>
+            <div className={styles.todoGuideBarRightItem}>
+              <MdList />
+            </div>
+            <div className={styles.todoGuideBarRightItem}>
+              <MdGridView />
+            </div>
+            <div>
+              <button
+                className={styles.todoAddButton}
+                onClick={() => setGroupView(!groupView)}
+              >
+                Group View
+              </button>
+            </div>
+            <div className={styles.sortDropdownContainer}>
+              <button
+                className={styles.todoAddButton}
+                onClick={() => setSortViewDropdown(!sortViewDropdown)}
+              >
+                <MdFilterAlt />
+                Filter
+              </button>
+              {sortViewDropdown && (
+                <div className={styles.sortDropdownContent} ref={menuRef}>
+                  <div className={styles.sortMenuHeader}>Filter</div>
+                  <div
+                    className={styles.sortMenuItem}
+                    onClick={() => setFilterType("filterAll")}
+                  >
+                    All {filterType == "filterAll" && <MdCheck />}
+                  </div>
+                  {/* <div
                   className={styles.sortMenuItem}
                   onClick={() => setFilterType("filterDone")}
                 >
@@ -227,99 +237,109 @@ function Todo() {
                 >
                   Not Done {filterType == "filterNotDone" && <MdCheck />}
                 </div> */}
-                <div
-                  className={styles.sortMenuItem1}
-                  onClick={() => setPriorityIsActive(!priorityIsActive)}
-                >
-                  <div className={styles.sortMenuItem1}>Priority </div>
-                  {priorityIsActive ? (
-                    <div className={styles.sortMenuIcon}>
-                      <MdKeyboardArrowDown />
-                    </div>
-                  ) : (
-                    <div className={styles.sortMenuIcon}>
-                      <MdKeyboardArrowRight />
+                  <div
+                    className={styles.sortMenuItem1}
+                    onClick={() => setPriorityIsActive(!priorityIsActive)}
+                  >
+                    <div className={styles.sortMenuItem1}>Priority </div>
+                    {priorityIsActive ? (
+                      <div className={styles.sortMenuIcon}>
+                        <MdKeyboardArrowDown />
+                      </div>
+                    ) : (
+                      <div className={styles.sortMenuIcon}>
+                        <MdKeyboardArrowRight />
+                      </div>
+                    )}
+                  </div>
+                  {priorityIsActive && (
+                    <div>
+                      <div
+                        className={styles.sortMenuPItem}
+                        onClick={() => setFilterType("filterP1")}
+                      >
+                        Urgent {filterType == "filterP1" && <MdCheck />}
+                      </div>
+                      <div
+                        className={styles.sortMenuPItem}
+                        onClick={() => setFilterType("filterP2")}
+                      >
+                        High {filterType == "filterP2" && <MdCheck />}
+                      </div>
+                      <div
+                        className={styles.sortMenuPItem}
+                        onClick={() => setFilterType("filterP3")}
+                      >
+                        Medium {filterType == "filterP3" && <MdCheck />}
+                      </div>
+                      <div
+                        className={styles.sortMenuPItem}
+                        onClick={() => setFilterType("filterP4")}
+                      >
+                        Low {filterType == "filterP4" && <MdCheck />}
+                      </div>
+                      <div
+                        className={styles.sortMenuPItem}
+                        onClick={() => setFilterType("filterP5")}
+                      >
+                        No priority {filterType == "filterP5" && <MdCheck />}
+                      </div>
                     </div>
                   )}
-                </div>
-                {priorityIsActive && (
-                  <div>
-                    <div
-                      className={styles.sortMenuPItem}
-                      onClick={() => setFilterType("filterP1")}
-                    >
-                      Urgent {filterType == "filterP1" && <MdCheck />}
-                    </div>
-                    <div
-                      className={styles.sortMenuPItem}
-                      onClick={() => setFilterType("filterP2")}
-                    >
-                      High {filterType == "filterP2" && <MdCheck />}
-                    </div>
-                    <div
-                      className={styles.sortMenuPItem}
-                      onClick={() => setFilterType("filterP3")}
-                    >
-                      Medium {filterType == "filterP3" && <MdCheck />}
-                    </div>
-                    <div
-                      className={styles.sortMenuPItem}
-                      onClick={() => setFilterType("filterP4")}
-                    >
-                      Low {filterType == "filterP4" && <MdCheck />}
-                    </div>
-                    <div
-                      className={styles.sortMenuPItem}
-                      onClick={() => setFilterType("filterP5")}
-                    >
-                      No priority {filterType == "filterP5" && <MdCheck />}
-                    </div>
-                  </div>
-                )}
 
-                <div className={styles.sortMenuHeader}>Sort</div>
-                <div
-                  className={styles.sortMenuItem}
-                  onClick={() => setSortType("priorityId")}
-                >
-                  Priority {sortType == "priorityId" && <MdCheck />}
-                </div>
-                {/* <div
+                  <div className={styles.sortMenuHeader}>Sort</div>
+                  <div
+                    className={styles.sortMenuItem}
+                    onClick={() => setSortType("priorityId")}
+                  >
+                    Priority {sortType == "priorityId" && <MdCheck />}
+                  </div>
+                  {/* <div
                   className={styles.sortMenuItem}
                   onClick={() => setSortType("todoDone")}
                 >
                   Done {sortType == "todoDone" && <MdCheck />}
                 </div> */}
-                <div
-                  className={styles.sortMenuItem}
-                  onClick={() => setSortType("todoDueDate")}
-                >
-                  Due date {sortType == "todoDueDate" && <MdCheck />}
-                </div>
-                <div
-                  className={styles.sortMenuItem}
-                  onClick={() => setSortType("todoCreateDate")}
-                >
-                  Create date {sortType == "todoCreateDate" && <MdCheck />}
-                </div>
+                  <div
+                    className={styles.sortMenuItem}
+                    onClick={() => setSortType("todoDueDate")}
+                  >
+                    Due date {sortType == "todoDueDate" && <MdCheck />}
+                  </div>
+                  <div
+                    className={styles.sortMenuItem}
+                    onClick={() => setSortType("todoCreateDate")}
+                  >
+                    Create date {sortType == "todoCreateDate" && <MdCheck />}
+                  </div>
 
-                {ascending ? (
-                  <div
-                    className={styles.sortMenuItem}
-                    onClick={() => setAscending(!ascending)}
-                  >
-                    Descending <MdOutlineNorth />
-                  </div>
-                ) : (
-                  <div
-                    className={styles.sortMenuItem}
-                    onClick={() => setAscending(!ascending)}
-                  >
-                    Ascending <MdOutlineSouth />
-                  </div>
-                )}
-              </div>
-            )}
+                  {ascending ? (
+                    <div
+                      className={styles.sortMenuItem}
+                      onClick={() => setAscending(!ascending)}
+                    >
+                      Descending <MdOutlineNorth />
+                    </div>
+                  ) : (
+                    <div
+                      className={styles.sortMenuItem}
+                      onClick={() => setAscending(!ascending)}
+                    >
+                      Ascending <MdOutlineSouth />
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+            <div>
+              <button
+                className={styles.todoAddButton}
+                onClick={() => handleAddNewTodo()}
+              >
+                <MdAdd className={styles.todoAddIcon} />
+                Add
+              </button>
+            </div>
           </div>
         </div>
 
@@ -330,7 +350,6 @@ function Todo() {
           <button onClick={clearAllTodo}>모두 삭제</button>
         </div> */}
       </div>
-      {/* <div className={styles.todoBodyFooter}>this is the footer </div> */}
     </div>
   );
 }

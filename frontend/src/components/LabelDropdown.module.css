@@ -21,6 +21,40 @@
     
 }
 
+.labelMainContainer{
+  display: flex;
+  
+}
+
+.labelListContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.displyedLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+
+  border: 1px solid var(--borderLineColor);
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.8rem;
+}
+
+.displyedLabelbutton {
+  border: none;
+  background-color: white;
+  color: gray;
+
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  padding: 0;
+}
+
 @keyframes menuShow {
     from {
       opacity: 0;

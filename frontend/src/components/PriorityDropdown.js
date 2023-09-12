@@ -16,6 +16,11 @@ import {
   MdCheck,
   MdKeyboardArrowLeft,
   MdVerticalSplit,
+  MdSignalCellularAlt, 
+  MdSignalCellularAlt2Bar, 
+  MdSignalCellularAlt1Bar, 
+  MdBlockFlipped, 
+  MdErrorOutline, 
 } from "react-icons/md";
 import { useGlobalContext } from "../context";
 
@@ -63,6 +68,25 @@ function PriorityDropdown({ todoForm, setTodoForm, todoId, type }) {
     setPriorityDropdown(false);
   };
 
+  
+  const getMenuItem = (priorityId) => {
+    switch (priorityId) {
+      case "1":
+        return <MdErrorOutline />;
+      case "2":
+        return <MdSignalCellularAlt />;
+        case "3":
+            return <MdErrorOutline />;
+          case "4":
+            return <MdErrorOutline />;
+            case "5":
+        return <MdBlockFlipped />;
+        default:
+            return null;
+    }
+  };
+
+
   return (
     <div className={styles.parent}>
       <button
@@ -73,7 +97,13 @@ function PriorityDropdown({ todoForm, setTodoForm, todoId, type }) {
         {todoForm?.priorityTitle == "" ? (
           <span>Priority</span>
         ) : (
+          <div className={styles.dropdownButton}>
+          <span className={styles.dropdownButton}>
+            {getMenuItem(todoForm.priorityId)}
+          </span>
           <span>{todoForm?.priorityTitle}</span>
+        </div>
+          
         )}
       </button>
       {priorityDropdown && (
@@ -85,6 +115,7 @@ function PriorityDropdown({ todoForm, setTodoForm, todoId, type }) {
               value={option.priorityId}
               onClick={() => handlePriorityMenuChange(option)}
             >
+               {getMenuItem(option.priorityId)}
               {option.priorityTitle}
               {todoForm?.priorityId == option.priorityId && <MdCheck />}
             </div>

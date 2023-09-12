@@ -13,6 +13,20 @@ import {
   MdMoreHoriz,
 } from "react-icons/md";
 
+import {
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  SubMenu,
+} from "@szhsin/react-menu";
+import "@szhsin/react-menu/dist/index.css";
+import "@szhsin/react-menu/dist/transitions/slide.css";
+import "react-responsive-modal/styles.css";
+import CopyToClipboard from "react-copy-to-clipboard";
+import toast, { Toaster } from "react-hot-toast";
+import StatusDropdown from "./StatusDropdown";
+
 function SingleTodoItem({ item }) {
   const {
     todos,
@@ -29,10 +43,10 @@ function SingleTodoItem({ item }) {
     setProjects,
     labels,
     status,
-
+    subtask,
   } = useGlobalContext();
 
-  const [singleItemSettingDropdown, setSingleItemSettingDropdown] = useState(false)
+  const [copied, setCopied] = useState(false);
 
   const navigate = useNavigate();
 
@@ -132,12 +146,36 @@ function SingleTodoItem({ item }) {
     }
   };
 
+  const menuClassName = ({ state }) =>
+    state === "opening"
+      ? styles.menuOpening
+      : state === "closing"
+      ? styles.menuClosing
+      : styles.menu;
+
+  const handleCopyClick = () => {
+    const url = `http://localhost:3000/todo/${item.todoId}`;
+
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        setCopied(true);
+        toast.success("Successfully copied!");
+      })
+      .catch((error) => {
+        console.error("URL복사실패", error);
+        toast.error("This is an error!");
+      });
+  };
+
   return (
     <div
-     
       className={item.todoDone ? styles.todoViewCardDone : styles.todoViewCard}
     >
-      <div className={styles.todoCardContent}  onClick={(e) => handleModalContents(e)}>
+      <div
+        className={styles.todoCardContent}
+        onClick={(e) => handleModalContents(e)}
+      >
         <div
           className={todoDonePrioritySelector(item.priorityId)}
           onClick={() => handleTodoDone(item.todoId)}
@@ -192,42 +230,60 @@ function SingleTodoItem({ item }) {
         {item.statusId && (
           <div className={styles.todoStatus}>{item.statusTitle}</div>
         )}
+        {subtask.filter((obj) => obj.subtaskPostId == item.todoId).length >
+          0 && (
+          <div className={styles.subtaskDisplayNum}>
+            {subtask.filter((obj) => obj.subtaskPostId == item.todoId).length}
+          </div>
+        )}
         {item.label.length > 0 &&
           item.label.map((obj) => (
-            <div className={styles.todolabels}>{obj.labelName}</div>
+            <div className={styles.todolabels}>
+              <div
+                className={styles.circle}
+                style={{ backgroundColor: obj.labelColor }}
+              ></div>
+              <div>{obj.labelName}</div>
+            </div>
           ))}
-        <div className={styles.todoDelSide} id="deleteBtn">
-          <div
-            // id="deleteBtn"
-            className={styles.todoCardDeleteButton}
-            onClick={() => setSingleItemSettingDropdown(!singleItemSettingDropdown)}
+
+        <div className={styles.todoDelSide}>
+          <Menu
+            transition
+            menuButton={
+              <MenuButton className={styles.menuButton}>
+                <MdMoreHoriz />
+              </MenuButton>
+            }
+            menuClassName={menuClassName}
           >
-            <MdMoreHoriz />
-          </div>
-        </div>
-        {singleItemSettingDropdown && <div className={styles.settingDropdownContent} >
-          <div className={styles.settingDropdownContentItem} >
-            Edit issue</div>
-          <div id="deleteBtn"
+            <MenuItem>
+              <div
+                className={styles.settingDropdownContentItem}
+                onClick={() => navigate(`/todo/${item.todoId}`)}
+              >
+                Edit issue
+              </div>
+            </MenuItem>
+            <MenuItem>
+              <div
                 className={styles.settingDropdownContentItem}
                 onClick={() => handleDeleteTodo(item.todoId)}
               >
-                {/* < MdOutlineDelete id="deleteBtn"/> */}
-                 Delete issue
+                Delete issue
               </div>
-              <div  className={styles.settingDropdownContentItem}>Copy issue link </div>
-          </div>
-          }
-      </div>
-
-      {/* <div className={styles.todoCardButtons} id="deleteBtn">    
-              <div id="deleteBtn"
-                className={styles.todoCardDeleteButton}
-                onClick={() => handleDeleteTodo(item.todoId)}
+            </MenuItem>
+            <MenuItem>
+              <div
+                className={styles.settingDropdownContentItem}
+                onClick={handleCopyClick}
               >
-                < MdOutlineDelete id="deleteBtn"/>
+                Copy issue link
               </div>
-            </div> */}
+            </MenuItem>
+          </Menu>
+        </div>
+      </div>
     </div>
   );
 }

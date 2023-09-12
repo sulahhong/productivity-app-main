@@ -31,6 +31,7 @@ import LabelDropdown from "../components/LabelDropdown";
 import DuedateDropdown from "../components/DuedateDropdown";
 import ProjectDropdown from "../components/ProjectDropdown";
 import StatusDropdown from "../components/StatusDropdown";
+import { Line, Circle } from "rc-progress";
 
 function TodoSinglePage() {
   const {
@@ -174,7 +175,16 @@ function TodoSinglePage() {
     testArray.splice(todoEditIndex, 1, todoForm);
 
     setTodos(testArray);
-  }, [priorityId, priorityTitle, todoDueDate, projectId, projectTitle, label, statusId, statusTitle]);
+  }, [
+    priorityId,
+    priorityTitle,
+    todoDueDate,
+    projectId,
+    projectTitle,
+    label,
+    statusId,
+    statusTitle,
+  ]);
 
   const handleTodoChange = (e) => {
     console.log("TODO ATTRIBUTE", e.target.name);
@@ -421,28 +431,12 @@ function TodoSinglePage() {
     setProjectDropdown(false);
   };
 
-  let priorityRef = useRef(null);
-  let dueDateRef = useRef();
-  let projectRef = useRef();
+  let subtaskRef = useRef(null);
 
-  // useEffect(() => {
-  //   let handler = (e) => {
-  //     if (!priorityRef.current.contains(e.target)) {
-  //       setPriorityDropdown(false);
-  //     }
-  //     console.log("ppppmmmm", e.target);
-  //     console.log("ppmmm2222", priorityRef.current);
-  //   };
-  //   document.addEventListener("mousedown", handler);
-
-  //   return () => {
-  //     document.removeEventListener("mousedown", handler);
-  //   };
-  // });
   useEffect(() => {
     let handler = (e) => {
-      if (!dueDateRef.current.contains(e.target)) {
-        setDueDateDropdown(false);
+      if (!subtaskRef.current.contains(e.target)) {
+        setOnSubtask(false);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -451,18 +445,36 @@ function TodoSinglePage() {
       document.removeEventListener("mousedown", handler);
     };
   });
-  useEffect(() => {
-    let handler = (e) => {
-      if (!projectRef.current.contains(e.target)) {
-        setProjectDropdown(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
 
-    return () => {
-      document.removeEventListener("mousedown", handler);
+  const handleAddLabel = (selectedLabel) => {
+    console.log("check selectedLabel", selectedLabel);
+
+    const selectedLabelObject = labels.find(
+      (item) => item.labelId === selectedLabel.labelId
+    );
+
+    let label = [...todoForm.label];
+
+    let labelIndex = label.findIndex(
+      (item) => item.labelId == selectedLabelObject.labelId
+    );
+
+    if (labelIndex == -1) {
+      label.push(selectedLabelObject);
+      // label = [...label,  selectedLabelObject]
+    } else {
+      label.splice(labelIndex, 1);
+    }
+
+    const updatedTodo = {
+      ...todoForm,
+      label: label,
     };
-  });
+
+    console.log("updatedTodo", updatedTodo);
+
+    setTodoForm(updatedTodo);
+  };
 
   return (
     <div className={styles.singlePageContainer}>
@@ -475,7 +487,15 @@ function TodoSinglePage() {
             >
               <MdKeyboardArrowLeft />
             </button>
-            <span>Detail page</span>
+            <div className={styles.singlePageTitleName}>
+              <span>{todoTitle} </span>
+              {projectId && (
+                <div className={styles.singlepageGuideBar}>
+                  {" "}
+                  | Issue {projectTitle} Details
+                </div>
+              )}
+            </div>
           </div>
           <div>
             <button
@@ -519,7 +539,7 @@ function TodoSinglePage() {
             />
           </div>
           <div className={styles.optionContainer}>
-            <StatusDropdown 
+            <StatusDropdown
               todoForm={todoForm}
               setTodoForm={setTodoForm}
               todoId={todoId}
@@ -549,13 +569,39 @@ function TodoSinglePage() {
               todoId={todoId}
             />
           </div>
-          <div className={styles.displayLabels}>{}</div>
+          <div className={styles.labelListContainer}>
+            {todoForm.label.length > 0 &&
+              todoForm.label.map((item) => (
+                <div className={styles.displyedLabel}>
+                  <div
+                    className={styles.circle}
+                    style={{ backgroundColor: item.labelColor }}
+                  ></div>
+                  {item.labelName}
+                  <button
+                    className={styles.displyedLabelbutton}
+                    onClick={() => handleAddLabel(item)}
+                  >
+                    <MdOutlineClose />{" "}
+                  </button>
+                </div>
+              ))}
+          </div>
         </div>
       </div>
       <div className={styles.subtaskMainContainer}>
         <div className={styles.todoSubtask}>
+          {subtask.filter((item) => item.subtaskPostId == todoId).length >
+            0 && (
+            <div className={styles.subtaskLineProgressbar}>
+              <span>
+                {completedSubtask}/{totalSubtask}
+              </span>
+              <Line percent={(completedSubtask/totalSubtask)*100} strokeWidth={10} trailWidth={10} />
+            </div>
+          )}
           {onSubtask ? (
-            <div className={styles.subtaskInputContainer}>
+            <div className={styles.subtaskInputContainer} ref={subtaskRef}>
               <input
                 className={styles.subtaskInputBox}
                 placeholder="Add New Sub-task..."
@@ -583,16 +629,16 @@ function TodoSinglePage() {
               onClick={() => setOnSubtask(true)}
             >
               <div className={styles.subtaskTitle}>
-                <MdAdd /> Sub task{" "}
+                <MdAdd /> Sub task
               </div>
               {
-                <div className={styles.SubtaskProgressbar}>
-                  <CircularProgressbar
-                    value={completedSubtask}
-                    maxValue={totalSubtask}
-                    text={`${completedSubtask}/${totalSubtask}`}
-                  />
-                </div>
+                // <div className={styles.SubtaskProgressbar}>
+                //   <CircularProgressbar
+                //     value={completedSubtask}
+                //     maxValue={totalSubtask}
+                //     text={`${completedSubtask}/${totalSubtask}`}
+                //   />
+                // </div>
               }
             </div>
           )}

@@ -23,6 +23,57 @@
     box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 1px;
 }
 
+.todoGuideBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--borderLineColor);
+}
+
+.todoGuideBarRightside {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+}
+
+.todoGuideBarLeftItem {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--borderLineColor);
+    border-radius: 0.5rem;
+    padding: 0.3rem 0.5rem;
+}
+
+.todoGuideBarLeftText {
+    display: flex;
+    align-items: center;
+}
+
+
+.todoGuideBarRightItem {
+    color: gray;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.todoGuideBarLeftside {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: gray;
+}
+
+.todoGuideBarLeftItem {
+    color: gray;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
 .todoBodyTitle {
     display: flex;
     align-items: center;

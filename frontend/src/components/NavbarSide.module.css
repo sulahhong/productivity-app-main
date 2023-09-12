@@ -182,6 +182,7 @@ body {
     justify-content: space-between;
     gap: 0.5rem;
     color: var(--navSideIconColor);
+    cursor: pointer;
 }
 
 .newIssuePart1 {
@@ -196,6 +197,8 @@ body {
     display: flex;
     gap: 0.5rem;
     align-items: center;
+
+    cursor: pointer;
 }
 
 .newIssuePart2 {

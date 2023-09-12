@@ -16,6 +16,11 @@ import {
   MdCheck,
   MdKeyboardArrowLeft,
   MdVerticalSplit,
+  MdOutlineCircle,
+  MdBlockFlipped,
+  MdCheckCircleOutline,
+  MdGroupWork,
+  MdPauseCircleOutline,
 } from "react-icons/md";
 
 function StatusDropdown({ todoForm, setTodoForm, todoId, type }) {
@@ -59,17 +64,17 @@ function StatusDropdown({ todoForm, setTodoForm, todoId, type }) {
   const getMenuItem = (statusId) => {
     switch (statusId) {
       case "1":
-        return <MdSort />;
+        return <MdPauseCircleOutline />;
       case "2":
-        return <MdGridView />;
-        case "3":
-            return <MdDelete />;
-          case "4":
-            return <MdCalendarToday />;
-            case "5":
-        return <MdModeEdit />;
-        default:
-            return null;
+        return <MdOutlineCircle />;
+      case "3":
+        return <MdGroupWork />;
+      case "4":
+        return <MdCheckCircleOutline />;
+      case "5":
+        return <MdBlockFlipped />;
+      default:
+        return null;
     }
   };
 
@@ -82,7 +87,12 @@ function StatusDropdown({ todoForm, setTodoForm, todoId, type }) {
         {todoForm?.statusTitle == "" ? (
           <span>Status</span>
         ) : (
-          <span>{getMenuItem(todoForm.statusId)}{todoForm?.statusTitle}</span>
+          <div className={styles.dropdownButton}>
+            <span className={styles.dropdownButton}>
+              {getMenuItem(todoForm.statusId)}
+            </span>
+            <span>{todoForm?.statusTitle}</span>
+          </div>
         )}
       </button>
       {statusDropdown && (
