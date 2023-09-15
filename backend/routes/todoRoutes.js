@@ -1,9 +1,16 @@
-const express = require('express')
-const router = express.Router()
-const { getTodos, setTodo, updateTodo, deleteTodo } = require('../controllers/todoController')
+const express = require("express");
+const router = express.Router();
+const {
+  getTodos,
+  setTodo,
+  updateTodo,
+  deleteTodo,
+} = require("../controllers/todoController");
 
-router.route('/').get(getTodos).post(setTodo)
-router.route('/:id').put(updateTodo).delete(deleteTodo)
+const {protect} = require('../middleWare/authMiddleware')
+
+router.route("/").get(protect, getTodos).post(protect, setTodo);
+router.route("/:id").put(protect, updateTodo).delete(protect, deleteTodo);
 
 // router.get('/', getTodos)
 
@@ -13,4 +20,4 @@ router.route('/:id').put(updateTodo).delete(deleteTodo)
 
 // router.delete('/:id', deleteTodo)
 
-module.exports = router 
+module.exports = router;
