@@ -1,0 +1,90 @@
+.mainOvelay {
+    position: fixed;
+    background-color: white;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1002;
+
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    transition: all 0.3s linear;
+}
+
+
+.mainContainer {
+    padding: 3rem 0rem;
+    width: 70%;
+}
+
+.registerGreeting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.registerGreetingItem1{
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.registerInfoWrapper {
+    width: 100%;
+    padding: 3rem 0 ;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.registerInfoWrapperItem {
+    width: 100%;
+    padding: 1rem;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+ 
+}
+
+.registerInfoWrapperInputBox {
+    border: 1px solid var(--borderLineColor);
+    width: 60%;
+    padding: 0.5rem;
+}
+
+.registerInfoWrapperInput {
+    width: 100%;
+    border: none;
+}
+
+.registerInfoWrapperLabel {
+    font-size: 0.8rem;
+    padding-bottom: 0.5rem;
+ 
+}
+
+.registerInfoWrapperLabelBox {
+    width: 60%;
+    display: flex;
+    justify-content: left;
+    
+}
+
+.registerInfoWrapperItemButtonBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.registerInfoWrapperItemButton {
+    border: none;
+    padding: 1rem 0;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -7,10 +7,47 @@ const todoSchema = mongoose.Schema(
         required: true, 
         ref: 'User'
     },
-    text: {
-      type: String,
-      required: [true, "Please add a text value"],
-    },
+      todoTitle: {
+        type: String,
+        required: true,
+      },
+      todoDescription: {
+        type: String,
+        required: true,
+      },
+      todoDone: {
+        type: Boolean,
+        default: false,
+      },
+      todoDueDate: {
+        type: Date,
+        // required: true,
+      },
+    //   projectId: {
+    //     type: String,
+    //     required: true,
+    //   },
+    //   projectTitle: {
+    //     type: String,
+    //     required: true,
+    //   },
+      priorityId: {
+        type: String,
+        required: true,
+      },
+      priorityTitle: {
+        type: String,
+        required: true,
+      },
+      label: [{type: mongoose.Schema.Types.ObjectId, ref:'Label' }],
+      statusId: {
+        type: String,
+        required: true,
+      },
+      statusTitle: {
+        type: String,
+        required: true,
+      },
   },
   {
     timestamps: true,
@@ -18,3 +55,4 @@ const todoSchema = mongoose.Schema(
 );
 
 module.exports = mongoose.model("Todo", todoSchema);
+ 

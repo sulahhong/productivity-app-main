@@ -14,6 +14,7 @@ import EmptyProjectModal from "./components/EmptyProjectModal";
 import TodoSinglePage from "./page/TodoSinglePage";
 import SideOptionModal from "./components/SideOptionModal";
 import LoginPage from "./page/LoginPage";
+import RegisterPage from "./page/RegisterPage";
 
 
 
@@ -32,6 +33,7 @@ function App() {
       {(projectIsActive && projects.length == 1) && <EmptyProjectModal/> }
       <Routes>
         <Route path="/login" element={<LoginPage />}/>
+        <Route path="/register" element={<RegisterPage />}/>
         <Route path="/" element={<Home />} />
         <Route path="/diary" element={<Diary />} />
         <Route path="/todo" element={<Todo />} />

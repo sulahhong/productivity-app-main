@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import axios from 'axios'
+import axios from "axios";
 
 const AppContext = React.createContext();
 
@@ -59,7 +59,6 @@ const getLocalStorageLabels = () => {
   }
 };
 
-
 const getLocalStorageUser = () => {
   let storage = localStorage.getItem("user");
   if (storage) {
@@ -105,7 +104,6 @@ const AppProvider = ({ children }) => {
   const [projectDropdown, setProjectDropdown] = useState(false);
   const [statusDropdown, setStatusDropdown] = useState(false);
 
-
   const [comments, setComments] = useState(getLocalStorageComments());
   const [targetCommentGlobal, setTaegetCommentGlobal] = useState({});
   // const [isEditingComment, setIsEditingComment] = useState(false);
@@ -127,12 +125,11 @@ const AppProvider = ({ children }) => {
   });
 
   //test
-  const [user2, setUser2] = useState(getLocalStorageUser())
-  const [todo2, setTodo2] = useState([])
+  const [user2, setUser2] = useState(getLocalStorageUser());
+  const [todo2, setTodo2] = useState([]);
 
   //API URL
-  const BASE_URL = "http://localhost:5000/api/"
-
+  const BASE_URL = "http://localhost:5000/api/";
 
   useEffect(() => {
     console.log("todostodos", todos);
@@ -214,45 +211,50 @@ const AppProvider = ({ children }) => {
   // -------------------API service--------------------//
   //Login user
 
-  const loginUser = async (loginForm)=>{
-    console.log("START LOGIN...")
-    const response = await axios.post(BASE_URL + "users/login" , loginForm)
-    console.log("LOGIN RES: ", response)
-  if (response.data) {
-    localStorage.setItem('user', JSON.stringify(response.data))
-  }
+  const loginUser = async (loginForm) => {
+    console.log("START LOGIN...");
+    const response = await axios.post(BASE_URL + "users/login", loginForm);
+    console.log("LOGIN RES: ", response);
+    if (response.data) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+  };
 
+  //Register User
+  const registerUser = async (registerForm) => {
+    const response = await axios.post(BASE_URL + "users", registerForm)
+    console.log("REGISTER RES: ", response);
+    if (response.data) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
   }
 
   //Create todo
 
-  const createTodo = async(todoForm)=>{
-
+  const createTodo = async (todoForm) => {
     const config = {
       headers: {
         Authorization: `Bearer ${user2.token}`,
       },
-    }
+    };
 
-    const response = await axios.post(BASE_URL + "todos" , todoForm, config)
-    console.log("CREATE TODO RES: ", response)
-  }
+    const response = await axios.post(BASE_URL + "todos", todoForm, config);
+    console.log("CREATE TODO RES: ", response);
+  };
 
   //Get todos
 
-  const getTodos = async() => {
-
+  const getTodos = async () => {
     const config = {
       headers: {
         Authorization: `Bearer ${user2.token}`,
       },
-    }
+    };
 
-    const response = await axios.get(BASE_URL + "todos", config)
-    console.log("GET TODOS RES:", response.data)
-    setTodo2(response.data)
-  }
-
+    const response = await axios.get(BASE_URL + "todos", config);
+    console.log("GET TODOS RES:", response.data);
+    setTodo2(response.data);
+  };
 
   return (
     <AppContext.Provider
@@ -310,7 +312,11 @@ const AppProvider = ({ children }) => {
         status,
         setStatus,
         statusDropdown,
-        setStatusDropdown, loginUser, createTodo, getTodos
+        setStatusDropdown,
+        loginUser,
+        createTodo,
+        getTodos,
+        registerUser,
       }}
     >
       {children}

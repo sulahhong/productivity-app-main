@@ -4,19 +4,28 @@ const Todo = require('../model/todoModel')
 const User = require('../model/userModel')
 
 const getTodos =  asyncHandler(async (req, res) => {
-    const todos = await Todo.find({ createdBy: req.user.id})
+    const todos = await Todo.find({ createdBy: req.user.id}).populate('label');
     res.status(200).json(todos)
 })
 
 const setTodo = asyncHandler(async (req, res) => {
-    if  (!req.body.text) {
-        res.status(400)
-        throw new Error('please add a text field')
-    }
+    // if  (!req.body.text) {
+    //     res.status(400)
+    //     throw new Error('please add a text field')
+    // }
     console.log("USER: ", req.user.id)
     const todo = await Todo.create({
-        text: req.body.text,
+        
+        todoTitle: req.body.todoTitle,
+        todoDescription: req.body.todoDescription,
+        todoDone: false,
         createdBy: req.user.id,
+        todoDueDate: req.body.todoDueDate, 
+        priorityId: req.body.priorityId,
+        priorityTitle: req.body.priorityTitle,
+        label: req.body.label, 
+        statusId: req.body.statusId,
+        statusTitle: req.body.statusTitle
     })
 
     res.status(200).json(todo)
