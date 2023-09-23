@@ -6,19 +6,25 @@ const labelSchema = mongoose.Schema(
         //     type: String,
         //     required: true,
         // }, 
-        labelName: {
+        name: {
             type: String,
             required: true,
         },
-        labelColor: {
+        color: {
             type: String,
             required: true,
+        },
+        project: {
+            type: mongoose.Schema.Types.ObjectId, 
+            required: true, 
+            ref: 'Project'
         },
         createdBy: {
             type: mongoose.Schema.Types.ObjectId, 
             required: true, 
             ref: 'User'
         },
+
         }, 
     {
         timestamps: true,

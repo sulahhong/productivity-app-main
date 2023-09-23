@@ -5,12 +5,13 @@ const {
   setTodo,
   updateTodo,
   deleteTodo,
+  getTodoDetail,
 } = require("../controllers/todoController");
 
 const {protect} = require('../middleWare/authMiddleware')
 
-router.route("/").get(protect, getTodos).post(protect, setTodo);
-router.route("/:id").put(protect, updateTodo).delete(protect, deleteTodo);
+router.route("/:slug/project/:projectId/todos").get(protect, getTodos).post(protect, setTodo);
+router.route("/:slug/project/:projectId/todos/:id").put(protect, updateTodo).delete(protect, deleteTodo).get(protect, getTodoDetail);
 
 // router.get('/', getTodos)
 

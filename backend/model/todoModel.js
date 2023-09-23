@@ -2,52 +2,54 @@ const mongoose = require("mongoose");
 
 const todoSchema = mongoose.Schema(
   {
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId, 
-        required: true, 
-        ref: 'User'
+    title: {
+      type: String,
+      required: true,
     },
-      todoTitle: {
-        type: String,
-        required: true,
-      },
-      todoDescription: {
-        type: String,
-        required: true,
-      },
-      todoDone: {
-        type: Boolean,
-        default: false,
-      },
-      todoDueDate: {
-        type: Date,
-        // required: true,
-      },
-    //   projectId: {
-    //     type: String,
-    //     required: true,
-    //   },
-    //   projectTitle: {
-    //     type: String,
-    //     required: true,
-    //   },
-      priorityId: {
-        type: String,
-        required: true,
-      },
-      priorityTitle: {
-        type: String,
-        required: true,
-      },
-      label: [{type: mongoose.Schema.Types.ObjectId, ref:'Label' }],
-      statusId: {
-        type: String,
-        required: true,
-      },
-      statusTitle: {
-        type: String,
-        required: true,
-      },
+    description: {
+      type: String,
+      required: true,
+    },
+    doneYn: {
+      type: Boolean,
+      default: false,
+    },
+    dueDate: {
+      type: Date,
+  
+    },
+    project: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Project",
+    },
+    priority: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Priority",
+    },
+
+    status: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Status",
+    },
+    label: [{ type: mongoose.Schema.Types.ObjectId, ref: "Label" }],
+    workspace: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Workspace",
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    updatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
   },
   {
     timestamps: true,
@@ -55,4 +57,3 @@ const todoSchema = mongoose.Schema(
 );
 
 module.exports = mongoose.model("Todo", todoSchema);
- 

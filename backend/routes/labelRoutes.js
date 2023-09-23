@@ -9,8 +9,8 @@ const {
 
 const {protect} = require('../middleWare/authMiddleware')
 
-router.route("/").get(protect, getLabel).post(protect, setLabel);
-router.route("/:id").put(protect, updateLabel).delete(protect, deleteLabel);
+router.route("/:projectId/label").get(protect, getLabel).post(protect, setLabel);
+router.route("/:projectId/label/:id").put(protect, updateLabel).delete(protect, deleteLabel);
 
 
 

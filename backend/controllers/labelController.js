@@ -1,28 +1,44 @@
 const asyncHandler = require('express-async-handler')
 
-
+const Project = require('../model/projectModel')
 const Label = require('../model/labelModel')
 const User = require('../model/userModel')
+const Priority = require('../model/priorityModel')
+const Status = require('../model/statusModel')
 
 const getLabel =  asyncHandler(async (req, res) => {
+
+const priorityAll = await Priority.find({sid: "1"})
+
+console.log("SUPER TEST", priorityAll)
+
+const status = await Status.find({sid: "1"})
+console.log("STATUS TEST :", status)
+
     const labels = await Label.find({ createdBy: req.user.id})
     res.status(200).json(labels)
 })
 
 const setLabel = asyncHandler(async (req, res) => {
-    if  (!req.body.labelName) {
+    const projectExists = await Project.findById(req.params.projectId)
+    if(!projectExists) {
+    res.status(400)
+    throw new Error ('Project invalid')
+}
+    if  (!req.body.name) {
         res.status(400)
         throw new Error('please add a label name field')
     }
-    if  (!req.body.labelColor) {
+    if  (!req.body.color) {
         res.status(400)
         throw new Error('please select a label color')
     }
     console.log("USER: ", req.user.id)
     const label = await Label.create({
         createdBy: req.user.id,
-        labelName: req.body.labelName,
-        labelColor: req.body.labelColor, 
+        name: req.body.name,
+        color: req.body.color, 
+        project: projectExists
     })
 
     res.status(200).json(label)

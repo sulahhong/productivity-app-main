@@ -14,9 +14,11 @@ app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({ extended : false}))
 
-app.use('/api/todos', require('./routes/todoRoutes'))
+app.use('/api/workspace', require('./routes/todoRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
-app.use('/api/label', require('./routes/labelRoutes')) 
+app.use('/api/project', require('./routes/labelRoutes')) 
+app.use('/api/workspace', require('./routes/workspaceRoutes')) 
+app.use('/api/workspace', require('./routes/projectRoutes')) 
 
 app.use(errorHandler)
 
