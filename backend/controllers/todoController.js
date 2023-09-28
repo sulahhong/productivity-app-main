@@ -150,7 +150,7 @@ const updateTodo = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("User not authorized");
   }
-
+ 
   //important, same as setTodo!
   if (!req.body.title) {
     res.status(400);
