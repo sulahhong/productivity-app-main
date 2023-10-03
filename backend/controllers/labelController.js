@@ -5,26 +5,33 @@ const Label = require('../model/labelModel')
 const User = require('../model/userModel')
 const Priority = require('../model/priorityModel')
 const Status = require('../model/statusModel')
+const { validProject, validProjectMember } = require('../service/projectService')
+const { validWorkspace } = require('../service/workspaceService')
 
-const getLabel =  asyncHandler(async (req, res) => {
+const getWorkspaceLabel = asyncHandler(async (req, res) => {
+    const workspace = await validWorkspace(res, req.params.slug);
 
-const priorityAll = await Priority.find({sid: "1"})
+    const labels = await Label.find({workspace: workspace._id}).populate([
+        { path: "project", select: "title description identifier publicYn" },
+        { path: "workspace", select: "name slug" }])
+    res.status(200).json({data: labels})
+})
 
-console.log("SUPER TEST", priorityAll)
+const getLabel = asyncHandler(async (req, res) => {
 
-const status = await Status.find({sid: "1"})
-console.log("STATUS TEST :", status)
+    const project = await validProject(res, req.params.projectId )
+    await validProjectMember(res, project._id, req.user.id )
 
-    const labels = await Label.find({ createdBy: req.user.id})
-    res.status(200).json(labels)
+    const labels = await Label.find({ project: req.params.projectId}).populate([
+        { path: "project", select: "title description identifier publicYn" },
+        { path: "workspace", select: "name slug" }])
+    res.status(200).json({data: labels})
 })
 
 const setLabel = asyncHandler(async (req, res) => {
-    const projectExists = await Project.findById(req.params.projectId)
-    if(!projectExists) {
-    res.status(400)
-    throw new Error ('Project invalid')
-}
+    const workspace = await validWorkspace(res, req.params.slug);
+    const project = await validProject(res, req.params.projectId )
+
     if  (!req.body.name) {
         res.status(400)
         throw new Error('please add a label name field')
@@ -33,78 +40,72 @@ const setLabel = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('please select a label color')
     }
-    console.log("USER: ", req.user.id)
+
+    const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+
+    if(!(hexColorRegex.test(req.body.color))){
+        res.status(400)
+        throw new Error('Invalid label hexadecimal color')
+    }
+
     const label = await Label.create({
         createdBy: req.user.id,
         name: req.body.name,
         color: req.body.color, 
-        project: projectExists
+        project: project._id,
+        workspace: workspace._id
     })
 
     res.status(200).json(label)
 })
 
-
-
 const updateLabel = asyncHandler(async (req, res) => {
-    const label = await Label.findById(req.params.id)
+    const project = await validProject(res, req.params.projectId )
+
+    const label = await Label.findById(req.params.labelId)
 
     if (!label) {
         res.status(400)
         throw new Error('Label not Found')
     }
 
-    const user = await User.findById(req.user.id)
-
-    // check for user
-    if(!user) {
-        res.status(401)
-        throw new Error('User not found')
+    if  (!req.body.name) {
+        res.status(400)
+        throw new Error('please add a label name field')
+    }
+    if  (!req.body.color) {
+        res.status(400)
+        throw new Error('please select a label color')
     }
 
-    //Make sure the logged in user matches the todo user
-    if(label.createdBy.toString() !== user.id) {
-        res.status(401)
-        throw new Error('User not authorized')
+    const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+    if(!(hexColorRegex.test(req.body.color))){
+        res.status(400)
+        throw new Error('Invalid label hexadecimal color')
     }
 
-    const updatedLabel = await Label.findByIdAndUpdate(req.params.id, req.body, {
+    const updatedLabel = await Label.findByIdAndUpdate(label._id, req.body, {
         new: true, 
     })
-
     res.status(200).json(updatedLabel)
-
 })
 
 const deleteLabel = asyncHandler(async (req, res) => {
-    const label = await Label.findById(req.params.id)
+    const project = await validProject(res, req.params.projectId )
+    const label = await Label.findById(req.params.labelId)
 
     if (!label) {
         res.status(400)
         throw new Error('Label not Found')
     }
-
-    const user = await User.findById(req.user.id)
-
-    // check for user
-    if(!user) {
-        res.status(401)
-        throw new Error('User not found')
-    }
-
-    //Make sure the logged in user matches the todo user
-    if(label.createdBy.toString() !== user.id) {
-        res.status(401)
-        throw new Error('User not authorized')
-    }
     await label.deleteOne()
 
-    res.status(200).json({ status: "delete success", id: req.params.id})
+    res.status(200).json({ status: "delete success", id: req.params.labelId})
 })
 
 module.exports = {
     getLabel, 
     setLabel, 
     updateLabel, 
-    deleteLabel
+    deleteLabel, getWorkspaceLabel
 }

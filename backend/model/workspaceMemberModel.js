@@ -1,4 +1,12 @@
 const mongoose = require('mongoose');
+const { workspace } = require('../rbac/workspace');
+
+// const ROLES = {
+//     OWNER: 'OWNER',
+//     ADMIN: 'ADMIN',
+//     MEMBER: 'MEMBER',
+//     VIEWER: 'VIEWER'
+//   };
 
 const workspaceMemberSchema = mongoose.Schema({
 
@@ -21,6 +29,12 @@ const workspaceMemberSchema = mongoose.Schema({
         type: Boolean,
         default: false,
       },
+      role: {
+        type: String,
+        enum: Object.values(workspace),
+        default: workspace.MEMBER,
+        required: true, 
+      }
 }, 
 {
     timestamps: true
@@ -28,3 +42,4 @@ const workspaceMemberSchema = mongoose.Schema({
 )
 
 module.exports = mongoose.model('WorkspaceMember', workspaceMemberSchema)
+// module.exports.ROLES = ROLES;

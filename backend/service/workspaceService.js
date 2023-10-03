@@ -21,7 +21,7 @@ const validWorkspaceMember = asyncHandler(async (res, workspaceId,userId) => {
     const workspaceMember = await WorkspaceMember.findOne({ member: userId, workspace: workspaceId });
     if (!workspaceMember) {
       res.status(400);
-      throw new Error("Invitee not workspace member");
+      throw new Error("Actor not workspace member");
     }
   });
 
@@ -30,6 +30,7 @@ const validWorkspaceMember = asyncHandler(async (res, workspaceId,userId) => {
         { path: "createdBy", select: "-password -createdAt -updatedAt -__v" },
         { path: "workspace", select: "name slug" },
         { path: "member", select: "-password -createdAt -updatedAt -__v" },
+        { path: "role" },
       ]);
     if (workspaceMember.length<1) {
       res.status(400);
@@ -38,6 +39,31 @@ const validWorkspaceMember = asyncHandler(async (res, workspaceId,userId) => {
     return workspaceMember
   });
 
+
+  const getWorkspaceMemberFromList = asyncHandler(async(res, workspaceMembers, workspaceId)=>{
+    let verifiedWorkspaceMember = []
+    
+    for(let workspaceMemberId of workspaceMembers){
+      const workspaceMember = await WorkspaceMember.findOne({_id: workspaceMemberId, workspace:workspaceId})
+      if(!workspaceMember){
+        res.status(400);
+      throw new Error(`${workspaceMemberId}`+"is not a valid user");
+      }
+      verifiedWorkspaceMember.push(workspaceMember)
+    }
+
+    return verifiedWorkspaceMember;
+  })
+
+  const getRoleFromUser= asyncHandler(async (res, workspaceId, userId) => {
+    const workspaceMember = await WorkspaceMember.findOne({member: userId, workspace: workspaceId }).populate({path: "role"})
+    if(!workspaceMember){
+      res.status(400);
+      throw new Error("not a valid workspaceMember");
+    }
+    return workspaceMember.role.sid
+  })
+
 module.exports = {
-    validWorkspace, validWorkspaceMember, workspaceMembers
+    validWorkspace, validWorkspaceMember, workspaceMembers, getWorkspaceMemberFromList, getRoleFromUser
   };

@@ -15,9 +15,13 @@ const projectSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        publicYn: {
+            type: Boolean,
+            default: true,
+          },
         projectLead: {
             type: mongoose.Schema.Types.ObjectId, 
-
+            required: true,
             ref: 'User'
         },
         workspace: {

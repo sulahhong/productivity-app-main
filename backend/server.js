@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended : false}))
 
 app.use('/api/workspace', require('./routes/todoRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
-app.use('/api/project', require('./routes/labelRoutes')) 
+app.use('/api/workspace', require('./routes/labelRoutes')) 
 app.use('/api/workspace', require('./routes/workspaceRoutes')) 
 app.use('/api/workspace', require('./routes/projectRoutes')) 
 

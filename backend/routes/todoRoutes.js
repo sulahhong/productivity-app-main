@@ -5,20 +5,26 @@ const {
   setTodo,
   updateTodo,
   deleteTodo,
-  getTodoDetail,
+  getTodoById,
 } = require("../controllers/todoController");
 
 const {protect} = require('../middleWare/authMiddleware')
+const {member} = require('../middleWare/memberMiddleware')
+const {permission} = require('../middleWare/permissionMiddleware')
 
-router.route("/:slug/project/:projectId/todos").get(protect, getTodos).post(protect, setTodo);
-router.route("/:slug/project/:projectId/todos/:id").put(protect, updateTodo).delete(protect, deleteTodo).get(protect, getTodoDetail);
+const { workspace } = require("../rbac/workspace");
+const { project } = require("../rbac/project");
 
-// router.get('/', getTodos)
+const getTodosACP = [ project.OWNER, project.ADMIN, project.MEMBER]
+const setTodosACP = [ project.OWNER, project.ADMIN, project.MEMBER]
+const updateTodosACP = [ project.OWNER, project.ADMIN, project.MEMBER]
+const deleteTodosACP = [ project.OWNER, project.ADMIN, project.MEMBER]
+const getTodoByIdACP = [ project.OWNER, project.ADMIN, project.MEMBER]
 
-// router.post('/', setTodo)
-
-// router.put('/:id', updateTodo)
-
-// router.delete('/:id', deleteTodo)
+router.route("/:slug/project/:projectId/todo").get(protect, member, permission([], getTodosACP), getTodos)
+router.route("/:slug/project/:projectId/todo").post(protect, member, permission([], setTodosACP), setTodo);
+router.route("/:slug/project/:projectId/todo/:todoId").put(protect, member, permission([], updateTodosACP), updateTodo)
+router.route("/:slug/project/:projectId/todo/:todoId").delete(protect, member, permission([], deleteTodosACP), deleteTodo)
+router.route("/:slug/project/:projectId/todo/:todoId").get(protect, member, permission([], getTodoByIdACP),getTodoById);
 
 module.exports = router;

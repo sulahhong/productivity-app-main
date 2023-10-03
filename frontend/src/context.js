@@ -115,6 +115,9 @@ const AppProvider = ({ children }) => {
   //SideOptionModal 상태
   const [openSideModal, setOpenSideModal] = useState(false);
 
+  //Create Workspace Modal
+  const [openWorkspaceModal, setOpenWorkspaceModal] = useState(false);
+
   //labelList
   const [labels, setLabels] = useState(getLocalStorageLabels());
 
@@ -222,12 +225,12 @@ const AppProvider = ({ children }) => {
 
   //Register User
   const registerUser = async (registerForm) => {
-    const response = await axios.post(BASE_URL + "users", registerForm)
+    const response = await axios.post(BASE_URL + "users", registerForm);
     console.log("REGISTER RES: ", response);
     if (response.data) {
       localStorage.setItem("user", JSON.stringify(response.data));
     }
-  }
+  };
 
   //Create todo
 
@@ -317,6 +320,8 @@ const AppProvider = ({ children }) => {
         createTodo,
         getTodos,
         registerUser,
+        openWorkspaceModal,
+        setOpenWorkspaceModal,
       }}
     >
       {children}

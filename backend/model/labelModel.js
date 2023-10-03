@@ -19,6 +19,11 @@ const labelSchema = mongoose.Schema(
             required: true, 
             ref: 'Project'
         },
+        workspace: {
+            type: mongoose.Schema.Types.ObjectId, 
+            required: true, 
+            ref: 'Workspace'
+        },
         createdBy: {
             type: mongoose.Schema.Types.ObjectId, 
             required: true, 

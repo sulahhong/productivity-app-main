@@ -2,20 +2,32 @@ const express = require("express");
 const router = express.Router();
 
 const {
-    getWorkspace,
+  getCreatedWorkspace,
     setWorkspace,
     updateWorkspace,
-    deleteWorkspace, inviteWorkspace, getMembers, joinWorkspace
+    deleteWorkspace, inviteWorkspace, getMembers, joinWorkspace, getJoinedWorkspace
   } = require("../controllers/workspaceController");
 
   const {protect} = require('../middleWare/authMiddleware')
+  const {member} = require('../middleWare/memberMiddleware')
+  const {permission} = require('../middleWare/permissionMiddleware')
 
-router.route("/").get(protect, getWorkspace).post(protect, setWorkspace);
-router.route("/:slug").put(protect, updateWorkspace).delete(protect, deleteWorkspace);
+  const WorkspaceMember = require("../model/workspaceMemberModel");
+  const { workspace } = require("../rbac/workspace");
 
-router.route("/:slug/invite").post(protect, inviteWorkspace);
-router.route("/:slug/members").get(protect, getMembers);
-router.route("/:slug/join/:inviteId").post(protect, joinWorkspace);
 
+const updateWorkspaceRoles = [ workspace.OWNER, workspace.ADMIN, workspace.MEMBER]
+const deleteWorkspaceRoles = [ workspace.OWNER]
+const inviteWorkspaceRoles = [ workspace.OWNER, workspace.ADMIN, workspace.MEMBER]
+const getMembersRoles = [ workspace.OWNER, workspace.ADMIN, workspace.MEMBER, workspace.GUEST, workspace.VIEWER]
+
+router.route("/").get(protect, getCreatedWorkspace)
+router.route("/").post(protect, setWorkspace);
+router.route("/joined").get(protect, getJoinedWorkspace);
+router.route("/:slug").put(protect, member, permission(updateWorkspaceRoles, []), updateWorkspace)
+router.route("/:slug").delete(protect, member, permission(deleteWorkspaceRoles, []), deleteWorkspace)
+router.route("/:slug/invite").post(protect, member, permission(inviteWorkspaceRoles, []), inviteWorkspace);
+router.route("/:slug/members").get(protect,member, permission(getMembersRoles, []), getMembers);
+router.route("/join/:inviteId").post(protect, joinWorkspace);
 
 module.exports = router;

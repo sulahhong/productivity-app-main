@@ -154,13 +154,13 @@ body {
     cursor: pointer;
 }
 
-.UserWorkplaceIcon {
+.UserWorkspaceIcon {
     display: flex;
     align-items: center;
 }
 
 
-.navbarSideUserWorkplace {
+.navbarSideUserWorkspace {
     cursor: pointer;
     position: relative;
     display: flex;
@@ -212,7 +212,7 @@ body {
 
 
 
-.userWorlplaceContent {
+.userWorkspaceContent {
     left: 1rem;
     
     position: absolute;
@@ -230,10 +230,10 @@ body {
     gap: 0.5rem;
 }
 
-.userWorkplaceContentItem {
+.userWorkspaceContentItem {
     padding: 0.4rem 0.5rem;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     
 
@@ -242,7 +242,7 @@ body {
 
 }
 
-.userWorkplaceContentItem:hover {
+.userWorkspaceContentItem:hover {
     background-color: rgb(231, 230, 230);   
     /* transition: 0.3s; */
     

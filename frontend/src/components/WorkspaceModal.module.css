@@ -1,0 +1,134 @@
+.workspaceModalOverlay{
+    position: fixed;
+    background-color: rgba(148, 143, 143, 0.848);
+    width: 100vw;
+    height: 100vh;
+    z-index: 1002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s linear;
+}
+
+.workspaceModalContainer{
+    background-color: white;
+    width: 70%;
+    max-width: 600px;
+    border-radius: 5px;
+    margin: auto 0;
+    padding: 1rem;
+    position: relative;
+}
+
+.workspaceModalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.5rem;
+    border-bottom: 1px solid rgb(216, 216, 216);
+
+}
+
+.workspaceModalHeaderTitle {
+    color: gray;
+    font-size: 1.2rem;
+}
+
+.workspaceModalBody {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem 0rem;
+   
+}
+
+
+.workspaceModalInput {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+}
+
+
+.inputWrapperLabel {
+    font-size: 0.8rem;
+    padding-bottom: 0.5rem;
+ 
+}
+
+
+.workspaceModalInputBox {
+    width: 100%;
+    padding: 1rem;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
+.workspaceModalInputItem {
+    width: 100%;
+    border: none;
+}
+
+.WrapperInputBox {
+    border: 1px solid var(--borderLineColor);
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.workspaceModalInput {
+
+}
+.inputWrapperLabelBox {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+}
+
+.inputWrapperLabel {
+    font-size: 0.8rem;
+    padding-bottom: 0.5rem;
+ 
+}
+
+.WrapperItemButtonBox{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+
+}
+
+.WrapperItemButton {
+    border: none;
+    padding: 1rem 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.WrapperItemButton:hover{
+   background-color: rgb(238, 174, 55);
+}
+
+.workspaceModalCloseButton {
+    background-color: white;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--navSideIconColor);
+    cursor: pointer;
+    border-radius: 0.2rem;
+    transition: background-color 0.3s ease;
+}
+
+.workspaceModalCloseButton:hover {
+    background-color: var(--navHoverColor);
+
+}

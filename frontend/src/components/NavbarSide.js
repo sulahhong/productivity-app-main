@@ -44,11 +44,14 @@ function NavbarSide() {
     setTargetProjectGlobal,
     isEditingProject,
     setIsEditingProject,
-    user, 
-    openModal, setOpenModal,
+    user,
+    openModal,
+    setOpenModal,
+    openWorkspaceModal,
+    setOpenWorkspaceModal,
   } = useGlobalContext();
 
-  const [openUserWorkplace, setOpenUserWorkplace] = useState(false);
+  const [openUserWorkspace, setOpenUserWorkspace] = useState(false);
   const [openUserProfile, setOpenUserProfile] = useState(false);
 
   const navigate = useNavigate();
@@ -118,12 +121,13 @@ function NavbarSide() {
     setTodos(arr);
   };
 
-  
   const handleAddNewTodo = () => {
     setOpenModal(!openModal);
   };
 
-
+  const handleCreateWorkspace = () => {
+    setOpenWorkspaceModal(!openWorkspaceModal)
+  };
 
   return (
     <div
@@ -135,47 +139,68 @@ function NavbarSide() {
     >
       <div className={styles.navbarSideTopPart}>
         <div className={styles.navbarSideUserInfo}>
-          <div className={styles.navbarSideUserWorkplace}
-            onClick={() => setOpenUserWorkplace(!openUserWorkplace)}
+          <div
+            className={styles.navbarSideUserWorkspace}
+            onClick={() => setOpenUserWorkspace(!openUserWorkspace)}
           >
-            <div className={styles.UserWorkplaceIcon}>
+            <div className={styles.UserWorkspaceIcon}>
               <FaRegStar />
             </div>
-            <div className={styles.UserWorkplaceName}>work space</div>
+            <div className={styles.UserWorkspaceName}>work space</div>
           </div>
-          {openUserWorkplace && (
-            <div className={styles.userWorlplaceContent} >
-              <div className={styles.userWorkplaceContentItem}>Work Place :{user.userEmail}</div>
-              <div className={styles.userWorkplaceContentItem}>Setting Work Place</div>
-              <div className={styles.userWorkplaceContentItem}>Logout</div>
+          {openUserWorkspace && (
+            <div className={styles.userWorkspaceContent}>
+              <div className={styles.userWorkspaceContentItem}>
+                Workspace :{user.userEmail}
+              </div>
+              <div
+                className={styles.userWorkspaceContentItem}
+                onClick={() => handleCreateWorkspace()}
+              >
+                <MdAdd /> Create Workspace
+              </div>
+              <div className={styles.userWorkspaceContentItem}>
+                Workspace Settings
+              </div>
+              <div className={styles.userWorkspaceContentItem}>
+                Workspace Invites
+              </div>
+              <div className={styles.userWorkspaceContentItem}>Logout</div>
             </div>
           )}
-          <div className={styles.navbarSideUserProfile} 
+     
+          <div
+            className={styles.navbarSideUserProfile}
             onClick={() => setOpenUserProfile(!openUserProfile)}
           >
             <FaUserCircle />
-          </div> 
+          </div>
           {openUserProfile && (
             <div className={styles.userProfileContent}>
               <div className={styles.userProfileContentItem1}>
-              <div className={styles.userProfileContentItem1}><FaUserCircle /></div>
-              <div className={styles.userProfileContentItem1}>{user.userName}</div>
+                <div className={styles.userProfileContentItem1}>
+                  <FaUserCircle />
+                </div>
+                <div className={styles.userProfileContentItem1}>
+                  {user.userName}
+                </div>
               </div>
-            
+
               <div className={styles.userProfileContentItem}>View profile</div>
               <div className={styles.userProfileContentItem}>Logout</div>
             </div>
-            
-          )
-
-          }
+          )}
         </div>
         <div className={styles.navbarSideNewIssueBar}>
-          <button className={styles.newIssuePart1}
-            onClick={()=> handleAddNewTodo()}
+          <button
+            className={styles.newIssuePart1}
+            onClick={() => handleAddNewTodo()}
           >
-            <FaRegEdit /> New Issue</button>
-          <button className={styles.newIssuePart2}><FaSearch /> </button>
+            <FaRegEdit /> New Issue
+          </button>
+          <button className={styles.newIssuePart2}>
+            <FaSearch />{" "}
+          </button>
         </div>
       </div>
       <div className={styles.navbarSideContents}>

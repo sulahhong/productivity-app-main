@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const { project } = require('../rbac/project');
 
-const projectMemberSchema = mongoose.Schema({
+const projectJoinRequestSchema = mongoose.Schema({
 
+    
     member: {
         type: mongoose.Schema.Types.ObjectId, 
         required: true, 
@@ -23,20 +23,14 @@ const projectMemberSchema = mongoose.Schema({
         required: true, 
         ref: 'User'
     },
-    joinedYn: {
+    acceptedYn: {
         type: Boolean,
         default: false,
       },
-      role: {
-        type: String,
-        enum: Object.values(project),
-        default: project.MEMBER,
-        required: true, 
-      }
 }, 
 {
     timestamps: true
 }
 )
 
-module.exports = mongoose.model('projectMember', projectMemberSchema)
+module.exports = mongoose.model('ProjectJoinRequest', projectJoinRequestSchema)

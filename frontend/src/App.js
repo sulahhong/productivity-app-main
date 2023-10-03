@@ -15,25 +15,35 @@ import TodoSinglePage from "./page/TodoSinglePage";
 import SideOptionModal from "./components/SideOptionModal";
 import LoginPage from "./page/LoginPage";
 import RegisterPage from "./page/RegisterPage";
-
-
-
+import WorkspaceModal from "./components/WorkspaceModal";
 
 function App() {
-
-  const { todos, setTodos, openModal, setOpenModal, openModalProject, setOpenModalProject, projectIsActive, projects, openSideModal} = useGlobalContext();
+  const {
+    todos,
+    setTodos,
+    openModal,
+    setOpenModal,
+    openModalProject,
+    setOpenModalProject,
+    projectIsActive,
+    projects,
+    openSideModal,
+    openWorkspaceModal,
+    setOpenWorkspaceModal,
+  } = useGlobalContext();
 
   return (
     <BrowserRouter>
       <NavbarTop />
       <NavbarSide />
       {openModal && <TodoModal />}
-      {openModalProject && <ProjectModal /> }
+      {openModalProject && <ProjectModal />}
       {openSideModal && <SideOptionModal />}
-      {(projectIsActive && projects.length == 1) && <EmptyProjectModal/> }
+      {openWorkspaceModal && <WorkspaceModal />}
+      {projectIsActive && projects.length == 1 && <EmptyProjectModal />}
       <Routes>
-        <Route path="/login" element={<LoginPage />}/>
-        <Route path="/register" element={<RegisterPage />}/>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/" element={<Home />} />
         <Route path="/diary" element={<Diary />} />
         <Route path="/todo" element={<Todo />} />

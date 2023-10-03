@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { workspace } = require('../rbac/workspace');
 
 const inviteSchema = mongoose.Schema({
 
@@ -21,6 +22,11 @@ const inviteSchema = mongoose.Schema({
         type: Boolean,
         default: false,
       },
+      role: {
+        type: String,
+        enum: Object.values(workspace),
+        default: workspace.MEMBER,
+      }
 }, 
 {
     timestamps: true
