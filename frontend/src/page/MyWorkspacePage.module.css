@@ -1,0 +1,61 @@
+.mainContainer {
+    padding-top: var(--navTopHeight);
+    padding-left: var(--navSideWidth) ;
+    height: 100%;
+    background-color: white;
+}
+
+.todoBody {
+    padding: 1rem;
+}
+
+.todoGuideBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--borderLineColor);
+}
+
+.todoGuideBarRightside {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+}
+
+.todoGuideBarLeftside {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: gray;
+}
+
+.todoGuideBarLeftItem {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--borderLineColor);
+    border-radius: 0.5rem;
+    padding: 0.3rem 0.5rem;
+}
+
+.todoGuideBarLeftText {
+    display: flex;
+    align-items: center;
+}
+
+
+.todoAddButton {
+    padding: 0.2rem 1rem;
+    font-size: 0.8rem;
+    border: none;
+    background-color: whitesmoke;
+    color: gray;
+    font-weight: 400;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 1px;
+}

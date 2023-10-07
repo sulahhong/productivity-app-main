@@ -16,6 +16,7 @@ import SideOptionModal from "./components/SideOptionModal";
 import LoginPage from "./page/LoginPage";
 import RegisterPage from "./page/RegisterPage";
 import WorkspaceModal from "./components/WorkspaceModal";
+import MyWorkspacePage from "./page/MyWorkspacePage";
 
 function App() {
   const {
@@ -33,7 +34,7 @@ function App() {
   } = useGlobalContext();
 
   return (
-    <BrowserRouter>
+    <>
       <NavbarTop />
       <NavbarSide />
       {openModal && <TodoModal />}
@@ -49,8 +50,9 @@ function App() {
         <Route path="/todo" element={<Todo />} />
         <Route path="/archive" element={<Archive />} />
         <Route path="/todo/:id" element={<TodoSinglePage />} />
+        <Route path="/myworkspace" element={<MyWorkspacePage />} />
       </Routes>
-    </BrowserRouter>
+      </>
   );
 }
 

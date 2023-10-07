@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const AppContext = React.createContext();
 
@@ -134,6 +136,8 @@ const AppProvider = ({ children }) => {
   //API URL
   const BASE_URL = "http://localhost:5000/api/";
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     console.log("todostodos", todos);
     console.log("projectsprojects", projects);
@@ -216,11 +220,24 @@ const AppProvider = ({ children }) => {
 
   const loginUser = async (loginForm) => {
     console.log("START LOGIN...");
-    const response = await axios.post(BASE_URL + "users/login", loginForm);
-    console.log("LOGIN RES: ", response);
-    if (response.data) {
-      localStorage.setItem("user", JSON.stringify(response.data));
+    try {
+      const response = await axios.post(BASE_URL + "users/login", loginForm);
+      console.log("LOGIN RES: ", response);
+      
+  
+      if (response.data) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+        toast.success('Successfully created!');
+        navigate('/myworkspace')
+      } 
+    } catch (error) {
+      console.log("errpr", error)
+       toast.error(error.response.data.message);
     }
+   
+    
+      
+    
   };
 
   //Register User

@@ -129,6 +129,9 @@ function NavbarSide() {
     setOpenWorkspaceModal(!openWorkspaceModal)
   };
 
+  const handleMyWorkspace = () => {
+    navigate('/myworkspace')
+  }
   return (
     <div
       className={
@@ -152,6 +155,11 @@ function NavbarSide() {
             <div className={styles.userWorkspaceContent}>
               <div className={styles.userWorkspaceContentItem}>
                 Workspace :{user.userEmail}
+              </div>
+              <div className={styles.userWorkspaceContentItem}
+                onClick={() => handleMyWorkspace()}
+              >
+                My Workspace
               </div>
               <div
                 className={styles.userWorkspaceContentItem}
