@@ -8,15 +8,18 @@ import Diary from "./routes/Diary";
 import Home from "./routes/Home";
 import Todo from "./routes/Todo";
 import { useGlobalContext } from "./context";
-import ProjectModal from "./components/ProjectModal";
+
 import Archive from "./routes/Archive";
 import EmptyProjectModal from "./components/EmptyProjectModal";
 import TodoSinglePage from "./page/TodoSinglePage";
 import SideOptionModal from "./components/SideOptionModal";
 import LoginPage from "./page/LoginPage";
 import RegisterPage from "./page/RegisterPage";
-import WorkspaceModal from "./components/WorkspaceModal";
+import WorkspaceModal from "./modal/WorkspaceModal";
 import MyWorkspacePage from "./page/MyWorkspacePage";
+import MyProjectPage from "./page/MyProjectPage";
+import ProjectModal from "./modal/ProjectModal";
+import MyTodoPage from "./page/MyTodoPage";
 
 function App() {
   const {
@@ -31,6 +34,7 @@ function App() {
     openSideModal,
     openWorkspaceModal,
     setOpenWorkspaceModal,
+    openProjectModal, 
   } = useGlobalContext();
 
   return (
@@ -38,7 +42,7 @@ function App() {
       <NavbarTop />
       <NavbarSide />
       {openModal && <TodoModal />}
-      {openModalProject && <ProjectModal />}
+      {openProjectModal && <ProjectModal />}
       {openSideModal && <SideOptionModal />}
       {openWorkspaceModal && <WorkspaceModal />}
       {projectIsActive && projects.length == 1 && <EmptyProjectModal />}
@@ -51,6 +55,8 @@ function App() {
         <Route path="/archive" element={<Archive />} />
         <Route path="/todo/:id" element={<TodoSinglePage />} />
         <Route path="/myworkspace" element={<MyWorkspacePage />} />
+        <Route path="/:slug/project" element={<MyProjectPage />} />
+        <Route path="/:slug/project/:projectId" element={<MyTodoPage />} />
       </Routes>
       </>
   );

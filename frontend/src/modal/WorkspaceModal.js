@@ -5,7 +5,7 @@ import { MdOutlineClose, MdAdd } from "react-icons/md";
 import toast, { Toaster } from "react-hot-toast";
 
 function WorkspaceModal() {
-  const { setOpenWorkspaceModal, openWorkspaceModal } = useGlobalContext();
+  const { setOpenWorkspaceModal, openWorkspaceModal, createWorkspace , getJoinedWorkspace} = useGlobalContext();
 
   const [workspaceForm, setWorkspaceForm] = useState({
     name: "",
@@ -26,6 +26,17 @@ function WorkspaceModal() {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const handleCreateWorkspace = async() => {
+   const success= await createWorkspace(workspaceForm)
+
+   if (success){
+    await setOpenWorkspaceModal(false)
+    await getJoinedWorkspace()
+   }
+
+
+  }
 
   return (
     <div
@@ -81,7 +92,7 @@ function WorkspaceModal() {
         </div>
         <div className={styles.WrapperItemButtonBox}>
         <button className={styles.WrapperItemButton}
-              
+            onClick={() => handleCreateWorkspace()}
             >Submit</button>
         </div>
       </div>

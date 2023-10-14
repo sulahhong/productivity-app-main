@@ -119,22 +119,38 @@ const AppProvider = ({ children }) => {
 
   //Create Workspace Modal
   const [openWorkspaceModal, setOpenWorkspaceModal] = useState(false);
+  const [openProjectModal, setOpenProjectModal] = useState(false)
+
+  //Workspace state
+  const [workspace, setWorkspace] = useState([])
+  const [currentWorkspace, setCurrentWorkspace] = useState()
+
+  //Project state
+  const [project, setProject] = useState([])
+
+  // Todo State
+  const [todo, setTodo] = useState([])
 
   //labelList
   const [labels, setLabels] = useState(getLocalStorageLabels());
 
-  const [user, setUser] = useState({
-    userId: "8888",
-    userName: "SA",
-    userEmail: "sulah@gmail.com",
-  });
+  // const [user, setUser] = useState({
+  //   userId: "8888",
+  //   userName: "SA",
+  //   userEmail: "sulah@gmail.com",
+  // });
 
   //test
-  const [user2, setUser2] = useState(getLocalStorageUser());
+  const [user, setUser] = useState(getLocalStorageUser());
   const [todo2, setTodo2] = useState([]);
 
   //API URL
   const BASE_URL = "http://localhost:5000/api/";
+  const configToken = {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  };
 
   const navigate = useNavigate();
 
@@ -235,10 +251,80 @@ const AppProvider = ({ children }) => {
        toast.error(error.response.data.message);
     }
    
-    
-      
-    
   };
+
+  // Get joined workspace
+  const getJoinedWorkspace = async () => {
+    try {
+      const response = await axios.get(BASE_URL + "workspace/joined", configToken);
+      console.log("GET JOINED WSPACE: ", response);
+      
+  
+      if (response.data) {
+        setWorkspace(response.data.data)
+      } 
+    } catch (error) {
+      console.log("error", error)
+       toast.error(error.response.data.message);
+    }
+   
+  };
+
+  //Create Workspace
+  const createWorkspace = async (workspaceForm) => {
+    try {
+      const response = await axios.post(BASE_URL + "workspace", workspaceForm, configToken);
+      console.log("CREATE NEW WSPACE: ", response);
+      
+  
+      if (response.data) {
+        toast.success('Successfully created!');
+        return true
+      } 
+    } catch (error) {
+      console.log("error", error)
+       toast.error(error.response.data.message);
+    }
+   
+  };
+
+  // GET project by Wspace
+  const getProjectByWspace = async (slug) => {
+    try {
+      const response = await axios.get(BASE_URL + `workspace/${slug}/project`, configToken);
+      console.log("GET PROJECT: ", response);
+      
+  
+      if (response.data) {
+        setProject(response.data.data)
+      } 
+    } catch (error) {
+      console.log("error", error)
+       toast.error(error.response.data.message);
+    }
+   
+  };
+  
+  // CREATE Projects
+  const createProject = async (projectForm, slug) => {
+    console.log("SLUG :", slug)
+    try {
+      const response = await axios.post(BASE_URL + `workspace/${slug}/project`, projectForm, configToken);
+      console.log("CREATE NEW PROJ: ", response);
+      
+  
+      if (response.data) {
+        toast.success('Successfully created!');
+        return true
+      } 
+    } catch (error) {
+      console.log("error", error)
+       toast.error(error.response.data.message);
+    }
+   
+  };
+
+
 
   //Register User
   const registerUser = async (registerForm) => {
@@ -252,28 +338,32 @@ const AppProvider = ({ children }) => {
   //Create todo
 
   const createTodo = async (todoForm) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user2.token}`,
-      },
-    };
+    // const config = {
+    //   headers: {
+    //     Authorization: `Bearer ${user2.token}`,
+    //   },
+    // };
 
-    const response = await axios.post(BASE_URL + "todos", todoForm, config);
-    console.log("CREATE TODO RES: ", response);
+    // const response = await axios.post(BASE_URL + "todos", todoForm, config);
+    // console.log("CREATE TODO RES: ", response);
   };
 
   //Get todos
 
-  const getTodos = async () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user2.token}`,
-      },
-    };
-
-    const response = await axios.get(BASE_URL + "todos", config);
-    console.log("GET TODOS RES:", response.data);
-    setTodo2(response.data);
+  const getTodos = async (slug, projectId) => {
+    try {
+      const response = await axios.get(BASE_URL + `workspace/${slug}/project/${projectId}/todo`, configToken);
+      console.log("GET Todos: ", response);
+      
+  
+      if (response.data) {
+        setTodo(response.data)
+      } 
+    } catch (error) {
+      console.log("error", error)
+       toast.error(error.response.data.message);
+    }
+   
   };
 
   return (
@@ -339,6 +429,15 @@ const AppProvider = ({ children }) => {
         registerUser,
         openWorkspaceModal,
         setOpenWorkspaceModal,
+        getJoinedWorkspace,
+        workspace,
+        createWorkspace, 
+        getProjectByWspace, 
+        project,
+        openProjectModal, setOpenProjectModal, 
+        createProject, 
+        currentWorkspace, setCurrentWorkspace, 
+        todo, setTodo
       }}
     >
       {children}

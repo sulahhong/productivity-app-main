@@ -1,0 +1,95 @@
+.ProjectModalOverlay {
+    position: fixed;
+    background-color: rgba(148, 143, 143, 0.848);
+    width: 100vw;
+    height: 100vh;
+    z-index: 1003;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s linear;
+}
+
+.ProjectModalContainer {
+    background-color: white;
+    width: 100vh;
+    max-width: 700px;
+    border-radius: 5px;
+    margin: auto 0;
+    padding: 1.5rem 2rem;
+    position: relative;
+}
+
+.ProjectModalBody {
+    padding-top: 1rem;
+}
+
+.ProjectModalInput {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0rem;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+}
+
+.ProjectModalInputTitle {
+    border: none;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.ProjectModalInputDescription {
+    border: none;
+    font-size: 0.8rem;
+}
+
+.ProjectModalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.5rem;
+    border-bottom: 1px solid rgb(216, 216, 216);
+}
+
+.ProjectModalHeaderTitle {
+    color: gray;
+    font-size: 1.2rem;
+}
+
+.ProjectModalCloseButton {
+    width: 1.9rem;
+    height: 1.9rem;
+
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: gray;
+    padding: 0;
+    border-radius: 1rem;
+}
+
+.ProjectModalCloseButton:hover {
+    background-color: rgb(227, 227, 227);
+}
+
+.ProjectModalAddTodocontainer {
+    display: flex;
+    justify-content: end;
+}
+
+.ProjectModalAddTodo {
+    padding: 0.2rem 1.3rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: rgb(236, 183, 84);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+}

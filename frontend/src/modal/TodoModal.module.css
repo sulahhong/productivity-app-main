@@ -1,0 +1,403 @@
+.todoModalOverlay{
+    position: fixed;
+    background-color: rgba(148, 143, 143, 0.848);
+    width: 100vw;
+    height: 100vh;
+    z-index: 1002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s linear;
+}
+
+.todoModalContainer{
+    background-color: white;
+    width: 70%;
+    max-width: 800px;
+    border-radius: 5px;
+    margin: auto 0;
+    padding: 1rem;
+    position: relative;
+
+}
+
+.todoModalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.5rem;
+    border-bottom: 1px solid rgb(216, 216, 216);
+
+}
+
+.todoModalHeaderTitle {
+    color: gray;
+    font-size: 1.2rem;
+}
+
+.priorityDropdownContent {
+    top: 6rem;
+    left: 1rem;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 1px 8px 0 rgb(0 0 0 / 8%);
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    z-index: 2;
+    width: 6.5rem;
+    padding: 0.2rem ;
+    font-size: 0.8rem;
+}
+
+.priorityDropdownContentItem {
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+
+    border-radius: 0.2rem;
+    transition: background-color 0.3s ease;
+
+}
+
+.priorityDropdownContentItem:hover {
+    background-color: rgb(231, 230, 230);   
+    /* transition: 0.3s; */
+    
+}
+
+.dueDateDropdownContent {
+    top: 6rem;
+    left: 6rem;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 1px 8px 0 rgb(0 0 0 / 8%);
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    z-index: 2;
+    width: 6rem;
+    padding: 0.5rem ;
+    font-size: 0.8rem;
+}
+
+.projectDropdownContent {
+    top: 6rem;
+    left: 10.5rem;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 1px 8px 0 rgb(0 0 0 / 8%);
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    z-index: 2;
+    width: 6.5rem;
+    padding: 0.2rem ;
+    font-size: 0.8rem;
+}
+
+.projectDropdownItem {
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+
+    border-radius: 0.2rem;
+    transition: background-color 0.3s ease;
+}
+
+.projectDropdownItem:hover {
+    background-color: rgb(231, 230, 230);   
+}
+
+
+.todoModalCloseButton {
+    width: 1.9rem;
+    height: 1.9rem;
+
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: gray;
+    padding: 0;
+    border-radius: 1rem;
+}
+
+.todoModalCloseButton:hover {
+    background-color: rgb(227, 227, 227);
+}
+
+.todoModalBody {
+    padding-top: 0.5rem;
+    gap: 1;
+    height: 30%;
+    width: 100%;
+}
+
+.todoModalInput {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0rem;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    height: 150%;
+}
+
+.textBoxIcons {
+    border: none;
+    padding-bottom: 0.5rem;
+    
+}
+
+.optionContainer {
+    border: none;
+    padding-bottom: 1rem;
+    display: flex;
+    color: gray;
+    cursor: pointer;
+
+}
+
+.textBoxIconsingle {
+    background-color: white;
+    border: 1px solid rgb(223, 225, 228);
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 1px;
+    margin-right: 0.5rem;
+
+    color: gray;
+    cursor: pointer;
+
+}
+
+.textBoxIconsingle:hover {
+    background-color: rgb(227, 227, 227);
+
+}
+
+
+.todoModalComments {
+    color: gray;
+    font-size: 0.8rem;
+    width: 48%;
+    height: 100%;
+}
+
+.todoModalCommentsTitle {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.5rem;
+    border-bottom: 1px ;
+    
+}
+
+
+input:focus {
+    outline: none;
+}
+
+.todoSubtask {
+    position: relative;
+    /* bottom: -135px; */
+}
+
+.todoSubtaskBtn {
+    border: none;
+    font-size: 0.8rem;
+    margin: 1rem;
+    background-color: white;
+    color: gray;
+    font-weight: 700;
+}
+
+.todoSubtaskList {
+
+}
+
+.todoSubtaskListContainer {
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0.5rem;
+    padding: 0.3rem;
+    font-size: 0.8rem;
+    color: gray;
+}
+
+.todoSubtaskCheckBox {
+    display: flex;
+    align-items: center;
+    padding-right:0.5rem;
+    padding: 0.2rem;
+}
+
+.todoModalInputTitle {
+    border: none;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.todoModalInputDescription {
+    border: none;
+    font-size: 0.8rem;
+    
+}
+
+.todoModalSelector {
+    margin-top: 3rem;
+    width: 20%;
+    height: 20%;
+    padding-right: 1rem;
+}
+
+.todoModalSettingIcon2 {
+    font-size: 0.8rem;
+    color: rgb(145, 142, 142);
+    display: flex;
+    align-items: center;
+}
+
+.todoModalSettings {
+
+
+}
+
+.todoModalSetting {
+    margin:  0;
+    padding-bottom: 1rem ;
+    padding-left: 1rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(216, 216, 216);
+
+}
+
+.todoModalSettingIcon {
+    font-size: 0.8rem;
+    color: rgb(145, 142, 142);
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.todoModalSettingText {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-right: 1rem;
+    width: 4rem;
+    color: rgb(110, 107, 107);
+}
+
+.todoDesWrap {
+    display: flex;
+    padding: 0rem 1rem;
+}
+
+.todoModalAddTodocontainer {
+    display: flex;
+    justify-content: end;
+
+}
+
+.todoModalDueDateTitle {
+    margin-right: 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    align-items: center;
+    width: 4rem;
+    color: rgb(110, 107, 107);
+}
+
+.todoDueDateInput {
+
+}
+
+.todoModalDueDate {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+    font-size: 0.8rem;
+}
+
+.todoModalAddTodo {
+    padding: 0.2rem 1.3rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: rgb(236, 183, 84);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    
+}
+
+select, input {
+    /* -webkit-appearance: none; */
+    padding: 0.2rem 1rem;
+    width: 20%;
+    background: white;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 0.5rem;
+    /* box-shadow: 0 1px 3px -2px #9098A9; */
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.8rem;
+    transition: all 150ms ease;
+    width: 10rem;
+}
+
+.todoModalSelectProject {
+    margin: 0.5rem 0;
+    padding-bottom: 1rem ;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(216, 216, 216);
+    padding-left: 1rem;
+}
+
+.todoModalSelectProjectTitle {
+    display: flex;
+    margin-right: 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    width: 4rem;
+    color: rgb(110, 107, 107);
+}
+
+.todoModalSelectProjectTitleOption {
+    display: flex;
+    margin-right: 1rem;
+    font-size: 0.8rem;
+}
+
+.todoModalCommentsInput {
+    margin-bottom: 1rem;
+}
+
+.todoSubtaskDone {
+    text-decoration: line-through;
+    color: rgb(185, 182, 182);
+    padding-left: 0.5rem;
+}
+
+.todoSubtask {
+    padding-left: 0.5rem;
+}
+
+.todoSubtaskIcon {
+    padding-right: 0.5rem;
+}
+
+.todoSubtaskIconGroup {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}

@@ -1,9 +1,24 @@
-import React from 'react'
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from '../page/MyWorkspacePage.module.css'
 import { useGlobalContext } from "../context";
 import { MdAdd, MdKeyboardArrowLeft } from 'react-icons/md';
 
 function MyWorkspacePage() {
+    const {
+        getJoinedWorkspace, workspace
+      } = useGlobalContext();
+
+      useEffect(()=>{
+        getJoinedWorkspace()
+      }, [])
+
+      const navigate = useNavigate();
+
+    const handleGotoWorkspace = (slug) => {
+        navigate(`/${slug}/project`)
+    }
+
   return (
     <div className={styles.mainContainer}>
         <div className={styles.todoBody}>
@@ -26,6 +41,11 @@ function MyWorkspacePage() {
               </button>
             </div>
 
+        </div>
+        <div className={styles.wspaceContent}>
+        {workspace.length>0? workspace.map((item) => (<div className={styles.wspaceItem} onClick={() => handleGotoWorkspace(item.slug)}>{item.name}</div>)):<div className={styles.wspaceContent}>
+
+</div>}
         </div>
         </div>
     </div>

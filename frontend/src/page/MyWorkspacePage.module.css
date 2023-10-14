@@ -59,3 +59,14 @@
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 1px;
 }
+
+
+
+.wspaceItem {
+    display: flex;
+    margin-top: 1rem;
+    padding: 1rem;
+    width: 10rem;
+    background-color: white;
+    border: 1px solid var(--borderLineColor);
+}
