@@ -189,24 +189,6 @@ function SingleTodoItem({ item }) {
 
         <div className={styles.todoCardBody}>
           <div className={styles.todoCardTitle}>{item.todoTitle}</div>
-
-          {/* <div className={styles.todoCardDateview}> 
-                  <div className={styles.todoCardDueDate}>
-                    <div className={styles.dueDateIcon}>
-                      <MdCalendarToday />
-                    </div>
-                    
-                    <div className={styles.dueDateText}>{item.todoDueDate}</div>
-                    <div className={styles.todoProjectTitle}>
-                    <div className={styles.todoProjectName}>{item.projectTitle}</div>
-                    </div>
-                  </div>
-                  <div className={styles.todoCardDday}>
-                    <div className={styles.ddayTrackerText}>
-                      {dateDifference(item.todoDueDate)}
-                    </div>
-                  </div>
-                </div> */}
         </div>
       </div>
 

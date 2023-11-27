@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import styles from "../modal/Dropdown/PriorityDropdown.module.css";
+import styles from "../Dropdown/PriorityDropdown.module.css";
 import {
   MdOutlineClose,
   MdCalendarToday,
@@ -22,9 +22,10 @@ import {
   MdBlockFlipped, 
   MdErrorOutline, 
 } from "react-icons/md";
-import { useGlobalContext } from "../context";
+import { useGlobalContext } from "../../context";
 
-function PriorityDropdown({ todoForm, setTodoForm, todoId, type }) {
+
+function PriorityDropdown({ todoForm, setTodoForm, todoId, type, action }) {
   const { todos, setTodos, priorityDropdown, setPriorityDropdown, priority } =
     useGlobalContext();
 
@@ -46,19 +47,16 @@ function PriorityDropdown({ todoForm, setTodoForm, todoId, type }) {
   });
 
   const handlePriorityMenuChange = (option) => {
-    // setTodoForm((prevState) => ({
-    //   ...prevState,
-    //   ["priorityId"]: option.priorityId,
-    //   ["prorityTitle"]: option.priorityTitle,
-    // }));
 
     let todo = {
       ...todoForm,
-      ["priorityId"]: option.priorityId,
-      ["priorityTitle"]: option.priorityTitle,
+      ["priority"]: option,
     };
 
     setTodoForm(todo);
+    if(todoForm._id){
+      action(todo)
+    }
     console.log("CHNAGE PRIO: ", todo);
 
     // const todoEditIndex = todos.findIndex((item) => item.todoId == todoId);
@@ -93,15 +91,15 @@ function PriorityDropdown({ todoForm, setTodoForm, todoId, type }) {
         className={styles.textBoxIconsingle}
         onClick={() => setPriorityDropdown(!priorityDropdown)}
       >
-        <MdOutlinedFlag />
-        {todoForm?.priorityTitle == "" ? (
-          <span>Priority</span>
+        
+        {todoForm?.priority.sid == "0" ? (
+         <><MdOutlinedFlag /> <span>Priority</span></>
         ) : (
           <div className={styles.dropdownButton}>
           <span className={styles.dropdownButton}>
-            {getMenuItem(todoForm.priorityId)}
+            {getMenuItem(todoForm.priority.sid)}
           </span>
-          <span>{todoForm?.priorityTitle}</span>
+          <span>{todoForm?.priority.title}</span>
         </div>
           
         )}
@@ -111,13 +109,13 @@ function PriorityDropdown({ todoForm, setTodoForm, todoId, type }) {
           {priority.map((option) => (
             <div
               className={styles.priorityDropdownContentItem}
-              key={option.priorityId}
-              value={option.priorityId}
+              key={option.sid}
+              value={option.sid}
               onClick={() => handlePriorityMenuChange(option)}
             >
-               {getMenuItem(option.priorityId)}
-              {option.priorityTitle}
-              {todoForm?.priorityId == option.priorityId && <MdCheck />}
+               {getMenuItem(option.sid)}
+              {option.title}
+              {todoForm?.priority.sid == option.sid && <MdCheck />}
             </div>
           ))}
         </div>

@@ -20,6 +20,9 @@ import MyWorkspacePage from "./page/MyWorkspacePage";
 import MyProjectPage from "./page/MyProjectPage";
 import ProjectModal from "./modal/ProjectModal";
 import MyTodoPage from "./page/MyTodoPage";
+import NewTodoModal from "./modal/NewTodoModal";
+import LabelModal from "./modal/LabelModal";
+import DetailPage from "./page/DetailPage";
 
 function App() {
   const {
@@ -35,13 +38,20 @@ function App() {
     openWorkspaceModal,
     setOpenWorkspaceModal,
     openProjectModal, 
+    openTodoModal,
+    setOpenTodoModal,
+    openLabelModal, setOpenLabelModal,
   } = useGlobalContext();
 
   return (
     <>
+    
       <NavbarTop />
       <NavbarSide />
+    
       {openModal && <TodoModal />}
+      {openTodoModal && <NewTodoModal />}
+      {openLabelModal && <LabelModal />}
       {openProjectModal && <ProjectModal />}
       {openSideModal && <SideOptionModal />}
       {openWorkspaceModal && <WorkspaceModal />}
@@ -57,7 +67,9 @@ function App() {
         <Route path="/myworkspace" element={<MyWorkspacePage />} />
         <Route path="/:slug/project" element={<MyProjectPage />} />
         <Route path="/:slug/project/:projectId" element={<MyTodoPage />} />
+        <Route path="/:slug/project/:projectId/todo/:todoId" element={<DetailPage />} />
       </Routes>
+      
       </>
   );
 }

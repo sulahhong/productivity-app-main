@@ -142,6 +142,7 @@ const updateTodo = asyncHandler(async (req, res) => {
 
   const todo = await validTodo(res, req.params.todoId);
 
+  console.log("UPDATE", req.body)
   //important, same as setTodo!
   if (!req.body.title) {
     res.status(400);

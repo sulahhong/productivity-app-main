@@ -24,7 +24,7 @@ function LoginPage() {
             ...prevState,
             [e.target.name]: e.target.value,
         })); 
-    }
+    } 
 
     
     const handleLoginButton=()=>{

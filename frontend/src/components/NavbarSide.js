@@ -56,6 +56,36 @@ function NavbarSide() {
 
   const navigate = useNavigate();
 
+  let workspaceRef = useRef(null);
+  let userProfileRef = useRef(null);
+
+  // useEffect(() => {
+  //   let handler = (e) => {
+  //     if (!workspaceRef.current?.contains(e.target)) {
+  //       setOpenUserWorkspace(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handler);
+
+  //   return () => {
+  //     document.removeEventListener("mousedown", handler);
+  //   };
+  // });
+
+  // useEffect(() => {
+  //   let handler = (e) => {
+  //     if (!userProfileRef.current?.contains(e.target)) {
+  //       setOpenUserProfile(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handler);
+
+  //   return () => {
+  //     document.removeEventListener("mousedown", handler);
+  //   };
+  // });
+
+
   const goHome = () => {
     navigate("/");
   };
@@ -149,7 +179,9 @@ function NavbarSide() {
             <div className={styles.UserWorkspaceIcon}>
               <FaRegStar />
             </div>
-            <div className={styles.UserWorkspaceName}>work space</div>
+            <div className={styles.UserWorkspaceName}
+            // ref={workspaceRef}
+            >workspace</div>
           </div>
           {openUserWorkspace && (
             <div className={styles.userWorkspaceContent}>
@@ -179,6 +211,7 @@ function NavbarSide() {
      
           <div
             className={styles.navbarSideUserProfile}
+            // ref={userProfileRef}
             onClick={() => setOpenUserProfile(!openUserProfile)}
           >
             <FaUserCircle />

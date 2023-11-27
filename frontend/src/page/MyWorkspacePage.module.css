@@ -6,7 +6,7 @@
 }
 
 .todoBody {
-    padding: 1rem;
+    padding: 1rem 1rem 1rem 1rem;
 }
 
 .todoGuideBar {
@@ -29,6 +29,7 @@
     align-items: center;
     gap: 1rem;
     color: gray;
+  
 }
 
 .todoGuideBarLeftItem {
@@ -38,6 +39,7 @@
     border: 1px solid var(--borderLineColor);
     border-radius: 0.5rem;
     padding: 0.3rem 0.5rem;
+    
 }
 
 .todoGuideBarLeftText {
@@ -61,12 +63,106 @@
 }
 
 
+/* .wspaceContent {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1;
+} */
 
-.wspaceItem {
+/* .wspaceItem {
     display: flex;
     margin-top: 1rem;
+    margin-left: 1rem;
     padding: 1rem;
-    width: 10rem;
+    width: 20rem;
+    height: 12rem;
     background-color: white;
     border: 1px solid var(--borderLineColor);
+    border-radius: 0.5rem;
+} */
+
+.wspaceContent {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
 }
+
+.wspaceItem{
+    height: 13rem;
+    
+    background-color: gray;
+
+    /* text-align: center; */
+}
+
+.wspaceItem2 {
+    background-color: green;
+    position: relative;
+    height: 50%;
+}
+
+.wspaceItem3 {
+    background-color: red;
+    height: 50%;
+    padding: 0.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.wspaceTitle{
+    font-size: 1.5rem;
+    text-align: start;
+    /* padding: 0.5rem 1rem; */
+}
+
+.wspaceLabel {
+    background-color: aqua;
+    display: inline-block;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.8rem;
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+}
+
+.todoContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+   
+}
+
+.wspaceContainer {
+    height: 10rem;
+    padding: 20px;
+    text-align: center;
+    background-color: lightblue;
+}
+
+.todoSingleItem {
+    background-color: white;
+  border-bottom: 1px solid rgb(216, 216, 216);
+  padding: 0.5rem ;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+}
+
+.todoItemTitle {
+
+}
+
+.todoFilter{
+    margin: 0 1rem ;
+    padding: 0.5rem;
+
+}
+
+

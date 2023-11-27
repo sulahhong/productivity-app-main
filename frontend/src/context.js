@@ -86,20 +86,39 @@ const AppProvider = ({ children }) => {
   const [projectViewtype, setProjectviewType] = useState("");
   const [filterType, setFilterType] = useState("filterAll");
   const [priority, setPriority] = useState([
-    { priorityId: "1", priorityTitle: "Urgent" },
-    { priorityId: "2", priorityTitle: "High" },
-    { priorityId: "3", priorityTitle: "Medium" },
-    { priorityId: "4", priorityTitle: "Low" },
-    { priorityId: "5", priorityTitle: "No priority" },
+    { sid: "0", title: "No priority" },
+    { sid: "1", title: "Urgent" },
+    { sid: "2", title: "High" },
+    { sid: "3", title: "Medium" },
+    { sid: "4", title: "Low" },
+   
   ]);
 
+  // const [priority, setPriority] = useState([
+  //   { priorityId: "1", priorityTitle: "Urgent" },
+  //   { priorityId: "2", priorityTitle: "High" },
+  //   { priorityId: "3", priorityTitle: "Medium" },
+  //   { priorityId: "4", priorityTitle: "Low" },
+  //   { priorityId: "5", priorityTitle: "No priority" },
+  // ]);
+
   const [status, setStatus] = useState([
-    { statusId: "1", statusTitle: "Backlog" },
-    { statusId: "2", statusTitle: "Todo" },
-    { statusId: "3", statusTitle: "In Progress" },
-    { statusId: "4", statusTitle: "Done" },
-    { statusId: "5", statusTitle: "Cancelled" },
+    { sid: "0", title: "No Status" },
+    { sid: "1", title: "Backlog" },
+    { sid: "2", title: "Todo" },
+    { sid: "3", title: "In Progress" },
+    { sid: "4", title: "Done" },
+    { sid: "5", title: "Cancelled" },
   ]);
+
+  // const [status, setStatus] = useState([
+  //   { statusId: "1", statusTitle: "Backlog" },
+  //   { statusId: "2", statusTitle: "Todo" },
+  //   { statusId: "3", statusTitle: "In Progress" },
+  //   { statusId: "4", statusTitle: "Done" },
+  //   { statusId: "5", statusTitle: "Cancelled" },
+  // ]);
+
 
   const [priorityDropdown, setPriorityDropdown] = useState(false);
   const [dueDateDropdown, setDueDateDropdown] = useState(false);
@@ -119,19 +138,23 @@ const AppProvider = ({ children }) => {
 
   //Create Workspace Modal
   const [openWorkspaceModal, setOpenWorkspaceModal] = useState(false);
-  const [openProjectModal, setOpenProjectModal] = useState(false)
+  const [openProjectModal, setOpenProjectModal] = useState(false);
+  const [openTodoModal, setOpenTodoModal] = useState(false);
+  const [openLabelModal, setOpenLabelModal] = useState(false);
 
   //Workspace state
-  const [workspace, setWorkspace] = useState([])
-  const [currentWorkspace, setCurrentWorkspace] = useState()
+  const [workspace, setWorkspace] = useState([]);
+  const [currentWorkspace, setCurrentWorkspace] = useState();
 
   //Project state
-  const [project, setProject] = useState([])
+  const [project, setProject] = useState([]);
 
   // Todo State
-  const [todo, setTodo] = useState([])
+  const [todo, setTodo] = useState([]);
 
   //labelList
+  // const [labels, setLabels] = useState([]);
+
   const [labels, setLabels] = useState(getLocalStorageLabels());
 
   // const [user, setUser] = useState({
@@ -239,92 +262,94 @@ const AppProvider = ({ children }) => {
     try {
       const response = await axios.post(BASE_URL + "users/login", loginForm);
       console.log("LOGIN RES: ", response);
-      
-  
+
       if (response.data) {
         localStorage.setItem("user", JSON.stringify(response.data));
-        toast.success('Successfully created!');
-        navigate('/myworkspace')
-      } 
+        toast.success("Successfully created!");
+        navigate("/myworkspace");
+      }
     } catch (error) {
-      console.log("errpr", error)
-       toast.error(error.response.data.message);
+      console.log("errpr", error);
+      toast.error(error.response.data.message);
     }
-   
   };
 
   // Get joined workspace
   const getJoinedWorkspace = async () => {
     try {
-      const response = await axios.get(BASE_URL + "workspace/joined", configToken);
+      const response = await axios.get(
+        BASE_URL + "workspace/joined",
+        configToken
+      );
       console.log("GET JOINED WSPACE: ", response);
-      
-  
+
       if (response.data) {
-        setWorkspace(response.data.data)
-      } 
+        setWorkspace(response.data.data);
+      }
     } catch (error) {
-      console.log("error", error)
-       toast.error(error.response.data.message);
+      console.log("error", error);
+      toast.error(error.response.data.message);
     }
-   
   };
 
   //Create Workspace
   const createWorkspace = async (workspaceForm) => {
     try {
-      const response = await axios.post(BASE_URL + "workspace", workspaceForm, configToken);
+      const response = await axios.post(
+        BASE_URL + "workspace",
+        workspaceForm,
+        configToken
+      );
       console.log("CREATE NEW WSPACE: ", response);
-      
-  
+
       if (response.data) {
-        toast.success('Successfully created!');
-        return true
-      } 
+        toast.success("Successfully created!");
+        return true;
+      }
     } catch (error) {
-      console.log("error", error)
-       toast.error(error.response.data.message);
+      console.log("error", error);
+      toast.error(error.response.data.message);
     }
-   
   };
 
   // GET project by Wspace
   const getProjectByWspace = async (slug) => {
     try {
-      const response = await axios.get(BASE_URL + `workspace/${slug}/project`, configToken);
+      const response = await axios.get(
+        BASE_URL + `workspace/${slug}/project`,
+        configToken
+      );
       console.log("GET PROJECT: ", response);
-      
-  
+
       if (response.data) {
-        setProject(response.data.data)
-      } 
+        setProject(response.data.data);
+      }
     } catch (error) {
-      console.log("error", error)
-       toast.error(error.response.data.message);
+      console.log("error", error);
+      toast.error(error.response.data.message);
     }
-   
   };
-  
+
   // CREATE Projects
   const createProject = async (projectForm, slug) => {
-    console.log("SLUG :", slug)
+    console.log("SLUG :", slug);
     try {
-      const response = await axios.post(BASE_URL + `workspace/${slug}/project`, projectForm, configToken);
+      const response = await axios.post(
+        BASE_URL + `workspace/${slug}/project`,
+        projectForm,
+        configToken
+      );
       console.log("CREATE NEW PROJ: ", response);
-      
-  
+
       if (response.data) {
-        toast.success('Successfully created!');
-        return true
-      } 
+        toast.success("Successfully created!");
+        return true;
+      }
     } catch (error) {
-      console.log("error", error)
-       toast.error(error.response.data.message);
+      console.log("error", error);
+      toast.error(error.response.data.message);
     }
-   
   };
-
-
 
   //Register User
   const registerUser = async (registerForm) => {
@@ -337,33 +362,132 @@ const AppProvider = ({ children }) => {
 
   //Create todo
 
-  const createTodo = async (todoForm) => {
-    // const config = {
-    //   headers: {
-    //     Authorization: `Bearer ${user2.token}`,
-    //   },
-    // };
+  const createTodo = async (todoForm, slug, projectId) => {
+    try {
 
-    // const response = await axios.post(BASE_URL + "todos", todoForm, config);
-    // console.log("CREATE TODO RES: ", response);
+      const data = {...todoForm, priority: todoForm.priority.sid, status: todoForm.status.sid, label: todoForm.label.map((item) => item._id)}
+
+
+      const response = await axios.post(
+        BASE_URL + `workspace/${slug}/project/${projectId}/todo`,
+        data,
+        configToken
+      )
+      console.log("CREATE NEW TODO :", response);
+      if (response.data) {
+        toast.success("Successfully created!");
+        return true;
+      }
+
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    };
+
   };
 
   //Get todos
 
   const getTodos = async (slug, projectId) => {
     try {
-      const response = await axios.get(BASE_URL + `workspace/${slug}/project/${projectId}/todo`, configToken);
+      const response = await axios.get(
+        BASE_URL + `workspace/${slug}/project/${projectId}/todo`,
+        configToken
+      );
       console.log("GET Todos: ", response);
-      
-  
+
       if (response.data) {
-        setTodo(response.data)
-      } 
+        setTodo(response.data);
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  //Get todo by Id 
+
+ 
+  const getTodoById = async (slug, projectId, todoId) => {
+    try {
+      const response = await axios.get(
+        BASE_URL + `workspace/${slug}/project/${projectId}/todo/${todoId}`,
+        configToken
+      );
+      console.log("GET Todos: ", response);
+
+      if (response.data) {
+        return response.data;
+      } else {
+        return null 
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  //Update todo
+  const updateTodo = async (slug, projectId, todoId, todoForm) => {
+    try {
+      const data = {...todoForm, priority: todoForm.priority.sid.toString(), status: todoForm.status.sid.toString(), label: todoForm.label.map((item) => item._id)}
+
+      const response = await axios.put(
+        BASE_URL + `workspace/${slug}/project/${projectId}/todo/${todoId}`,
+        data, 
+        configToken
+      );
+      console.log("Update Todos: ", response);
+
+      if (response.data) {
+        toast.success("Successfully updated!");
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  //Get Labels
+  const getLabels = async(slug, projectId) =>{
+    try {
+      const response = await axios.get(
+        BASE_URL + `workspace/${slug}/project/${projectId}/label`,
+        configToken
+      );
+      console.log("GET Labels: ", response)
+
+      if (response.data) {
+        setLabels(response.data.data)
+      }
+      // if (response.data && Array.isArray(response.data.data)) {
+      //   setLabels(response.data.data);
+      // }
     } catch (error) {
       console.log("error", error)
-       toast.error(error.response.data.message);
+      toast.error(error.response.data.message);
     }
-   
+  }
+
+  //create label
+  const createLabel = async (labelForm, slug, projectId) => {
+    console.log("SLUG :" , labelForm, slug, projectId);
+    try {
+      const response = await axios.post(
+        BASE_URL + `workspace/${slug}/project/${projectId}/label`,
+        labelForm,
+        configToken
+      );
+      console.log("CREATE NEW label: ", response);
+
+      if (response.data) {
+        toast.success("Successfully created!");
+        return true;
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -431,13 +555,20 @@ const AppProvider = ({ children }) => {
         setOpenWorkspaceModal,
         getJoinedWorkspace,
         workspace,
-        createWorkspace, 
-        getProjectByWspace, 
+        createWorkspace,
+        getProjectByWspace,
         project,
-        openProjectModal, setOpenProjectModal, 
-        createProject, 
-        currentWorkspace, setCurrentWorkspace, 
-        todo, setTodo
+        openProjectModal,
+        setOpenProjectModal,
+        createProject,
+        currentWorkspace,
+        setCurrentWorkspace,
+        todo,
+        setTodo,
+        openTodoModal,
+        setOpenTodoModal,
+        openLabelModal, setOpenLabelModal, createLabel, createTodo, getLabels, 
+        getTodoById, updateTodo,
       }}
     >
       {children}
