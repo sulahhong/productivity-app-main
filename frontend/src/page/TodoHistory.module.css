@@ -1,0 +1,39 @@
+.historyWrapper {
+    padding: 1rem;
+    
+}
+
+.historyHeader {
+    border-top: 1px solid rgb(209, 206, 206);
+    padding-top: 1rem;
+}
+
+.historyHeader h1 {
+    padding-bottom: 0.5rem;
+}
+
+.actor{
+    color: red;
+}
+.historyItem{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.historyMain {
+    border-left: 3px solid gray;
+    padding: 0.2rem 1rem;
+}
+
+.historyMainWrapper {
+    font-size: 0.8rem;
+}
+
+.historyListWrapper {
+    display: flex;
+    flex-direction: column;
+    
+    gap: 0.5rem;
+    border: 1px solid pink;
+    padding: 0.5rem;
+}

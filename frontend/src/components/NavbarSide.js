@@ -49,6 +49,7 @@ function NavbarSide() {
     setOpenModal,
     openWorkspaceModal,
     setOpenWorkspaceModal,
+    logoutUser,
   } = useGlobalContext();
 
   const [openUserWorkspace, setOpenUserWorkspace] = useState(false);
@@ -162,6 +163,11 @@ function NavbarSide() {
   const handleMyWorkspace = () => {
     navigate('/myworkspace')
   }
+
+  const handleLogout = () => {
+
+    logoutUser()
+  }
   return (
     <div
       className={
@@ -205,7 +211,9 @@ function NavbarSide() {
               <div className={styles.userWorkspaceContentItem}>
                 Workspace Invites
               </div>
-              <div className={styles.userWorkspaceContentItem}>Logout</div>
+              <div className={styles.userWorkspaceContentItem} 
+              onClick={() => handleLogout()}
+              >Logout</div>
             </div>
           )}
      
@@ -228,7 +236,9 @@ function NavbarSide() {
               </div>
 
               <div className={styles.userProfileContentItem}>View profile</div>
-              <div className={styles.userProfileContentItem}>Logout</div>
+              <div className={styles.userProfileContentItem} 
+               onClick={() => handleLogout()}
+              >Logout</div>
             </div>
           )}
         </div>

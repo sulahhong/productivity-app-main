@@ -5,7 +5,7 @@ import { useGlobalContext } from "../context";
 import { MdAdd, MdKeyboardArrowLeft } from "react-icons/md";
 
 function MyWorkspacePage() {
-  const { getJoinedWorkspace, workspace } = useGlobalContext();
+  const { getJoinedWorkspace, workspace, openWorkspaceModal, setOpenWorkspaceModal,  } = useGlobalContext();
 
   useEffect(() => {
     getJoinedWorkspace();
@@ -16,6 +16,11 @@ function MyWorkspacePage() {
   const handleGotoWorkspace = (slug) => {
     navigate(`/${slug}/project`);
   };
+
+  const handleOpenModal = () =>{
+    console.log("PUSHED")
+    setOpenWorkspaceModal(true)
+  }
 
   return (
     <div className={styles.mainContainer}>
@@ -29,9 +34,11 @@ function MyWorkspacePage() {
           </div>
 
           <div>
-            <button className={styles.todoAddButton}>
-              <MdAdd className={styles.todoAddIcon} />
-              Add
+            <button className={styles.todoAddButton} onClick={() => handleOpenModal()}>
+              <MdAdd className={styles.todoAddIcon} 
+                
+              />
+              Add222
             </button>
           </div>
         </div>

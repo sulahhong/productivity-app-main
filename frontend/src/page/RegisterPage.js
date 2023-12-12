@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "../page/RegisterPage.module.css";
 import { useGlobalContext } from "../context";
+import { useNavigate } from "react-router-dom";
 
 
 function RegisterPage() {
@@ -14,6 +15,8 @@ function RegisterPage() {
   })
 
   const { name, email, password, password2} = registerForm
+
+  const navigate = useNavigate();
 
   const handleFormChange = (e) => {
     setRegisterForm((prevState) => ({
@@ -32,8 +35,7 @@ function RegisterPage() {
         password: password,
       }
       registerUser(data)
-      console.log("user reg success")
-      //go to main page
+
     }
   }
 

@@ -167,8 +167,13 @@ const AppProvider = ({ children }) => {
   const [user, setUser] = useState(getLocalStorageUser());
   const [todo2, setTodo2] = useState([]);
 
+
   //API URL
-  const BASE_URL = "http://localhost:5000/api/";
+  // const BASE_URL = "http://localhost:5000/api/";
+  const BASE_URL = process.env.REACT_APP_ENV === 'production' ? "http://128.199.74.175/api/" : "http://localhost:5000/api/";
+
+  console.log("process.env.REACT_APP_ENV", process.env.REACT_APP_ENV)
+
   const configToken = {
     headers: {
       Authorization: `Bearer ${user.token}`,
@@ -181,6 +186,10 @@ const AppProvider = ({ children }) => {
     console.log("todostodos", todos);
     console.log("projectsprojects", projects);
   }, []);
+
+useEffect(()=>{
+console.log("WS ", openWorkspaceModal)
+}, [openWorkspaceModal])
 
   useEffect(() => {
     window.localStorage.setItem("todoList", JSON.stringify(todos));
@@ -264,12 +273,101 @@ const AppProvider = ({ children }) => {
       console.log("LOGIN RES: ", response);
 
       if (response.data) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        setUser(response.data.user)
+        toast.success("Successfully login!");
+        navigate("/myworkspace");
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
+    //Register User
+    const registerUser = async (registerForm) => {
+      try{
+      const response = await axios.post(BASE_URL + "users/register", registerForm);
+      console.log("REGISTER RES: ", response);
+      
+      
+      if (response.data) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        setUser(response.data.user)
         toast.success("Successfully created!");
         navigate("/myworkspace");
       }
     } catch (error) {
-      console.log("errpr", error);
+      toast.error(error.response.data.message);
+    }
+    };
+
+  //Logout User
+  const logoutUser = async() => {
+    //토큰 삭제 + 리다이렉트
+    localStorage.removeItem('user')
+    setUser({})
+    toast.success("Successfully logout!");
+    navigate('/login')
+  }
+
+  //User Avatar
+  const uploadUserAvatar = async(file) => {
+    try{
+      const formData = new FormData();
+      formData.append('image', file)
+
+      const response = await axios.post(BASE_URL + 'users/avatar', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // 필수: 파일을 업로드할 때는 Content-Type을 지정해야함
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      console.log('Image uploaded successfully:', response.data);
+      if(response.data){
+        return true
+      }
+      toast.success("Image uploaded successfully");
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return false
+    }
+
+  }
+  
+  //Get Me 
+  const getMe = async () => {
+    try {
+      const response = await axios.get(
+        BASE_URL + "users/me",
+        configToken
+      );
+      console.log("GET User: ", response);
+
+      if (response.data) {
+        return response.data
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  //Update User (profile setting)
+  const updateUser = async (profileForm) => {
+    try {
+      const response = await axios.post(
+        BASE_URL + "users/update",
+        profileForm,
+        configToken, 
+      );
+      console.log("UPDATE User: ", response);
+
+      if (response.data) {
+        return true
+      }
+    } catch (error) {
+      return false
+      console.log("error", error);
       toast.error(error.response.data.message);
     }
   };
@@ -285,10 +383,14 @@ const AppProvider = ({ children }) => {
 
       if (response.data) {
         setWorkspace(response.data.data);
-      }
+      } 
+
     } catch (error) {
       console.log("error", error);
       toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        navigate(`/login`)
+      }
     }
   };
 
@@ -351,14 +453,6 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  //Register User
-  const registerUser = async (registerForm) => {
-    const response = await axios.post(BASE_URL + "users", registerForm);
-    console.log("REGISTER RES: ", response);
-    if (response.data) {
-      localStorage.setItem("user", JSON.stringify(response.data));
-    }
-  };
 
   //Create todo
 
@@ -397,7 +491,7 @@ const AppProvider = ({ children }) => {
       console.log("GET Todos: ", response);
 
       if (response.data) {
-        setTodo(response.data);
+        setTodo(response.data.data);
       }
     } catch (error) {
       console.log("error", error);
@@ -448,6 +542,25 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  //Delete Todo
+  const deleteTodo = async (slug, projectId, todoId) => {
+    try {
+ 
+      const response = await axios.delete(
+        BASE_URL + `workspace/${slug}/project/${projectId}/todo/${todoId}`,
+        configToken
+      );
+      console.log("DELETE Todo: ", response);
+
+      if (response.data) {
+        toast.success("Successfully deleted!");
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
   //Get Labels
   const getLabels = async(slug, projectId) =>{
     try {
@@ -485,6 +598,46 @@ const AppProvider = ({ children }) => {
         return true;
       }
     } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  //Get Todo History
+  const getTodoHistory = async(slug, projectId, todoId) =>{
+    try {
+      const response = await axios.get(
+        BASE_URL + `workspace/${slug}/project/${projectId}/todo/${todoId}/history`,
+        configToken
+      );
+      console.log("GET Todo History: ", response)
+
+      if (response.data) {
+        return response.data
+      }
+     
+    } catch (error) {
+      console.log("error", error)
+      toast.error(error.response.data.message);
+    }
+  }
+
+//Create Comments
+  const createComment = async (slug, projectId, todoId, comment, parent) => {
+    try {
+      const response = await axios.post(
+        BASE_URL + `workspace/${slug}/project/${projectId}/todo/${todoId}/comment`,
+        {parent: parent, content: comment}, 
+        configToken
+      );
+      console.log("CREATE NEW Comment: ", response);
+
+      if (response.data) {
+        toast.success("Successfully created!");
+        return true;
+      }
+    } catch (error) {
+      return false
       console.log("error", error);
       toast.error(error.response.data.message);
     }
@@ -568,7 +721,8 @@ const AppProvider = ({ children }) => {
         openTodoModal,
         setOpenTodoModal,
         openLabelModal, setOpenLabelModal, createLabel, createTodo, getLabels, 
-        getTodoById, updateTodo,
+        getTodoById, updateTodo,deleteTodo, logoutUser, uploadUserAvatar,getMe, 
+        getTodoHistory, createComment, updateUser, 
       }}
     >
       {children}

@@ -31,26 +31,12 @@ import StatusDropdown2 from "../modal/Dropdown/StatusDropdown";
 import PriorityDropdown from "../modal/Dropdown/PriorityDropdown";
 import DuedateDropdown from "../modal/Dropdown/DuedateDropdown";
 import LabelDropdown from "../modal/Dropdown/LabelDropdown";
+import TodoHistory from "./TodoHistory";
+import CommentPage from "./CommentPage";
 
 
 function DetailPage() {
     const {
-        todos,
-        setTodos,
-        projects,
-        comments,
-        setComments,
-        subtask,
-        setSubtask,
-        user,
-        setUser,
-        priorityDropdown,
-        setPriorityDropdown,
-        dueDateDropdown,
-        setDueDateDropdown,
-        projectDropdown,
-        setProjectDropdown,
-        setPriority,
         openSideModal,
         setOpenSideModal,
         labels,
@@ -59,6 +45,7 @@ function DetailPage() {
         status: statusOpt,
         priority: priorityOpt,
         updateTodo,
+        getTodoHistory,
       } = useGlobalContext();
 
       const { slug, projectId, todoId } = useParams();
@@ -75,6 +62,8 @@ function DetailPage() {
     
       const { title, description, priority, status, dueDate, label } = todoForm;
 
+      const [todoHistory, setTodoHistory] = useState([]);
+
       async function fetchData() {
         
         const data = await getTodoById(slug, projectId, todoId)
@@ -86,6 +75,11 @@ function DetailPage() {
     
        fetchData()
       }, [])
+
+      async function fetchDataTodoHist() {
+        const data = await getTodoHistory(slug, projectId, todoId);
+        setTodoHistory(data);
+      }
       
     //   useEffect(() => {
     //     // handleBlur()
@@ -103,6 +97,7 @@ function DetailPage() {
       const handleUpdateTodoAPI = async (todo) => {
         await updateTodo(slug, projectId, todoId, todo)
          await fetchData()
+         await fetchDataTodoHist()
        };
 
       const handleTodoChange = (e) => {
@@ -141,6 +136,9 @@ function DetailPage() {
     console.log("updatedTodo", updatedTodo);
 
     setTodoForm(updatedTodo);
+    if(todoForm._id){
+      handleUpdateTodoAPI(updatedTodo)
+    }
   };
 
   return (
@@ -254,169 +252,8 @@ function DetailPage() {
           </div>
         </div>
       </div>
-      {/* <div className={styles.subtaskMainContainer}>
-        <div className={styles.todoSubtask}>
-          {subtask.filter((item) => item.subtaskPostId == todoId).length >
-            0 && (
-            <div className={styles.subtaskLineProgressbar}>
-              <span>
-                {completedSubtask}/{totalSubtask}
-              </span>
-              <Line percent={(completedSubtask/totalSubtask)*100} strokeWidth={10} trailWidth={10} />
-            </div>
-          )}
-          {onSubtask ? (
-            <div className={styles.subtaskInputContainer} ref={subtaskRef}>
-              <input
-                className={styles.subtaskInputBox}
-                placeholder="Add New Sub-task..."
-                value={subtaskText}
-                onChange={handleSubtaskChange}
-              />
-              <div className={styles.subtaskInputButtonBox}>
-                <button
-                  className={styles.subtaskCancelButton}
-                  onClick={() => setOnSubtask(false)}
-                >
-                  취소
-                </button>
-                <button
-                  className={styles.subtaskSaveButton}
-                  onClick={handleCreateSubtask}
-                >
-                  입력
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div
-              className={styles.todoSubtaskBtn}
-              onClick={() => setOnSubtask(true)}
-            >
-              <div className={styles.subtaskTitle}>
-                <MdAdd /> Sub task
-              </div>
-              {
-                // <div className={styles.SubtaskProgressbar}>
-                //   <CircularProgressbar
-                //     value={completedSubtask}
-                //     maxValue={totalSubtask}
-                //     text={`${completedSubtask}/${totalSubtask}`}
-                //   />
-                // </div>
-              }
-            </div>
-          )}
-        </div>
-        <div className={styles.singlePageSubtaskList}>
-          {subtask &&
-            subtask
-              .filter((item) => item.subtaskPostId == todoId)
-              .map((item) => (
-                <div className={styles.todoSubtaskListContainer}>
-                  <div className={styles.todoSubtaskCheckBox}>
-                    {item.subtaskDone ? (
-                      <div
-                        className={styles.todoSubtaskCheckBox}
-                        onClick={() => handleSubtaskDone(item.subtaskId)}
-                      >
-                        <MdOutlineCheckCircleOutline id="subtaskDone" />
-                      </div>
-                    ) : (
-                      <div
-                        className={styles.todoSubtaskCheckBox}
-                        onClick={() => handleSubtaskDone(item.subtaskId)}
-                      >
-                        <MdRadioButtonUnchecked id="subtaskNotDone" />
-                      </div>
-                    )}
-                    {item.subtaskId == editingSubtaskId ? (
-                      <div className={styles.todoSubtaskEditMode}>
-                        <input
-                          className={styles.subtaskEditMode}
-                          value={editSubtaskValue}
-                          onChange={(e) => setEditSubtaskValue(e.target.value)}
-                        />
-                        <div className={styles.subtaskEditModeButtonBox}>
-                          <button
-                            className={styles.subtaskSaveButton}
-                            onClick={() => handleSubtaskEditing(item)}
-                          >
-                            수정
-                          </button>
-                          <button
-                            className={styles.subtaskCancelButton}
-                            onClick={() => handleEditSubTaskToggle(item)}
-                          >
-                            취소
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      <div
-                        className={
-                          item.subtaskDone
-                            ? styles.todoSubtaskDone
-                            : styles.todoSubtask
-                        }
-                      >
-                        {item.subtaskText}
-                      </div>
-                    )}
-                  </div>
-                  <div className={styles.todoSubtaskIconGroup}>
-                    <div
-                      className={styles.todoSubtaskIcon}
-                      onClick={() => handleEditSubTaskToggle(item)}
-                    >
-                      <MdModeEdit />
-                    </div>
-                    <div
-                      className={styles.todoSubtaskIcon}
-                      onClick={() => handleSubtaskDelete(item.subtaskId)}
-                    >
-                      <MdDelete />
-                    </div>
-                  </div>
-                </div>
-              ))}
-        </div>
-      </div> */}
-
-      {/* <div className={styles.singleComments}>
-        <div className={styles.comments}>
-          <div className={styles.commentsTitle}>
-            <MdKeyboardArrowDown className={styles.commentsIcon} /> Comments
-          </div>
-
-          <div className={styles.commentsInputContainer}>
-            <div className={styles.commentsInputBox}>
-              <input
-                className={styles.commentsInput}
-                name="commentText"
-                value={commentText}
-                placeholder={commentIsFocused ? "" : "댓글을 입력해주세요 :)"}
-                onFocus={() => setCommentIsFocused(true)}
-                onBlur={() => setCommentIsFocused(false)}
-                onChange={handleCommentChange}
-              />
-            </div>
-            <div className={styles.commentsInputButtonBox}>
-              <button
-                className={styles.commentsInputButton}
-                onClick={handleCreateComment}
-              >
-                입력
-              </button>
-            </div>
-          </div>
-
-          {comments &&
-            comments
-              .filter((item) => item.postId == todoId)
-              .map((item) => <Comments item={item} />)}
-        </div>
-      </div> */}
+          <TodoHistory slug={slug} projectId={projectId} todoId={todoId} fetchDataTodoHist={fetchDataTodoHist} todoHistory={todoHistory} />
+          <CommentPage slug={slug} projectId={projectId} todoId={todoId} fetchDataTodoHist={fetchDataTodoHist} />
     </div>
   );
 }

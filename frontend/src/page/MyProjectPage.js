@@ -26,15 +26,16 @@ function MyProjectPage() {
   };
 
   const handleGoBack = () => {
-    navigate("/myworkspace")
-  }
+    navigate("/myworkspace");
+  };
 
   return (
     <div className={styles.mainContainer}>
       <div className={styles.todoBody}>
         <div className={styles.todoGuideBar}>
           <div className={styles.todoGuideBarLeftside}>
-            <button className={styles.todoGuideBarLeftItem}
+            <button
+              className={styles.todoGuideBarLeftItem}
               onClick={() => handleGoBack()}
             >
               <MdKeyboardArrowLeft />
@@ -59,9 +60,13 @@ function MyProjectPage() {
                 className={styles.wspaceItem}
                 onClick={() => handleGotoProject(item._id)}
               >
-               <div>{item.title}</div>
-                <div>{item.description}</div>
-                <div></div>
+                <div className={styles.wspaceItem2}>
+                  {/* <div className={styles.wspaceLabel}>joined</div> */}
+                </div>
+                <div className={styles.wspaceItem3}>
+                  <div className={styles.wspaceTitle}>{item.title}</div>
+                  <div className={styles.wspaceName}>{item.description}</div>
+                </div>
               </div>
             ))
           ) : (

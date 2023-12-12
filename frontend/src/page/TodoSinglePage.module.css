@@ -458,6 +458,76 @@
     background-color: red;
 }
 
+.settingBoxTop {
+    width: 90%;
+    /* padding: 2rem; */
+    margin: 1rem auto ;
+
+    height: 13rem; 
+    background-color: gray;
+    border: 1px solid rgb(216, 211, 211);
+    position: relative;
+}
+
+.inputItem {
+    border: none;
+}
+
+.settingBoxLabel {
+   position: absolute;
+    border: 1px solid gray;
+    padding: 1rem;
+    right: 1rem;
+    top: 5rem;
+}
+
+.settingBoxItem1 {
+    background-color: white;
+    position: relative;
+    width: 100%;
+    height: 70%;
+
+}
+
+.settingBoxItem2 {
+    background-color: aqua;
+    width: 5rem;
+    height: 5rem;
+}
+
+.settingBoxBody {
+    width: 90%;
+    height: 10rem;
+    padding: 2rem;
+    margin: 1rem auto ;
+    background-color: aquamarine;
+}
+
+.settingBoxBottom {
+    width: 90%;
+    height: 10rem;
+    padding: 2rem;
+    margin: 1rem auto ;
+    background-color: aquamarine;
+}
+
+.settingPageTopbar {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--borderLineColor);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: gray;
+}
+
+.settingPageMainContainer {
+    padding-left: var(--navSideWidth) ;
+
+}
+
+
 
 @media (max-width: 750px) {
     .singlePageContainer {

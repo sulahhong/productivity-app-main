@@ -50,7 +50,7 @@ function WorkspaceModal() {
             Create Workspace
           </div>
           <button className={styles.workspaceModalCloseButton}
-            onClick={() => {setOpenWorkspaceModal(!openWorkspaceModal)}}
+            onClick={() => {setOpenWorkspaceModal(false)}}
           >
             <MdOutlineClose />
           </button>

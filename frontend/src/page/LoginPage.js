@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styles from '../page/LoginPage.module.css'
 import { useGlobalContext } from "../context";
 import toast from 'react-hot-toast';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function LoginPage() {
     const {
@@ -18,6 +19,7 @@ function LoginPage() {
         password,
     } = loginForm
 
+    const navigate = useNavigate()
 
     const handleFormChange = (e) => {
         setLoginForm((prevState) => ({
@@ -38,6 +40,10 @@ function LoginPage() {
         }
         loginUser(loginForm)
     }
+
+  const  handleRegisterButton = () => {
+    navigate('/register')
+  }
 
   return (
     // <div className={styles.LoginPageContainer}>
@@ -115,6 +121,13 @@ function LoginPage() {
             <button className={styles.registerInfoWrapperItemButton}
               onClick={() => handleLoginButton()}
             >Submit</button>
+            
+          </div>
+          <div className={styles.registerInfoWrapperItemButtonBox}>
+            <button className={styles.registerInfoWrapperItemButton}
+              onClick={() => handleRegisterButton()}
+            >Register</button>
+            
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useRef } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import "./App.css";
 import NavbarSide from "./components/NavbarSide";
 import NavbarTop from "./components/NavbarTop";
@@ -23,6 +23,7 @@ import MyTodoPage from "./page/MyTodoPage";
 import NewTodoModal from "./modal/NewTodoModal";
 import LabelModal from "./modal/LabelModal";
 import DetailPage from "./page/DetailPage";
+import SettingPage from "./page/SettingPage";
 
 function App() {
   const {
@@ -43,11 +44,13 @@ function App() {
     openLabelModal, setOpenLabelModal,
   } = useGlobalContext();
 
+  console.log("useParams", useParams)
+
   return (
     <>
     
       <NavbarTop />
-      <NavbarSide />
+     <NavbarSide />
     
       {openModal && <TodoModal />}
       {openTodoModal && <NewTodoModal />}
@@ -66,6 +69,7 @@ function App() {
         <Route path="/todo/:id" element={<TodoSinglePage />} />
         <Route path="/myworkspace" element={<MyWorkspacePage />} />
         <Route path="/:slug/project" element={<MyProjectPage />} />
+        <Route path="/:slug/settings" element={<SettingPage />} />
         <Route path="/:slug/project/:projectId" element={<MyTodoPage />} />
         <Route path="/:slug/project/:projectId/todo/:todoId" element={<DetailPage />} />
       </Routes>
