@@ -296,4 +296,10 @@
 }
 
 
-
+@media (max-width: 750px) {
+  .mainContainer {
+      padding-left: 0 ;
+    
+  }
+ 
+ }

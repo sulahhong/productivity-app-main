@@ -53,6 +53,7 @@ function LabelModal() {
 
     if (success) {
         await setOpenLabelModal(false)
+        await getLabels(slug, projectId)
     }
   };
 

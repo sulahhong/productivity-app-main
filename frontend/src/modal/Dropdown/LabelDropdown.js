@@ -20,6 +20,12 @@ import LabelModal from "../LabelModal";
 function LabelDropdown({ todoForm, setTodoForm, action}) {
   const { labels, setLabels, todos, setTodos, openLabelModal, setOpenLabelModal, getLabels } = useGlobalContext();
 
+  const path = window.location.pathname;
+  const pathSegments = path.split('/');
+
+  const slug = pathSegments[1];
+  const projectId = pathSegments[3];
+
   const [open, setOpen] = useState(false);
   const [color, setColor] = useState("#aabbcc");
   const [labelName, setLabelName] = useState("");
@@ -30,6 +36,7 @@ function LabelDropdown({ todoForm, setTodoForm, action}) {
 
   useEffect(() => {
     console.log("Check the Labels" , labels)
+    getLabels(slug, projectId)
   }, [])
 
   const check = true;

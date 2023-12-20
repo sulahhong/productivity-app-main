@@ -48,6 +48,7 @@ function NewTodoModal() {
     status: statusOpt[0],
     dueDate: "",
     label: [],
+    assignee: [],
   });
 
   const { title, description, priority, status, dueDate, label } = todoForm;

@@ -5,14 +5,13 @@
 
 .commentHeader {
     background-color: white;
-    border: 1px solid gray;
     border-radius: 0.5rem;
     padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: end;
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 4p;
-    border: 1px solid rgb(223, 225, 228);
+    border: 1px solid rgb(237, 240, 243);
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 4px;
 }
 
 .commentInput {
@@ -65,4 +64,82 @@
 .commentBtn:hover {
     background-color: rgb(209, 206, 206);
     color: white;
+}
+
+
+/* CommentItem */
+.commentItemContainer {
+    border: 1px solid rgb(237, 240, 243);
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 4px;
+    border-radius: 0.5rem;
+
+    line-height: 1.5;
+}
+
+.commentItemMainWrapper {
+    padding: 0.8rem 1rem;
+}
+
+.commentItemHeader {
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.commentItemHeaderIcons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.commentItemHeaderIcon {
+    display: flex;
+    align-items: center;
+}
+
+.commentItemMain {
+}
+
+.replyItemWrapper {
+    color: gray;
+    border-top: 1px solid rgb(237, 240, 243);
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.replyItemInput {
+    border: none;
+    color: gray;
+    font-size: 0.9rem;
+}
+
+.replyItemBtn {
+    padding: 0.2rem 0.6rem;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 4p;
+    border: 1px solid rgb(223, 225, 228);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background-color: white;
+    color: gray;
+}
+
+.replyItemBtn:hover {
+    background-color: rgb(209, 206, 206);
+    color: white;
+}
+
+.commentReplyItemWrapper {
+    color: gray;
+    border-top: 1px solid rgb(237, 240, 243);
+    padding: 0.8rem 1rem;
+    line-height: 1.5;
+}
+
+.replyActor {
+    font-size: 0.9rem;
+    font-weight: 600;
 }

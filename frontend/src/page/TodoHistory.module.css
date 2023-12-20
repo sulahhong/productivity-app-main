@@ -1,5 +1,6 @@
 .historyWrapper {
     padding: 1rem;
+    max-width: 100vw;
     
 }
 
@@ -15,25 +16,92 @@
 .actor{
     color: red;
 }
+
+
+.historyMain::before {
+    content: '';
+    background-color: rgb(214, 214, 214);
+    position: absolute;
+    width: 2px;
+    inset: 0;
+    transform: translateX(80%);
+    margin-left: 1.5rem;
+    opacity: 1;
+}
+
+
 .historyItem{
-    display: flex;
     gap: 0.5rem;
 }
 
-.historyMain {
-    border-left: 3px solid gray;
+
+.historyWrapper {
     padding: 0.2rem 1rem;
+}
+
+.historyMain {
+    display: flex;
+    justify-content: start;
+    padding-bottom: 1rem;
+    margin-left: 15px ;
+
+}
+
+.historyWrapperItem {
+    display: flex;
+    gap: 1rem;
+}
+
+.historyMain:first-child {
+    display: flex;
+    gap: 0;
+}
+
+.historyMain:last-child {
+    display: flex;
+    padding-bottom: 0;
 }
 
 .historyMainWrapper {
     font-size: 0.8rem;
+    position: relative;
+}
+
+.historyListContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(237, 240, 243);
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 4px;
+    padding: 0.7rem;
 }
 
 .historyListWrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.historyList {
+    display: flex;
+    gap: 1rem;
     
-    gap: 0.5rem;
-    border: 1px solid pink;
-    padding: 0.5rem;
+}
+
+.historyListbtn {
+    color: gray;
+    border: none;
+    border-radius: 50%;
+    background-color: white;
+    cursor: pointer;
+}
+
+.replyWrapper {
+
+}
+
+.commentInput {
+    border: none;
+    padding: 0.5rem 0;
 }

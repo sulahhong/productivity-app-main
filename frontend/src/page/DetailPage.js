@@ -33,81 +33,79 @@ import DuedateDropdown from "../modal/Dropdown/DuedateDropdown";
 import LabelDropdown from "../modal/Dropdown/LabelDropdown";
 import TodoHistory from "./TodoHistory";
 import CommentPage from "./CommentPage";
-
+import AssigneeDropdown from "../modal/Dropdown/AssigneeDropdown";
 
 function DetailPage() {
-    const {
-        openSideModal,
-        setOpenSideModal,
-        labels,
-        setLabels,
-        getTodoById,
-        status: statusOpt,
-        priority: priorityOpt,
-        updateTodo,
-        getTodoHistory,
-      } = useGlobalContext();
+  const {
+    openSideModal,
+    setOpenSideModal,
+    labels,
+    setLabels,
+    getTodoById,
+    status: statusOpt,
+    priority: priorityOpt,
+    updateTodo,
+    getTodoHistory,
+  } = useGlobalContext();
 
-      const { slug, projectId, todoId } = useParams();
-      const navigate = useNavigate();
+  const { slug, projectId, todoId } = useParams();
+  const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
-      const [todoForm, setTodoForm] = useState({
-        title: "",
-        description: "",
-        priority: priorityOpt[0],
-        status: statusOpt[0],
-        dueDate: "",
-        label: [],
-      });
-    
-      const { title, description, priority, status, dueDate, label } = todoForm;
+  const [todoForm, setTodoForm] = useState({
+    title: "",
+    description: "",
+    priority: priorityOpt[0],
+    status: statusOpt[0],
+    dueDate: "",
+    label: [],
+  });
 
-      const [todoHistory, setTodoHistory] = useState([]);
+  const { title, description, priority, status, dueDate, label } = todoForm;
 
-      async function fetchData() {
-        
-        const data = await getTodoById(slug, projectId, todoId)
-        console.log("DATA CHECK", data )
-        setTodoForm(data)
-       }
+  const [todoHistory, setTodoHistory] = useState([]);
 
-      useEffect(() =>{
-    
-       fetchData()
-      }, [])
+  async function fetchData() {
+    const data = await getTodoById(slug, projectId, todoId);
+    console.log("DATA CHECK", data);
+    setTodoForm(data);
+  }
 
-      async function fetchDataTodoHist() {
-        const data = await getTodoHistory(slug, projectId, todoId);
-        setTodoHistory(data);
-      }
-      
-    //   useEffect(() => {
-    //     // handleBlur()
-    //    if(todoForm._id ){
-    //     console.log("GG")
-    //     updateTodo(slug, projectId, todoId, todoForm)
-    //    }
-    //   }, [todoForm])
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    //   const handleUpdateTodoAPI = async () => {
-    //    await updateTodo(slug, projectId, todoId, todoForm)
-    //     await fetchData()
-    //   };
+  async function fetchDataTodoHist() {
+    const data = await getTodoHistory(slug, projectId, todoId);
+    setTodoHistory(data);
+  }
 
-      const handleUpdateTodoAPI = async (todo) => {
-        await updateTodo(slug, projectId, todoId, todo)
-         await fetchData()
-         await fetchDataTodoHist()
-       };
+  //   useEffect(() => {
+  //     // handleBlur()
+  //    if(todoForm._id ){
+  //     console.log("GG")
+  //     updateTodo(slug, projectId, todoId, todoForm)
+  //    }
+  //   }, [todoForm])
 
-      const handleTodoChange = (e) => {
-        setTodoForm((prevState) => ({
-            ...prevState,
-            [e.target.name]: e.target.value,
-          }));
-      }
+  //   const handleUpdateTodoAPI = async () => {
+  //    await updateTodo(slug, projectId, todoId, todoForm)
+  //     await fetchData()
+  //   };
 
-      
+  const handleUpdateTodoAPI = async (todo) => {
+    await updateTodo(slug, projectId, todoId, todo);
+    await fetchData();
+    await fetchDataTodoHist();
+  };
+
+  const handleTodoChange = (e) => {
+    setTodoForm((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   const handleAddLabel = (selectedLabel) => {
     console.log("check selectedLabel", selectedLabel);
 
@@ -136,9 +134,13 @@ function DetailPage() {
     console.log("updatedTodo", updatedTodo);
 
     setTodoForm(updatedTodo);
-    if(todoForm._id){
-      handleUpdateTodoAPI(updatedTodo)
+    if (todoForm._id) {
+      handleUpdateTodoAPI(updatedTodo);
     }
+  };
+
+  const handleIconClick = () => {
+    fileInputRef.current.click();
   };
 
   return (
@@ -188,9 +190,9 @@ function DetailPage() {
               name="title"
               placeholder="Title"
               value={title}
-              onBlur={()=>handleUpdateTodoAPI(todoForm)}
+              onBlur={() => handleUpdateTodoAPI(todoForm)}
               onChange={handleTodoChange}
-            //   onKeyDown={(e) => handleTodoTitleEnter(e)}
+              //   onKeyDown={(e) => handleTodoTitleEnter(e)}
             />
           </div>
           <div className={styles.singlePageTextBox}>
@@ -199,7 +201,7 @@ function DetailPage() {
               placeholder="Description"
               name="description"
               value={description}
-              onBlur={()=>handleUpdateTodoAPI(todoForm)}
+              onBlur={() => handleUpdateTodoAPI(todoForm)}
               onChange={handleTodoChange}
             />
           </div>
@@ -208,30 +210,43 @@ function DetailPage() {
               todoForm={todoForm}
               setTodoForm={setTodoForm}
               todoId={todoId}
-              action = {handleUpdateTodoAPI}
+              action={handleUpdateTodoAPI}
             />
 
             <PriorityDropdown
               todoForm={todoForm}
               setTodoForm={setTodoForm}
               todoId={todoId}
-              action = {handleUpdateTodoAPI}
+              action={handleUpdateTodoAPI}
             />
 
             <DuedateDropdown
               todoForm={todoForm}
               setTodoForm={setTodoForm}
               todoId={todoId}
-              action = {handleUpdateTodoAPI}
+              action={handleUpdateTodoAPI}
             />
 
             <LabelDropdown
               todoForm={todoForm}
               setTodoForm={setTodoForm}
               todoId={todoId}
-              action = {handleUpdateTodoAPI}
+              action={handleUpdateTodoAPI}
+              slug={slug}
+              projectId={projectId}
             />
+
+            <AssigneeDropdown
+              todoForm={todoForm}
+              setTodoForm={setTodoForm}
+              todoId={todoId}
+              action={handleUpdateTodoAPI}
+              slug={slug}
+              projectId={projectId}
+            />
+
           </div>
+          
           <div className={styles.labelListContainer}>
             {todoForm.label.length > 0 &&
               todoForm.label.map((item) => (
@@ -251,11 +266,38 @@ function DetailPage() {
               ))}
           </div>
         </div>
+        <div className={styles.attachmentContainer}>
+          <div className={styles.attachmentInputWrapper}>
+            <h1>Attachments</h1>
+            <div
+              className={styles.attachmentInputBox}
+              onClick={handleIconClick}
+            >
+              <h1>click to add</h1>
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
-          <TodoHistory slug={slug} projectId={projectId} todoId={todoId} fetchDataTodoHist={fetchDataTodoHist} todoHistory={todoHistory} />
-          <CommentPage slug={slug} projectId={projectId} todoId={todoId} fetchDataTodoHist={fetchDataTodoHist} />
+      <TodoHistory
+        slug={slug}
+        projectId={projectId}
+        todoId={todoId}
+        fetchDataTodoHist={fetchDataTodoHist}
+        todoHistory={todoHistory}
+      />
+      <CommentPage
+        slug={slug}
+        projectId={projectId}
+        todoId={todoId}
+        fetchDataTodoHist={fetchDataTodoHist}
+      />
     </div>
   );
 }
 
-export default DetailPage
+export default DetailPage;

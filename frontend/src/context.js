@@ -91,7 +91,6 @@ const AppProvider = ({ children }) => {
     { sid: "2", title: "High" },
     { sid: "3", title: "Medium" },
     { sid: "4", title: "Low" },
-   
   ]);
 
   // const [priority, setPriority] = useState([
@@ -118,7 +117,6 @@ const AppProvider = ({ children }) => {
   //   { statusId: "4", statusTitle: "Done" },
   //   { statusId: "5", statusTitle: "Cancelled" },
   // ]);
-
 
   const [priorityDropdown, setPriorityDropdown] = useState(false);
   const [dueDateDropdown, setDueDateDropdown] = useState(false);
@@ -155,7 +153,7 @@ const AppProvider = ({ children }) => {
   //labelList
   // const [labels, setLabels] = useState([]);
 
-  const [labels, setLabels] = useState(getLocalStorageLabels());
+  const [labels, setLabels] = useState([]);
 
   // const [user, setUser] = useState({
   //   userId: "8888",
@@ -167,12 +165,14 @@ const AppProvider = ({ children }) => {
   const [user, setUser] = useState(getLocalStorageUser());
   const [todo2, setTodo2] = useState([]);
 
-
   //API URL
   // const BASE_URL = "http://localhost:5000/api/";
-  const BASE_URL = process.env.REACT_APP_ENV === 'production' ? "http://128.199.74.175/api/" : "http://localhost:5000/api/";
+  const BASE_URL =
+    process.env.REACT_APP_ENV === "production"
+      ? "http://128.199.74.175/api/"
+      : "http://localhost:5000/api/";
 
-  console.log("process.env.REACT_APP_ENV", process.env.REACT_APP_ENV)
+  console.log("process.env.REACT_APP_ENV", process.env.REACT_APP_ENV);
 
   const configToken = {
     headers: {
@@ -187,9 +187,9 @@ const AppProvider = ({ children }) => {
     console.log("projectsprojects", projects);
   }, []);
 
-useEffect(()=>{
-console.log("WS ", openWorkspaceModal)
-}, [openWorkspaceModal])
+  useEffect(() => {
+    console.log("WS ", openWorkspaceModal);
+  }, [openWorkspaceModal]);
 
   useEffect(() => {
     window.localStorage.setItem("todoList", JSON.stringify(todos));
@@ -274,7 +274,7 @@ console.log("WS ", openWorkspaceModal)
 
       if (response.data) {
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        setUser(response.data.user)
+        setUser(response.data.user);
         toast.success("Successfully login!");
         navigate("/myworkspace");
       }
@@ -283,68 +283,66 @@ console.log("WS ", openWorkspaceModal)
     }
   };
 
-    //Register User
-    const registerUser = async (registerForm) => {
-      try{
-      const response = await axios.post(BASE_URL + "users/register", registerForm);
+  //Register User
+  const registerUser = async (registerForm) => {
+    try {
+      const response = await axios.post(
+        BASE_URL + "users/register",
+        registerForm
+      );
       console.log("REGISTER RES: ", response);
-      
-      
+
       if (response.data) {
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        setUser(response.data.user)
+        setUser(response.data.user);
         toast.success("Successfully created!");
         navigate("/myworkspace");
       }
     } catch (error) {
       toast.error(error.response.data.message);
     }
-    };
+  };
 
   //Logout User
-  const logoutUser = async() => {
+  const logoutUser = async () => {
     //토큰 삭제 + 리다이렉트
-    localStorage.removeItem('user')
-    setUser({})
+    localStorage.removeItem("user");
+    setUser({});
     toast.success("Successfully logout!");
-    navigate('/login')
-  }
+    navigate("/login");
+  };
 
   //User Avatar
-  const uploadUserAvatar = async(file) => {
-    try{
+  const uploadUserAvatar = async (file) => {
+    try {
       const formData = new FormData();
-      formData.append('image', file)
+      formData.append("image", file);
 
-      const response = await axios.post(BASE_URL + 'users/avatar', formData, {
+      const response = await axios.post(BASE_URL + "users/avatar", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // 필수: 파일을 업로드할 때는 Content-Type을 지정해야함
+          "Content-Type": "multipart/form-data", // 필수: 파일을 업로드할 때는 Content-Type을 지정해야함
           Authorization: `Bearer ${user.token}`,
         },
-      })
-      console.log('Image uploaded successfully:', response.data);
-      if(response.data){
-        return true
+      });
+      console.log("Image uploaded successfully:", response.data);
+      if (response.data) {
+        return true;
       }
       toast.success("Image uploaded successfully");
     } catch (error) {
       toast.error(error.response.data.message);
-      return false
+      return false;
     }
+  };
 
-  }
-  
-  //Get Me 
+  //Get Me
   const getMe = async () => {
     try {
-      const response = await axios.get(
-        BASE_URL + "users/me",
-        configToken
-      );
+      const response = await axios.get(BASE_URL + "users/me", configToken);
       console.log("GET User: ", response);
 
       if (response.data) {
-        return response.data
+        return response.data;
       }
     } catch (error) {
       console.log("error", error);
@@ -358,15 +356,33 @@ console.log("WS ", openWorkspaceModal)
       const response = await axios.post(
         BASE_URL + "users/update",
         profileForm,
-        configToken, 
+        configToken
       );
       console.log("UPDATE User: ", response);
 
       if (response.data) {
-        return true
+        return true;
       }
     } catch (error) {
-      return false
+      return false;
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  //Get Members
+  const getMembers = async (slug, projectId) => {
+    try {
+      const response = await axios.get(
+        BASE_URL + `workspace/${slug}/project/${projectId}/members`,
+        configToken
+      );
+      console.log("GET Members: ", response);
+
+      if (response.data) {
+        return response.data;
+      }
+    } catch (error) {
       console.log("error", error);
       toast.error(error.response.data.message);
     }
@@ -383,13 +399,12 @@ console.log("WS ", openWorkspaceModal)
 
       if (response.data) {
         setWorkspace(response.data.data);
-      } 
-
+      }
     } catch (error) {
       console.log("error", error);
       toast.error(error.response.data.message);
       if (error.response.status === 401) {
-        navigate(`/login`)
+        navigate(`/login`);
       }
     }
   };
@@ -453,31 +468,31 @@ console.log("WS ", openWorkspaceModal)
     }
   };
 
-
   //Create todo
 
   const createTodo = async (todoForm, slug, projectId) => {
     try {
-
-      const data = {...todoForm, priority: todoForm.priority.sid, status: todoForm.status.sid, label: todoForm.label.map((item) => item._id)}
-
+      const data = {
+        ...todoForm,
+        priority: todoForm.priority.sid,
+        status: todoForm.status.sid,
+        label: todoForm.label.map((item) => item._id),
+      };
 
       const response = await axios.post(
         BASE_URL + `workspace/${slug}/project/${projectId}/todo`,
         data,
         configToken
-      )
+      );
       console.log("CREATE NEW TODO :", response);
       if (response.data) {
         toast.success("Successfully created!");
         return true;
       }
-
     } catch (error) {
       console.log("error", error);
       toast.error(error.response.data.message);
-    };
-
+    }
   };
 
   //Get todos
@@ -499,9 +514,8 @@ console.log("WS ", openWorkspaceModal)
     }
   };
 
-  //Get todo by Id 
+  //Get todo by Id
 
- 
   const getTodoById = async (slug, projectId, todoId) => {
     try {
       const response = await axios.get(
@@ -513,7 +527,7 @@ console.log("WS ", openWorkspaceModal)
       if (response.data) {
         return response.data;
       } else {
-        return null 
+        return null;
       }
     } catch (error) {
       console.log("error", error);
@@ -524,11 +538,16 @@ console.log("WS ", openWorkspaceModal)
   //Update todo
   const updateTodo = async (slug, projectId, todoId, todoForm) => {
     try {
-      const data = {...todoForm, priority: todoForm.priority.sid.toString(), status: todoForm.status.sid.toString(), label: todoForm.label.map((item) => item._id)}
+      const data = {
+        ...todoForm,
+        priority: todoForm.priority.sid.toString(),
+        status: todoForm.status.sid.toString(),
+        label: todoForm.label.map((item) => item._id),
+      };
 
       const response = await axios.put(
         BASE_URL + `workspace/${slug}/project/${projectId}/todo/${todoId}`,
-        data, 
+        data,
         configToken
       );
       console.log("Update Todos: ", response);
@@ -545,7 +564,6 @@ console.log("WS ", openWorkspaceModal)
   //Delete Todo
   const deleteTodo = async (slug, projectId, todoId) => {
     try {
- 
       const response = await axios.delete(
         BASE_URL + `workspace/${slug}/project/${projectId}/todo/${todoId}`,
         configToken
@@ -561,30 +579,49 @@ console.log("WS ", openWorkspaceModal)
     }
   };
 
+  //Add Todo Attachments
+  const addTodoAttachment = async (slug, projectId, todoId) => {
+    try {
+      const response = await axios.post(
+        BASE_URL +
+          `workspace/${slug}/project/${projectId}/todo/${todoId}/attachment`,
+        configToken
+      );
+      console.log("POST ADD TODO ATTACHMENT: ", response);
+
+      if (response.data) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
   //Get Labels
-  const getLabels = async(slug, projectId) =>{
+  const getLabels = async (slug, projectId) => {
     try {
       const response = await axios.get(
         BASE_URL + `workspace/${slug}/project/${projectId}/label`,
         configToken
       );
-      console.log("GET Labels: ", response)
+      console.log("GET Labels: ", response);
 
       if (response.data) {
-        setLabels(response.data.data)
+        setLabels(response.data.data);
       }
       // if (response.data && Array.isArray(response.data.data)) {
       //   setLabels(response.data.data);
       // }
     } catch (error) {
-      console.log("error", error)
+      console.log("error", error);
       toast.error(error.response.data.message);
     }
-  }
+  };
 
   //create label
   const createLabel = async (labelForm, slug, projectId) => {
-    console.log("SLUG :" , labelForm, slug, projectId);
+    console.log("SLUG :", labelForm, slug, projectId);
     try {
       const response = await axios.post(
         BASE_URL + `workspace/${slug}/project/${projectId}/label`,
@@ -604,30 +641,31 @@ console.log("WS ", openWorkspaceModal)
   };
 
   //Get Todo History
-  const getTodoHistory = async(slug, projectId, todoId) =>{
+  const getTodoHistory = async (slug, projectId, todoId) => {
     try {
       const response = await axios.get(
-        BASE_URL + `workspace/${slug}/project/${projectId}/todo/${todoId}/history`,
+        BASE_URL +
+          `workspace/${slug}/project/${projectId}/todo/${todoId}/history`,
         configToken
       );
-      console.log("GET Todo History: ", response)
+      console.log("GET Todo History: ", response);
 
       if (response.data) {
-        return response.data
+        return response.data;
       }
-     
     } catch (error) {
-      console.log("error", error)
+      console.log("error", error);
       toast.error(error.response.data.message);
     }
-  }
+  };
 
-//Create Comments
+  //Create Comments
   const createComment = async (slug, projectId, todoId, comment, parent) => {
     try {
       const response = await axios.post(
-        BASE_URL + `workspace/${slug}/project/${projectId}/todo/${todoId}/comment`,
-        {parent: parent, content: comment}, 
+        BASE_URL +
+          `workspace/${slug}/project/${projectId}/todo/${todoId}/comment`,
+        { parent: parent, content: comment },
         configToken
       );
       console.log("CREATE NEW Comment: ", response);
@@ -637,7 +675,7 @@ console.log("WS ", openWorkspaceModal)
         return true;
       }
     } catch (error) {
-      return false
+      return false;
       console.log("error", error);
       toast.error(error.response.data.message);
     }
@@ -720,9 +758,21 @@ console.log("WS ", openWorkspaceModal)
         setTodo,
         openTodoModal,
         setOpenTodoModal,
-        openLabelModal, setOpenLabelModal, createLabel, createTodo, getLabels, 
-        getTodoById, updateTodo,deleteTodo, logoutUser, uploadUserAvatar,getMe, 
-        getTodoHistory, createComment, updateUser, 
+        openLabelModal,
+        setOpenLabelModal,
+        createLabel,
+        createTodo,
+        getLabels,
+        getTodoById,
+        updateTodo,
+        deleteTodo,
+        logoutUser,
+        uploadUserAvatar,
+        getMe,
+        getTodoHistory,
+        createComment,
+        updateUser,
+        getMembers, 
       }}
     >
       {children}
