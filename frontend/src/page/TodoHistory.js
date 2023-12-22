@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./TodoHistory.module.css";
 import { useGlobalContext } from "../context";
-import { MdOutlineReply, MdModeEdit  } from "react-icons/md";
+import { MdOutlineReply, MdModeEdit } from "react-icons/md";
 import CommentItem from "./CommentItem";
 
 function TodoHistory({
@@ -14,7 +14,7 @@ function TodoHistory({
   const { getTodoHistory, createComment } = useGlobalContext();
 
   const [reply, setReply] = useState();
-  const [replyOn, setReplyOn] = useState(false)
+  const [replyOn, setReplyOn] = useState(false);
 
   const handleCommentChange = (e) => {
     setReply(e.target.value);
@@ -37,20 +37,74 @@ function TodoHistory({
     fetchDataTodoHist();
   }, []);
 
+  const historyDataParser = (item) => {
+    let value = { text: "", color: "" };
+
+    switch (item.field) {
+      case "1":
+        value = { text: "", color: "" };
+        break;
+      case "dueDate":
+        value = {
+          text: new Date(JSON.parse(item.newValue)).toLocaleDateString("ko-KR"),
+          color: "",
+        };
+        break;
+      case "status":
+        value = { text: JSON.parse(item.newValue).title, color: "" };
+        break;
+      case "priority":
+        value = { text: JSON.parse(item.newValue).title, color: "" };
+        break;
+      case "label":
+        value = {
+          text: JSON.parse(item.newValue).name,
+          color: JSON.parse(item.newValue).color,
+        };
+        break;
+    }
+    return value;
+  };
+
+  const historyHtmlParser = (item, value) => {
+    if (item.field == "label") {
+      return (
+        <div className={styles.displyedLabel}>
+          <div
+            className={styles.circle}
+            style={{ backgroundColor: value.color }}
+          ></div>
+          <span> {value.text}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div className={styles.historyValue} style={{ fontWeight: 600 }}>
+          {value.text}
+        </div>
+      );
+    }
+  };
+
   const handle = (item) => {
     if (item.type == "action") {
-      console.log("ddd", item);
       let name = item.actor.displayName;
       let comment = item.commentBasic;
-      let newValue = item.newValue;
+
+      let value = historyDataParser(item);
 
       return (
         <div className={styles.historyWrapperItem}>
-          <div><MdModeEdit /></div>
+          <div className={styles.historyIcon}>
+            <MdModeEdit />
+          </div>
           <div className={styles.actor}>{name}</div>
-          <div className={styles.historyItem}>{comment}{newValue}</div>
+          <div className={styles.historyItem}>
+            <div className={styles.historyValue}>{comment}</div>{" "}
+            {historyHtmlParser(item, value)}
+          </div>
         </div>
-      )
+      );
 
       // let renderComment = comment.replace(
       //   /%{displayName}/g,
@@ -63,11 +117,18 @@ function TodoHistory({
       //     dangerouslySetInnerHTML={{ __html: renderComment }}
       //   />
       // );
-
-
     } else if (item.type == "comment") {
       return (
-        <CommentItem item={item} slug={slug} projectId={projectId} todoId={todoId} fetchDataTodoHist={fetchDataTodoHist} />
+        <div className={styles.comment}>
+          <div className={styles.commentAvatar}>avatar</div>
+          <CommentItem
+            item={item}
+            slug={slug}
+            projectId={projectId}
+            todoId={todoId}
+            fetchDataTodoHist={fetchDataTodoHist}
+          />
+        </div>
       );
     }
   };

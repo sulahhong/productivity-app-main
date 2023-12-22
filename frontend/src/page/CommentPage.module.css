@@ -68,12 +68,14 @@
 
 
 /* CommentItem */
+
+
 .commentItemContainer {
     border: 1px solid rgb(237, 240, 243);
     box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 4px;
     border-radius: 0.5rem;
-
     line-height: 1.5;
+    width: 100%;
 }
 
 .commentItemMainWrapper {

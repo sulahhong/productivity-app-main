@@ -31,9 +31,12 @@
 
 
 .historyItem{
-    gap: 0.5rem;
+
 }
 
+.historyValue {
+    display: inline;
+}
 
 .historyWrapper {
     padding: 0.2rem 1rem;
@@ -43,12 +46,12 @@
     display: flex;
     justify-content: start;
     padding-bottom: 1rem;
-    margin-left: 15px ;
-
+    margin-left: 11px ;
 }
 
 .historyWrapperItem {
     display: flex;
+    align-items: center;
     gap: 1rem;
 }
 
@@ -101,7 +104,46 @@
 
 }
 
+.historyIcon {
+    background-color: #f3f3f3;
+    border: 4px solid white;
+    padding: 0.3rem;
+    border-radius: 1rem;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+}
+
 .commentInput {
     border: none;
     padding: 0.5rem 0;
 }
+
+.comment {
+    display: flex;
+    width: 100%;
+}
+
+.commentAvatar {
+    background-color: aqua;
+}
+
+.circle {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: red;
+}
+
+.displyedLabel {
+    display: inline-block;
+    border: 1px solid var(--borderLineColor);
+    border-radius: 0.5rem;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.7rem;
+  }

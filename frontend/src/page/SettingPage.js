@@ -149,46 +149,6 @@ function SettingPage() {
       </div>
     </div>
 
-    // <div className={styles.settingPageMainContainer}>
-    //   <div className={styles.settingPageTopbar}>
-    //     {/* arrow 클릭시 마이페이지로 이동  */}
-    //     <MdKeyboardArrowLeft />
-    //     My Profile
-    //   </div>
-    //   <div className={styles.settingBoxTop}>
-    //     <div className={styles.settingBoxItem1}>
-    //         <label className={styles.settingBoxLabel}>
-    //       <input className={styles.inputItem} type="file" accept="image/*" onChange={handleImageChange} />
-    //       </label>
-    //     <button className={styles.inputButton} onClick={handleUpload}>Upload</button>
-    //     </div>
-    //     <div className={styles.settingBoxItem2}>
-    //     <label className={styles.settingBoxItem2}>
-    //       <input type="file" accept="image/*" onChange={handleImageChange} />
-    //       </label>
-    //     <button onClick={handleUpload}>Upload</button>
-    //     </div>
-    //   </div>
-    //   <div className={styles.settingBoxBody}>userName & emil 표시</div>
-    //   <div className={styles.settingBoxBottom}>
-    //     <div className={styles.BottomItemWrapper}>
-    //       <div>
-    //         <label>Your Name</label>
-    //       </div>
-    //       <div>
-    //         <input name="name" />
-    //       </div>
-    //     </div>
-    //     <div className={styles.BottomItemWrapper}>
-    //       <div>
-    //         <label>Your Email</label>
-    //       </div>
-    //       <div>
-    //         <input name="email" />
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 }
 
