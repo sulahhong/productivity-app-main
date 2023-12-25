@@ -24,6 +24,9 @@ import NewTodoModal from "./modal/NewTodoModal";
 import LabelModal from "./modal/LabelModal";
 import DetailPage from "./page/DetailPage";
 import SettingPage from "./page/SettingPage";
+import WorkspaceMember from "./page/settings/WorkspaceMember";
+import InviteModal from "./modal/InviteModal";
+import JoinWorkspacePage from "./page/JoinWorkspacePage";
 
 function App() {
   const {
@@ -42,6 +45,8 @@ function App() {
     openTodoModal,
     setOpenTodoModal,
     openLabelModal, setOpenLabelModal,
+    openInviteModal,
+    setOpenInviteModal,
   } = useGlobalContext();
 
   console.log("useParams", useParams)
@@ -58,10 +63,12 @@ function App() {
       {openProjectModal && <ProjectModal />}
       {openSideModal && <SideOptionModal />}
       {openWorkspaceModal && <WorkspaceModal />}
+      {openInviteModal && <InviteModal />}
       {projectIsActive && projects.length == 1 && <EmptyProjectModal />}
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/workspace-join/:inviteId" element={<JoinWorkspacePage />} />
         <Route path="/" element={<Home />} />
         <Route path="/diary" element={<Diary />} />
         <Route path="/todo" element={<Todo />} />
@@ -70,6 +77,7 @@ function App() {
         <Route path="/myworkspace" element={<MyWorkspacePage />} />
         <Route path="/:slug/project" element={<MyProjectPage />} />
         <Route path="/:slug/settings" element={<SettingPage />} />
+        <Route path="/:slug/settings/members" element={<WorkspaceMember />} />
         <Route path="/:slug/project/:projectId" element={<MyTodoPage />} />
         <Route path="/:slug/project/:projectId/todo/:todoId" element={<DetailPage />} />
       </Routes>

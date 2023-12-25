@@ -58,7 +58,9 @@ function DetailPage() {
     priority: priorityOpt[0],
     status: statusOpt[0],
     dueDate: "",
+    parent: null,
     label: [],
+    assignee: [],
   });
 
   const { title, description, priority, status, dueDate, label } = todoForm;
@@ -68,7 +70,7 @@ function DetailPage() {
   async function fetchData() {
     const data = await getTodoById(slug, projectId, todoId);
     console.log("DATA CHECK", data);
-    setTodoForm(data);
+    setTodoForm(data.data);
   }
 
   useEffect(() => {

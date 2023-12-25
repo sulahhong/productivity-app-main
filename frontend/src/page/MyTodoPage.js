@@ -36,6 +36,8 @@ function MyTodoPage() {
     setOpenTodoModal,
     getLabels,
     deleteTodo,
+    getProjectSelf,
+    joinProject,
   } = useGlobalContext();
   const { slug, projectId } = useParams();
   const navigate = useNavigate();
@@ -43,9 +45,26 @@ function MyTodoPage() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    getTodos(slug, projectId);
-    getLabels(slug, projectId);
+
+    const projectSeq = async()=>{
+      const projectMemberResponse = await getProjectSelf(slug, projectId)
+      console.log("projectMemberResponse", projectMemberResponse)
+      
+      if(projectMemberResponse.data[0] && projectMemberResponse.data[0]._id){
+        getTodos(slug, projectId);
+        getLabels(slug, projectId);
+      }else{
+        joinProject(slug, projectId)
+      }
+    }
+
+    projectSeq()
+    
+
+    
   }, []);
+
+  
 
   const handleGoBack = () => {
     navigate(`/${slug}/project`);

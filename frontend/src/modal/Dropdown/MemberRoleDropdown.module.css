@@ -1,0 +1,18 @@
+.memberDropdownContainer {
+    display: flex;
+}
+
+.menuButton {
+    background-color: white;
+    border: 1px solid rgb(223, 225, 228);
+    border-radius: 0.5rem;
+
+    color: gray;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem 1rem;
+
+    justify-content: space-between;
+}

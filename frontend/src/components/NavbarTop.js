@@ -15,7 +15,7 @@ function NavbarTop() {
   return (
     <div className={styles.navbarTopContainer}>
       <div className={styles.navbarTopLeft} onClick={handleNavbarSide}>
-        <AiOutlineMenu size={20} />
+        {/* <AiOutlineMenu size={20} /> */}
       </div>
       <div></div>
     </div>

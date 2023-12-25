@@ -73,7 +73,7 @@ function LoginPage() {
         
     //     <button onClick={()=>handleCreateButton()}>입력</button>
     // </div>
-    <div className={styles.mainOvelay}>
+    <div className={styles.mainOverlay}>
       <div className={styles.mainContainer}>
         <div className={styles.registerGreeting}>
           <div className={styles.registerGreetingItem1}>Welcome!</div>

@@ -16,6 +16,13 @@ function RegisterPage() {
 
   const { name, email, password, password2} = registerForm
 
+  const path = window.location.href;
+    const pathSegments = path.split('register');
+    const inviteInfo = pathSegments[1]
+
+    console.log("invite info" , inviteInfo)
+
+
   const navigate = useNavigate();
 
   const handleFormChange = (e) => {
@@ -34,7 +41,13 @@ function RegisterPage() {
         email: email,
         password: password,
       }
-      registerUser(data)
+      if(inviteInfo){
+        
+        registerUser(data, inviteInfo)
+      }else{
+        registerUser(data)
+      }
+      
 
     }
   }

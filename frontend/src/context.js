@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { MdEmail } from "react-icons/md";
 
 const AppContext = React.createContext();
 
@@ -139,6 +140,7 @@ const AppProvider = ({ children }) => {
   const [openProjectModal, setOpenProjectModal] = useState(false);
   const [openTodoModal, setOpenTodoModal] = useState(false);
   const [openLabelModal, setOpenLabelModal] = useState(false);
+  const [openInviteModal, setOpenInviteModal] = useState(false);
 
   //Workspace state
   const [workspace, setWorkspace] = useState([]);
@@ -284,10 +286,12 @@ const AppProvider = ({ children }) => {
   };
 
   //Register User
-  const registerUser = async (registerForm) => {
+  const registerUser = async (registerForm, inviteInfo) => {
     try {
+      let inviteParam = inviteInfo ? inviteInfo: ''
+
       const response = await axios.post(
-        BASE_URL + "users/register",
+        BASE_URL + "users/register"+inviteParam,
         registerForm
       );
       console.log("REGISTER RES: ", response);
@@ -296,7 +300,13 @@ const AppProvider = ({ children }) => {
         localStorage.setItem("user", JSON.stringify(response.data.user));
         setUser(response.data.user);
         toast.success("Successfully created!");
-        navigate("/myworkspace");
+
+        if(response.data.redirectUrl){
+          navigate(response.data.redirectUrl);
+        }else{
+          navigate("/myworkspace");
+        }
+        
       }
     } catch (error) {
       toast.error(error.response.data.message);
@@ -467,6 +477,47 @@ const AppProvider = ({ children }) => {
       toast.error(error.response.data.message);
     }
   };
+
+  //GET project Self 
+  const getProjectSelf = async (slug, projectId) => {
+    console.log("SLUG :", slug);
+    try {
+      const response = await axios.get(
+        BASE_URL + `workspace/${slug}/project/${projectId}/me`,
+        configToken
+      );
+      console.log("GET Project Self: ", response);
+
+      if (response.data) {
+        
+        return response.data;
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+// join project
+const joinProject = async (slug, projectId) => {
+  try {
+    let data = {}
+    const response = await axios.post(
+      BASE_URL + `workspace/${slug}/project/${projectId}/join`,
+      data,
+      configToken
+    );
+    console.log("JOIN Project: ", response);
+
+    if (response.data) {
+      
+      return response.data;
+    }
+  } catch (error) {
+    console.log("error", error);
+    toast.error(error.response.data.message);
+  }
+};
 
   //Create todo
 
@@ -681,6 +732,106 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  // Invite Workspace 
+  const inviteWorkspace = async (slug, inviteForm ) => {
+    try {
+      const data = {
+        user: [{
+          email: inviteForm.email,
+          role: inviteForm.role
+        }]
+      }
+      const response = await axios.post(
+        BASE_URL +
+          `workspace/${slug}/invite`,
+       data,
+        configToken
+      );
+      console.log("Invite Workspace: ", response);
+
+
+      if (response.data) {
+        console.log("GG")
+
+        if(response.data.notEmail.length > 0){
+          
+          const notEmail = response.data.notEmail
+          let list = ''
+          for(let i = 0; i<notEmail.length; i++){
+            list = list + notEmail[i]
+          }
+          console.log("HH!", list)
+          toast.error(`Following are not email: ${list}`);
+        }
+
+        if(response.data.sentList.length > 0){
+          const sentList = response.data.sentList
+          let list = ''
+          for(let i = 0; i<sentList.length; i++){
+            list = list + sentList[i]
+          }
+
+          toast.error(`Following are sentList: ${list}`);
+        }
+      
+        if(response.data.inviteExists.length > 0){
+          const inviteExists = response.data.inviteExists
+          let list = ''
+          for(let i = 0; i<inviteExists.length; i++){
+            list = list + inviteExists[i]
+          }
+
+          toast.error(`Following are inviteExists: ${list}`);
+        }
+
+        if(response.data.memberExists.length > 0){
+          const memberExists = response.data.memberExists
+          let list = ''
+          for(let i = 0; i<memberExists.length; i++){
+            list = list + memberExists[i]
+          }
+
+          toast.error(`Following are memberExists: ${list}`);
+        }
+
+        // toast.success("Successfully created!");
+        return true;
+      } 
+    } catch (error) {
+      return false;
+    }
+  };
+
+  // Join Workspace 
+  const respondWorkspaceInvitation = async (joinYn, inviteId) => {
+    try {
+      const data = {
+        joinYn: joinYn
+      }
+      const response = await axios.post(
+        BASE_URL +
+          `workspace/join/${inviteId}`,
+          data,
+        configToken
+      );
+      console.log("RES Invite: ", response);
+
+      if (response.data) {
+        toast.success("Successfully created!");
+        navigate('/myworkspace')
+        
+      }
+    } catch (error) {
+      if (error.response.data.redirectUrl) {
+        navigate(error.response.data.redirectUrl)
+      }
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  // 
+
   return (
     <AppContext.Provider
       value={{
@@ -772,7 +923,13 @@ const AppProvider = ({ children }) => {
         getTodoHistory,
         createComment,
         updateUser,
-        getMembers, 
+        getMembers,
+        openInviteModal,
+        setOpenInviteModal,
+        inviteWorkspace,
+        respondWorkspaceInvitation,
+        getProjectSelf,
+        joinProject,
       }}
     >
       {children}

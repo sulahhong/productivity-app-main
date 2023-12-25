@@ -116,7 +116,43 @@ input {
     border-radius: 100%;
 }
 
-/*  */
+/* Workspcae Members settings */
+.header {
+    width: 60%; 
+    /* margin: 3rem auto;
+    margin-bottom: 0; */
+    margin: 3rem auto 0 auto ;
+    padding: 1rem;
+    width: 60%;
+}
+
+.headerItem {
+    margin-bottom: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgb(168, 168, 168);
+    display: flex;
+}
+
+.headerMain {
+    margin-left: auto;
+}
+
+.mainInput {
+    padding: 0.3rem 1rem;
+    margin-right: 0.5rem;
+}
+
+.addBtn {
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    color: white;
+    background-color: rgb(190, 189, 189);
+}
+
+.addBtn:hover {
+    background-color: rgb(243, 184, 117);
+}
 
 
 @media (max-width: 750px) {

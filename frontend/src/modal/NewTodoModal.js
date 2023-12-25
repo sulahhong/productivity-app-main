@@ -47,6 +47,7 @@ function NewTodoModal() {
     priority: priorityOpt[0],
     status: statusOpt[0],
     dueDate: "",
+    parent: null,
     label: [],
     assignee: [],
   });

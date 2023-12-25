@@ -11,6 +11,7 @@ function MyProjectPage() {
     setOpenProjectModal,
     currentWorkspace,
     setCurrentWorkspace,
+    getProjectSelf,
   } = useGlobalContext();
   const { slug } = useParams();
 
@@ -23,6 +24,7 @@ function MyProjectPage() {
 
   const handleGotoProject = (projectId) => {
     navigate(`/${slug}/project/${projectId}`);
+    
   };
 
   const handleGoBack = () => {

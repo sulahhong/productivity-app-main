@@ -164,6 +164,10 @@ function NavbarSide() {
     navigate('/myworkspace')
   }
 
+  const handleGoToSettings = () => {
+    navigate('/')
+  }
+
   const handleLogout = () => {
 
     logoutUser()
@@ -208,7 +212,9 @@ function NavbarSide() {
               <div className={styles.userWorkspaceContentItem}>
                 Workspace Settings
               </div>
-              <div className={styles.userWorkspaceContentItem}>
+              <div className={styles.userWorkspaceContentItem}
+                onClick={() => handleGoToSettings()}
+              >
                 Workspace Invites
               </div>
               <div className={styles.userWorkspaceContentItem} 
