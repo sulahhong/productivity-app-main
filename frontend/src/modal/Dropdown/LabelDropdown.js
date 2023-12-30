@@ -140,19 +140,6 @@ function LabelDropdown({ todoForm, setTodoForm, action}) {
 
   return (
     <>
-     {/* <Modal open={open} onClose={onCloseModal} center  classNames={{
-          overlay: styles.customOverlay,
-          modal:styles.customModal,
-        }}>
-        <h2>Simple centered modal</h2>
-        <HexColorPicker color={color} onChange={setColor} />
-        <input
-          placeholder="이름을 입력하세요"
-          value={labelName}
-          onChange={handelLabelNameChange}
-        />
-        <button onClick={createLabel}>입력</button>
-      </Modal> */}
     <div className={styles.labelMainContainer}>
       <Menu
         transition
@@ -183,33 +170,7 @@ function LabelDropdown({ todoForm, setTodoForm, action}) {
         ))}
         <MenuItem onClick={onOpenModal}>Create Labelz</MenuItem>
       </Menu>
-      {/* <Modal open={open} onClose={onCloseModal} center  classNames={{
-          overlay: styles.customOverlay,
-          modal:styles.customModal,
-        }}>
-        <h2>Simple centered modal</h2>
-        <HexColorPicker color={color} onChange={setColor} />
-        <input
-          placeholder="이름을 입력하세요"
-          value={labelName}
-          onChange={handelLabelNameChange}
-        />
-        <button onClick={createLabel}>입력</button>
-      </Modal> */}
     </div>
-    {/* <div className={styles.labelListContainer}> 
-        {todoForm.label.length > 0 &&
-          todoForm.label.map((item) => (
-            <div className={styles.displyedLabel}>
-              <div
-              className={styles.circle}
-              style={{ backgroundColor: item.labelColor }}
-            ></div>
-              {item.labelName}
-              <button className={styles.displyedLabelbutton} onClick={() => handleAddLabel(item)}><MdOutlineClose /> </button>
-            </div>
-          ))}
-      </div> */}
     </>
   );
 }

@@ -46,6 +46,7 @@ function DetailPage() {
     priority: priorityOpt,
     updateTodo,
     getTodoHistory,
+    addTodoAttachment,
   } = useGlobalContext();
 
   const { slug, projectId, todoId } = useParams();
@@ -66,6 +67,7 @@ function DetailPage() {
   const { title, description, priority, status, dueDate, label } = todoForm;
 
   const [todoHistory, setTodoHistory] = useState([]);
+  const [selectedAttachment, setSelectedAttachment] = useState(null);
 
   async function fetchData() {
     const data = await getTodoById(slug, projectId, todoId);
@@ -144,6 +146,17 @@ function DetailPage() {
   const handleIconClick = () => {
     fileInputRef.current.click();
   };
+
+  const handleAttachmentChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedAttachment(file)
+  }
+
+  const handleAttachmentUpload = async () => {
+    await addTodoAttachment(slug, projectId, todoId)
+  }
+
+  
 
   return (
     <div className={styles.singlePageContainer}>
@@ -280,6 +293,7 @@ function DetailPage() {
                 type="file"
                 ref={fileInputRef}
                 style={{ display: "none" }}
+                onChange={handleAttachmentChange}
               />
             </div>
           </div>
@@ -291,6 +305,7 @@ function DetailPage() {
         todoId={todoId}
         fetchDataTodoHist={fetchDataTodoHist}
         todoHistory={todoHistory}
+
       />
       <CommentPage
         slug={slug}

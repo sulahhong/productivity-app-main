@@ -380,8 +380,8 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  //Get Members
-  const getMembers = async (slug, projectId) => {
+  //Get Project Members
+  const getProjectMembers = async (slug, projectId) => {
     try {
       const response = await axios.get(
         BASE_URL + `workspace/${slug}/project/${projectId}/members`,
@@ -594,6 +594,7 @@ const joinProject = async (slug, projectId) => {
         priority: todoForm.priority.sid.toString(),
         status: todoForm.status.sid.toString(),
         label: todoForm.label.map((item) => item._id),
+        assignee: todoForm.assignee.map((item) => item._id)
       };
 
       const response = await axios.put(
@@ -633,9 +634,11 @@ const joinProject = async (slug, projectId) => {
   //Add Todo Attachments
   const addTodoAttachment = async (slug, projectId, todoId) => {
     try {
+      let data = {}
       const response = await axios.post(
         BASE_URL +
           `workspace/${slug}/project/${projectId}/todo/${todoId}/attachment`,
+          data,
         configToken
       );
       console.log("POST ADD TODO ATTACHMENT: ", response);
@@ -648,6 +651,26 @@ const joinProject = async (slug, projectId) => {
       toast.error(error.response.data.message);
     }
   };
+
+    //GET Todo Attachments
+    const getTodoAttachment = async (slug, projectId, todoId) => {
+      try {
+        const response = await axios.get(
+          BASE_URL +
+            `workspace/${slug}/project/${projectId}/todo/${todoId}/attachment`,
+          configToken
+        );
+        console.log("POST ADD TODO ATTACHMENT: ", response);
+  
+        if (response.data) {
+          return response.data;
+        }
+      } catch (error) {
+        console.log("error", error);
+        toast.error(error.response.data.message);
+      }
+    };
+
 
   //Get Labels
   const getLabels = async (slug, projectId) => {
@@ -923,13 +946,14 @@ const joinProject = async (slug, projectId) => {
         getTodoHistory,
         createComment,
         updateUser,
-        getMembers,
+        getProjectMembers,
         openInviteModal,
         setOpenInviteModal,
         inviteWorkspace,
         respondWorkspaceInvitation,
         getProjectSelf,
         joinProject,
+        addTodoAttachment,
       }}
     >
       {children}
