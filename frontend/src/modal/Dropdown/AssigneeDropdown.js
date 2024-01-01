@@ -16,7 +16,7 @@ import { useGlobalContext } from "../../context";
 function AssigneeDropdown({ todoForm, setTodoForm, action }) {
   const { getProjectMembers } = useGlobalContext();
 
-  const [projectMembers, setprojectMembers] = useState()
+  const [projectMembers, setprojectMembers] = useState([])
 
   const path = window.location.pathname;
   const pathSegments = path.split('/');
@@ -27,7 +27,9 @@ function AssigneeDropdown({ todoForm, setTodoForm, action }) {
   async function fetchData() {
     const data = await getProjectMembers(slug, projectId);
     console.log("GET MEMBERS ",data.data)
-    setprojectMembers(data.data)
+    if(data && data.data) {
+      setprojectMembers(data.data)
+    } 
   }
 
   useEffect(() => {

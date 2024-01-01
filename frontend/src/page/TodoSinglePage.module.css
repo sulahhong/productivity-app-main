@@ -543,6 +543,28 @@
     cursor: pointer;
 }
 
+.subTodoContainer {
+    border-top: 1px solid rgb(209, 206, 206);
+    padding: 1rem 0;
+}
+
+.subTodoInputBox {
+    margin-top: 1rem;
+    padding: 1rem 0.5rem;
+    border: 1px solid rgb(211, 214, 218);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+}
+
+.subTodoInput {
+    padding: 0.5rem;
+    border: none;
+}
+
 
 @media (max-width: 750px) {
     .singlePageContainer {

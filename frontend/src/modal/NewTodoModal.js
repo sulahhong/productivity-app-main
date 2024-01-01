@@ -29,6 +29,7 @@ import StatusDropdown2 from "./Dropdown/StatusDropdown";
 import PriorityDropdown from "./Dropdown/PriorityDropdown";
 import DuedateDropdown from "./Dropdown/DuedateDropdown";
 import LabelDropdown from "./Dropdown/LabelDropdown";
+import AssigneeDropdown from "./Dropdown/AssigneeDropdown";
 
 function NewTodoModal() {
   const {
@@ -73,8 +74,8 @@ function NewTodoModal() {
     setTodoForm((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
   return (
     <div className={styles.todoModalOverlay}>
@@ -93,11 +94,14 @@ function NewTodoModal() {
           <PriorityDropdown todoForm={todoForm} setTodoForm={setTodoForm} />
           <DuedateDropdown todoForm={todoForm} setTodoForm={setTodoForm} />
           <LabelDropdown todoForm={todoForm} setTodoForm={setTodoForm} />
+          <AssigneeDropdown todoForm={todoForm} setTodoForm={setTodoForm} />
         </div>
 
         <div className={styles.todoModalBody}>
           <div className={styles.todoModalInput}>
-            <input className={styles.todoModalInputTitle} placeholder="Title" 
+            <input
+              className={styles.todoModalInputTitle}
+              placeholder="Title"
               name="title"
               value={title}
               onChange={handleTodoChange}

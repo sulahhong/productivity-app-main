@@ -528,6 +528,7 @@ const joinProject = async (slug, projectId) => {
         priority: todoForm.priority.sid,
         status: todoForm.status.sid,
         label: todoForm.label.map((item) => item._id),
+        assignee: todoForm.assignee.map((item) => item._id)
       };
 
       const response = await axios.post(
@@ -565,6 +566,26 @@ const joinProject = async (slug, projectId) => {
     }
   };
 
+  //Get Todos Dropdown
+  const getTodosDropdown = async (slug, projectId) => {
+    try {
+      const response = await axios.get(
+        BASE_URL + `workspace/${slug}/project/${projectId}/todo`,
+        configToken
+      );
+      console.log("GET Todos: ", response);
+
+      if (response.data) {
+        return response.data;
+      } else {
+        return null
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
   //Get todo by Id
 
   const getTodoById = async (slug, projectId, todoId) => {
@@ -589,12 +610,14 @@ const joinProject = async (slug, projectId) => {
   //Update todo
   const updateTodo = async (slug, projectId, todoId, todoForm) => {
     try {
+      console.log("TODOFORM", todoForm)
       const data = {
         ...todoForm,
         priority: todoForm.priority.sid.toString(),
         status: todoForm.status.sid.toString(),
         label: todoForm.label.map((item) => item._id),
-        assignee: todoForm.assignee.map((item) => item._id)
+        assignee: todoForm.assignee.map((item) => item._id),
+        parent: todoForm.parent ? todoForm.parent._id : null
       };
 
       const response = await axios.put(
@@ -630,6 +653,8 @@ const joinProject = async (slug, projectId) => {
       toast.error(error.response.data.message);
     }
   };
+
+
 
   //Add Todo Attachments
   const addTodoAttachment = async (slug, projectId, todoId) => {
@@ -853,7 +878,6 @@ const joinProject = async (slug, projectId) => {
     }
   };
 
-  // 
 
   return (
     <AppContext.Provider
@@ -954,6 +978,7 @@ const joinProject = async (slug, projectId) => {
         getProjectSelf,
         joinProject,
         addTodoAttachment,
+        getTodosDropdown,
       }}
     >
       {children}

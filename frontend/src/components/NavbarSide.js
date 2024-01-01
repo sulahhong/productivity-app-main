@@ -13,6 +13,7 @@ import {
   MdOutlineEdit,
   MdOutlineDelete,
   MdOutlineArchive,
+  MdNotifications,
 } from "react-icons/md";
 import {
   FaRegCalendarAlt,
@@ -22,6 +23,7 @@ import {
   FaRegEdit,
   FaSearch,
 } from "react-icons/fa";
+import NotificationsMenu from "../modal/Dropdown/NotificationsMenu";
 
 function NavbarSide() {
   const {
@@ -327,6 +329,7 @@ function NavbarSide() {
               );
             }
           })}
+          <NotificationsMenu />
       </div>
     </div>
   );

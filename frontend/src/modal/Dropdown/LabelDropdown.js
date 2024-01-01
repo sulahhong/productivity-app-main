@@ -18,7 +18,7 @@ import { useGlobalContext } from "../../context";
 import LabelModal from "../LabelModal";
 
 function LabelDropdown({ todoForm, setTodoForm, action}) {
-  const { labels, setLabels, todos, setTodos, openLabelModal, setOpenLabelModal, getLabels } = useGlobalContext();
+  const { labels, setOpenLabelModal, getLabels } = useGlobalContext();
 
   const path = window.location.pathname;
   const pathSegments = path.split('/');
@@ -129,14 +129,13 @@ function LabelDropdown({ todoForm, setTodoForm, action}) {
     <MenuItemInner {...props} className={menuItemClassName} />
   );
 
-  const SubMenu = (props) => (
-    <SubMenuInner
-      {...props}
-      menuClassName={menuClassName}
-      itemProps={{ className: submenuItemClassName }}
-      offsetY={-7}
-    />
-  );
+  const handleLabels = () => {
+    // 옵션으로 추가해둔 기능 
+    // (이후에 같은 시간에 생성된 라벨을 실시간으로 업데이트 하기 위해 )
+    console.log("LABELS CHECK")
+    getLabels(slug, projectId)
+  }
+
 
   return (
     <>
@@ -144,7 +143,7 @@ function LabelDropdown({ todoForm, setTodoForm, action}) {
       <Menu
         transition
         menuButton={
-          <MenuButton className={styles.menuButton}>Label</MenuButton>
+          <MenuButton className={styles.menuButton} onClick={handleLabels}>Label</MenuButton>
         }
         menuClassName={menuClassName}
       >

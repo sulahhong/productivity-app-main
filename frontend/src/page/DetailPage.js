@@ -34,6 +34,7 @@ import LabelDropdown from "../modal/Dropdown/LabelDropdown";
 import TodoHistory from "./TodoHistory";
 import CommentPage from "./CommentPage";
 import AssigneeDropdown from "../modal/Dropdown/AssigneeDropdown";
+import ParentDropdown from "../modal/Dropdown/ParentDropdown";
 
 function DetailPage() {
   const {
@@ -260,6 +261,15 @@ function DetailPage() {
               projectId={projectId}
             />
 
+            <ParentDropdown
+               todoForm={todoForm}
+               setTodoForm={setTodoForm}
+               todoId={todoId}
+               action={handleUpdateTodoAPI}
+               slug={slug}
+               projectId={projectId}
+            />
+
           </div>
           
           <div className={styles.labelListContainer}>
@@ -281,6 +291,15 @@ function DetailPage() {
               ))}
           </div>
         </div>
+
+          <div className={styles.subTodoContainer}>
+            <h1>Sub Todo</h1>
+            <div className={styles.subTodoInputBox}>
+              <input className={styles.subTodoInput} placeholder="add new sub Todo.." />
+              <button>입력</button>
+            </div>
+          </div>
+
         <div className={styles.attachmentContainer}>
           <div className={styles.attachmentInputWrapper}>
             <h1>Attachments</h1>
