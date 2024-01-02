@@ -878,6 +878,24 @@ const joinProject = async (slug, projectId) => {
     }
   };
 
+  // Get User Notifications
+    const getUserNotifications = async () => {
+    try {
+      const response = await axios.get(
+        BASE_URL +
+          'users/notification',
+        configToken
+      );
+      console.log("RES Notification: ", response);
+
+      if (response.data) {
+        return response.data
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -979,6 +997,7 @@ const joinProject = async (slug, projectId) => {
         joinProject,
         addTodoAttachment,
         getTodosDropdown,
+        getUserNotifications,
       }}
     >
       {children}

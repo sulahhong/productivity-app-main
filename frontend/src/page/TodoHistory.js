@@ -39,6 +39,7 @@ function TodoHistory({
 
   const historyDataParser = (item) => {
     let value = { text: "", color: "" };
+    console.log("JSONPARSER", JSON.parse(item.newValue))
 
     switch (item.field) {
       case "1":
@@ -62,6 +63,14 @@ function TodoHistory({
           color: JSON.parse(item.newValue).color,
         };
         break;
+      case "assignee":
+        value = { text: JSON.parse(item.newValue).member.detail?.displayName,
+                  color: ""};
+        break;
+      // case "parent":
+      //   value = {
+      //     text: JSON.parse(item.newValue)
+      //   }
     }
     return value;
   };

@@ -16,9 +16,21 @@ import {
   MdOutlineClose,
   MdNotifications,
 } from "react-icons/md";
+import { useGlobalContext } from "../../context";
 
 function NotificationsMenu() {
+const { getUserNotifications } = useGlobalContext();
 
+const [notifications, setNotifications] = useState([]);
+
+async function fetchData() {
+    const data = await getUserNotifications();
+    setNotifications(data.data)
+}
+
+useEffect(() => {
+    fetchData()
+}, [])
 
     const menuClassName = ({ state }) =>
     state === "opening"
@@ -57,7 +69,13 @@ function NotificationsMenu() {
         menuClassName={menuClassName}
       >
 
-        <MenuItem>notifications</MenuItem>
+        {notifications.map((item) => (
+            <div>
+                <MenuItem>{item.type}{item.message}</MenuItem>
+            </div>
+        ))
+
+        }
       </Menu>
     </div>
   );
