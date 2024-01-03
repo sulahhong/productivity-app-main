@@ -71,7 +71,7 @@ useEffect(() => {
 
         {notifications.map((item) => (
             <div>
-                <MenuItem>{item.type}{item.message}</MenuItem>
+                <MenuItem>{item.message}</MenuItem>
             </div>
         ))
 

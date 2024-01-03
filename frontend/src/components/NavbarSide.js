@@ -36,15 +36,9 @@ function NavbarSide() {
     setViewTodos,
     openModalProject,
     setOpenModalProject,
-    viewCategory,
-    setViewCategory,
     projectIsActive,
     setProjectIsActive,
-    projectViewtype,
-    setProjectviewType,
-    targetProjectGlobal,
     setTargetProjectGlobal,
-    isEditingProject,
     setIsEditingProject,
     user,
     openModal,
@@ -52,28 +46,41 @@ function NavbarSide() {
     openWorkspaceModal,
     setOpenWorkspaceModal,
     logoutUser,
+    getMe,
   } = useGlobalContext();
 
   const [openUserWorkspace, setOpenUserWorkspace] = useState(false);
   const [openUserProfile, setOpenUserProfile] = useState(false);
+  const [profile, setProfile] = useState({})
 
   const navigate = useNavigate();
-
+  
   let workspaceRef = useRef(null);
-  let userProfileRef = useRef(null);
+  // let userProfileRef = useRef(null);
 
-  // useEffect(() => {
-  //   let handler = (e) => {
-  //     if (!workspaceRef.current?.contains(e.target)) {
-  //       setOpenUserWorkspace(false);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handler);
+  async function fetchData() {
+    const data = await getMe();
+    console.log("NAVBAR HI", data)
+    setProfile(data)
+  }
 
-  //   return () => {
-  //     document.removeEventListener("mousedown", handler);
-  //   };
-  // });
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+
+    useEffect(() => {
+    let handler = (e) => {
+      if (!workspaceRef.current?.contains(e.target)) {
+        setOpenUserWorkspace(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
 
   // useEffect(() => {
   //   let handler = (e) => {
@@ -92,10 +99,6 @@ function NavbarSide() {
   const goHome = () => {
     navigate("/");
   };
-
-  // const goDiary = () => {
-  //   navigate('/diary');
-  // };
 
   const goTodo = () => {
     navigate("/todo");
@@ -163,10 +166,15 @@ function NavbarSide() {
   };
 
   const handleMyWorkspace = () => {
+    console.log("yyyyyyy")
     navigate('/myworkspace')
   }
 
   const handleGoToSettings = () => {
+    navigate('/')
+  }
+
+  const handleGoToMembersSettings = () => {
     navigate('/')
   }
 
@@ -192,7 +200,8 @@ function NavbarSide() {
               <FaRegStar />
             </div>
             <div className={styles.UserWorkspaceName}
-            // ref={workspaceRef}
+            ref={workspaceRef}
+
             >workspace</div>
           </div>
           {openUserWorkspace && (
@@ -215,7 +224,7 @@ function NavbarSide() {
                 Workspace Settings
               </div>
               <div className={styles.userWorkspaceContentItem}
-                onClick={() => handleGoToSettings()}
+                onClick={() => handleGoToMembersSettings()}
               >
                 Workspace Invites
               </div>
@@ -230,20 +239,20 @@ function NavbarSide() {
             // ref={userProfileRef}
             onClick={() => setOpenUserProfile(!openUserProfile)}
           >
-            <FaUserCircle />
+            {profile?.avatar ? (<div className={styles.userAvatar}><img src={profile.avatar}/></div>) :  <FaUserCircle />}
           </div>
           {openUserProfile && (
             <div className={styles.userProfileContent}>
               <div className={styles.userProfileContentItem1}>
                 <div className={styles.userProfileContentItem1}>
-                  <FaUserCircle />
+                {profile?.avatar ? (<div className={styles.userAvatar}><img src={profile.avatar}/></div>) :  <FaUserCircle />}
                 </div>
                 <div className={styles.userProfileContentItem1}>
-                  {user.userName}
+                  {profile.displayName}
                 </div>
               </div>
 
-              <div className={styles.userProfileContentItem}>View profile</div>
+              <div className={styles.userProfileContentItem} onClick={handleGoToSettings}>View profile</div>
               <div className={styles.userProfileContentItem} 
                onClick={() => handleLogout()}
               >Logout</div>

@@ -274,6 +274,17 @@ body {
     gap: 0.5rem;
 }
 
+.userAvatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.userAvatar img {
+    width: 100%;
+}
+
 @media (max-width: 750px) {
     .navbarSideContainer {
         left: -425px;
