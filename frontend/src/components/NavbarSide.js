@@ -24,6 +24,8 @@ import {
   FaSearch,
 } from "react-icons/fa";
 import NotificationsMenu from "../modal/Dropdown/NotificationsMenu";
+import MyWorkspaceDropdown from "./MyWorkspaceDropdown";
+import ProfileDropdown from "./ProfileDropdown";
 
 function NavbarSide() {
   const {
@@ -182,6 +184,15 @@ function NavbarSide() {
 
     logoutUser()
   }
+
+  const handleGoToLogin = () => {
+
+  }
+
+  const handleGoToRegister = () => {
+
+  }
+  
   return (
     <div
       className={
@@ -191,7 +202,12 @@ function NavbarSide() {
       }
     >
       <div className={styles.navbarSideTopPart}>
-        <div className={styles.navbarSideUserInfo}>
+        <div className={styles.userSettings}>
+        <MyWorkspaceDropdown />
+        <ProfileDropdown />
+        
+        </div>
+        {/* <div className={styles.navbarSideUserInfo}>
           <div
             className={styles.navbarSideUserWorkspace}
             onClick={() => setOpenUserWorkspace(!openUserWorkspace)}
@@ -241,7 +257,7 @@ function NavbarSide() {
           >
             {profile?.avatar ? (<div className={styles.userAvatar}><img src={profile.avatar}/></div>) :  <FaUserCircle />}
           </div>
-          {openUserProfile && (
+          {openUserProfile && profile?.name ? (
             <div className={styles.userProfileContent}>
               <div className={styles.userProfileContentItem1}>
                 <div className={styles.userProfileContentItem1}>
@@ -257,8 +273,21 @@ function NavbarSide() {
                onClick={() => handleLogout()}
               >Logout</div>
             </div>
-          )}
-        </div>
+          ) : (
+            <div className={styles.userProfileContent}>
+              <div className={styles.userProfileContentItem1}>
+                <div className={styles.userProfileContentItem1}>
+                <FaUserCircle />
+                </div>
+              </div>
+
+              <div className={styles.userProfileContentItem} onClick={handleGoToLogin}>Login</div>
+              <div className={styles.userProfileContentItem} 
+               onClick={handleGoToRegister}
+              >Register</div>
+            </div>
+          ) }
+        </div> */}
         <div className={styles.navbarSideNewIssueBar}>
           <button
             className={styles.newIssuePart1}

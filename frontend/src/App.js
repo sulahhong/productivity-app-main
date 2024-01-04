@@ -76,8 +76,8 @@ function App() {
         <Route path="/todo/:id" element={<TodoSinglePage />} />
         <Route path="/myworkspace" element={<MyWorkspacePage />} />
         <Route path="/:slug/project" element={<MyProjectPage />} />
-        <Route path="/:slug/settings" element={<SettingPage />} />
-        <Route path="/:slug/settings/members" element={<WorkspaceMember />} />
+        <Route path="/settings" element={<SettingPage />} />
+        <Route path="/settings/members" element={<WorkspaceMember />} />
         <Route path="/:slug/project/:projectId" element={<MyTodoPage />} />
         <Route path="/:slug/project/:projectId/todo/:todoId" element={<DetailPage />} />
       </Routes>

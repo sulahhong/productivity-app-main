@@ -4,12 +4,19 @@
     color: gray;
     font-size: 1.1rem;
     font-weight: 700;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    
 }
 
-.iconLayout {
-    margin-right: 0.5rem;
+.userAvatar {
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.userAvatar img {
+    width: 100%;
 }
