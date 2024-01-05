@@ -49,11 +49,12 @@ function NavbarSide() {
     setOpenWorkspaceModal,
     logoutUser,
     getMe,
+    getJoinedWorkspace,
   } = useGlobalContext();
 
   const [openUserWorkspace, setOpenUserWorkspace] = useState(false);
   const [openUserProfile, setOpenUserProfile] = useState(false);
-  const [profile, setProfile] = useState({})
+  const [profile, setProfile] = useState({});
 
   const navigate = useNavigate();
   

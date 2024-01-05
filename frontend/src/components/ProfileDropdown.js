@@ -77,7 +77,7 @@ const MenuItem = (props) => (
           }
           menuClassName={menuClassName}
     >
-
+      <div></div>
       <MenuItem>view profile</MenuItem>
       <MenuItem onClick={handleGoToSettings}>profile settings</MenuItem>
       <MenuItem onClick={handleLogout}>Sign Out</MenuItem>

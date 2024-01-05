@@ -439,6 +439,26 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  //Update Workspace
+  const updateWorkspaceSetting = async (slug) => {
+    try {
+      let data = {}
+      const response = await axios.put(
+        BASE_URL + `workspace/${slug}/project`,
+        data,
+        configToken
+      );
+      console.log("GET PROJECT: ", response);
+
+      if (response.data) {
+        setProject(response.data.data);
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
   // GET project by Wspace
   const getProjectByWspace = async (slug) => {
     try {
@@ -998,6 +1018,7 @@ const joinProject = async (slug, projectId) => {
         addTodoAttachment,
         getTodosDropdown,
         getUserNotifications,
+        updateWorkspaceSetting,
       }}
     >
       {children}

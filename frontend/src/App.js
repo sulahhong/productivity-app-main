@@ -27,6 +27,7 @@ import SettingPage from "./page/SettingPage";
 import WorkspaceMember from "./page/settings/WorkspaceMember";
 import InviteModal from "./modal/InviteModal";
 import JoinWorkspacePage from "./page/JoinWorkspacePage";
+import WorkspaceGeneral from "./page/settings/WorkspaceGeneral";
 
 function App() {
   const {
@@ -77,6 +78,7 @@ function App() {
         <Route path="/myworkspace" element={<MyWorkspacePage />} />
         <Route path="/:slug/project" element={<MyProjectPage />} />
         <Route path="/settings" element={<SettingPage />} />
+        <Route path="settings/workspace" element={<WorkspaceGeneral />} />
         <Route path="/settings/members" element={<WorkspaceMember />} />
         <Route path="/:slug/project/:projectId" element={<MyTodoPage />} />
         <Route path="/:slug/project/:projectId/todo/:todoId" element={<DetailPage />} />

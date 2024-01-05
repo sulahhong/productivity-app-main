@@ -21,16 +21,12 @@ body {
     color: rgb(151, 147, 147);
 }
 
-
-
 .navbarSideContents {
     padding: 1rem 0.5rem ;
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
 }
-
-
 
 .navbarSideIcons {
     display: flex;
@@ -40,7 +36,6 @@ body {
     font-size: 1.2rem;
 
 }
-
 
 .navbarSideItems {
     padding: 0.8rem;
@@ -123,9 +118,6 @@ body {
     font-size: 0.8rem;
 }
 
-.navbarSideTopPart {
-   
-}
 
 .projectLeftPart {
     display: flex;

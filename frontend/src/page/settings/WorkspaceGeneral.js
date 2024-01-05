@@ -9,19 +9,33 @@ import {
   FaRegEdit,
   FaSearch,
 } from "react-icons/fa";
-import { useGlobalContext } from "../context";
+import { useGlobalContext } from "../../context";
 
 function WorkspaceGeneral() {
-    const {  } = useGlobalContext();    
+    const { updateWorkspaceSetting } = useGlobalContext();    
+
+    const [workspaceForm, setWorkspaceForm] = useState({
+      name: "",
+      slug: "",
+    });
+    const { name, slug } = workspaceForm;
+    
+    const handleIconClick = () => {
+      
+    }
+
+    const handleUpdateUser = () => {
+
+    }
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.main}>
-        <h1 className={styles.title}>Workspacee</h1>
+        <h1 className={styles.title}>Workspace</h1>
         <p className={styles.titleDes}>Manage your Workspace</p>
       </div>
       <div className={styles.workspacePhoto}>
-        <div className={styles.workspaceWrapper} onClick={handleIconClick}>
+        {/* <div className={styles.workspaceWrapper} onClick={handleIconClick}>
           {avatar ? (
             <div className={styles.workspacePhoto}>
               <img className={styles.workspaceLogoItem} src={avatar} />
@@ -37,9 +51,9 @@ function WorkspaceGeneral() {
             style={{ display: "none" }}
             onChange={handleImageChange}
           />
-        </div>
+        </div> */}
       </div>
-      <div className={styles.contents}>
+      {/* <div className={styles.contents}>
         <div className={styles.contentsItem}>
           <label className={styles.itemLabel}>Your Email</label>
           <input className={styles.itemInput} placeholder="email"
@@ -65,7 +79,7 @@ function WorkspaceGeneral() {
             onChange={handleSettingChange}
           />
         </div>
-      </div>
+      </div> */}
       <div className={styles.footer}>
         <button className={styles.saveBtn} onClick={handleUpdateUser}>Save</button>
       </div>
