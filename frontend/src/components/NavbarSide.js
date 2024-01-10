@@ -65,10 +65,16 @@ function NavbarSide() {
     const data = await getMe();
     console.log("NAVBAR HI", data)
     setProfile(data)
+
+    if(window.location.pathname == "/"){
+      navigate(`/${data.lastWorkspaceSlug}/project`)
+    }
+    
   }
 
   useEffect(() => {
     fetchData()
+    console.log("loca", window.location)
   }, [])
 
 
@@ -204,8 +210,8 @@ function NavbarSide() {
     >
       <div className={styles.navbarSideTopPart}>
         <div className={styles.userSettings}>
-        <MyWorkspaceDropdown />
-        <ProfileDropdown />
+        <MyWorkspaceDropdown profile={profile} setProfile={setProfile} />
+        <ProfileDropdown profile={profile} setProfile={setProfile} />
         
         </div>
         {/* <div className={styles.navbarSideUserInfo}>

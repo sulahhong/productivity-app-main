@@ -29,7 +29,7 @@ async function fetchData() {
 }
 
 useEffect(() => {
-    fetchData()
+    
 }, [])
 
     const menuClassName = ({ state }) =>
@@ -61,7 +61,7 @@ useEffect(() => {
         direction="right"
         gap={15}
         menuButton={
-          <MenuButton className={styles.menuButton}>
+          <MenuButton onClick={() => fetchData()} className={styles.menuButton}>
             <MdNotifications />
             Notifications
           </MenuButton>

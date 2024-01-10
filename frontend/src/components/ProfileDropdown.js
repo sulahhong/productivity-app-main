@@ -15,24 +15,23 @@ import { MdGridView, MdCheck, MdOutlineClose} from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import { useGlobalContext } from "../context";
 
-function ProfileDropdown() {
+function ProfileDropdown({profile, setProfile}) {
   const {
     logoutUser,
     getMe,
   } = useGlobalContext();
-  const [profile, setProfile] = useState({})
 
   const navigate = useNavigate();
 
-  async function fetchData() {
-    const data = await getMe();
-    console.log("NAVBAR HI", data)
-    setProfile(data)
-  }
+  // async function fetchData() {
+  //   const data = await getMe();
+  //   console.log("NAVBAR HI", data)
+  //   setProfile(data)
+  // }
 
-  useEffect(() => {
-    fetchData()
-  }, [])
+  // useEffect(() => {
+  //   fetchData()
+  // }, [])
 
   const handleLogout = () => {
 
@@ -73,7 +72,7 @@ const MenuItem = (props) => (
         direction="right"
         gap={15}
         menuButton={
-            <MenuButton className={styles.menuButton}>  {profile?.avatar ? (<div className={styles.userAvatar}><img src={profile.avatar}/></div>) :  <FaUserCircle />}</MenuButton>
+            <MenuButton className={styles.menuButton} >  {profile?.avatar ? (<div className={styles.userAvatar}><img src={profile.avatar}/></div>) :  <FaUserCircle />}</MenuButton>
           }
           menuClassName={menuClassName}
     >

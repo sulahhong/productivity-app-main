@@ -12,14 +12,33 @@ import {
 import { useGlobalContext } from "../../context";
 
 function WorkspaceGeneral() {
-    const { updateWorkspaceSetting } = useGlobalContext();    
+    const { updateWorkspaceSetting, setWorkspaceLogo, getJoinedWorkspace  } = useGlobalContext();  
+    const [workspaceForm, setWorkspaceForm] = useState({});
 
-    const [workspaceForm, setWorkspaceForm] = useState({
-      name: "",
-      slug: "",
-    });
-    const { name, slug } = workspaceForm;
-    
+    const path = window.location.pathname;
+    const pathSegments = path.split('/');
+  
+    const slug = pathSegments[1];
+    const projectId = pathSegments[3];
+
+  console.log("SLUG CHECK", slug)
+
+  async function fetchData() {
+    const data = await getJoinedWorkspace();
+    console.log("NAVBAR HI", data)
+
+    let findWorkspace = data.filter((item) => item.slug == slug)
+
+    console.log("FILTER" , findWorkspace)
+
+    setWorkspaceForm(findWorkspace[0])
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+
     const handleIconClick = () => {
       
     }

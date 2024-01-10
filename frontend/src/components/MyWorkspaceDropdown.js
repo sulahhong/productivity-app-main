@@ -11,10 +11,10 @@ import "@szhsin/react-menu/dist/transitions/slide.css";
 import "react-responsive-modal/styles.css";
 import styles from "./MyWorkspaceDropdown.module.css";
 import { MdGridView, MdCheck, MdOutlineClose, MdHome } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGlobalContext } from "../context";
 
-function MyWorkspaceDropdown() {
+function MyWorkspaceDropdown({profile, setProfile}) {
   const {
     openWorkspaceModal,
     setOpenWorkspaceModal,
@@ -23,10 +23,15 @@ function MyWorkspaceDropdown() {
     getMe,
     workspace,
     setWorkspace,
+    getProjectByWspace,
   } = useGlobalContext();
-  const [profile, setProfile] = useState({})
 
   const navigate = useNavigate();
+  const path = window.location.pathname;
+  const pathSegments = path.split('/');
+
+  const slug = pathSegments[1];
+  const projectId = pathSegments[3];
 
   const handleGoToMyWorkspaceList = () => {
     navigate('/myworkspace')
@@ -41,7 +46,7 @@ function MyWorkspaceDropdown() {
   }
 
   const handleGoToWorkspaceSettings = () => {
-    navigate('/settings/workspace')
+    navigate(`/${slug}/settings`)
   }
 
   const handleCreateWorkspace = () => {
@@ -54,9 +59,14 @@ function MyWorkspaceDropdown() {
     logoutUser()
   }
 
-  useEffect(() => {
-    getJoinedWorkspace()
-  },[])
+  const handleGoToSingleWorkspace = (data) => {
+    navigate(`/${data.slug}/project`)
+    getProjectByWspace(data.slug)
+  }
+
+  // useEffect(() => {
+  //   getJoinedWorkspace()
+  // },[])
 
     const menuClassName = ({ state }) =>
     state === "opening"
@@ -78,6 +88,17 @@ function MyWorkspaceDropdown() {
   const MenuItem = (props) => (
     <MenuItemInner {...props} className={menuItemClassName} />
   );
+
+  const checker = (data,) => {
+    console.log("CCCC", data.slug, slug)
+    if (slug == data.slug) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
   
 
   return (
@@ -85,13 +106,16 @@ function MyWorkspaceDropdown() {
         <Menu
             transition
             menuButton={
-                <MenuButton className={styles.menuButton}><MdHome className={styles.iconLayout} /> workspace</MenuButton>
+                <MenuButton className={styles.menuButton} onClick={() => getJoinedWorkspace()} ><MdHome className={styles.iconLayout} /> workspace</MenuButton>
               }
               menuClassName={menuClassName}
         >
           <MenuItem onClick={handleGoToMyWorkspaceList}>My Workspace :</MenuItem>
             {workspace?.map((item) => (
-              <MenuItem>{item.name}</MenuItem>
+              <MenuItem onClick={() => handleGoToSingleWorkspace(item)}>
+              <div>{item.name}</div>
+              <div>{checker(item) && <MdCheck />}</div>
+              </MenuItem>
             ))}
           <MenuItem onClick={handleCreateWorkspace}>+ Create New Workspace</MenuItem>
           <MenuItem onClick={handleGoToWorkspaceSettings}>Workspace Settings</MenuItem>

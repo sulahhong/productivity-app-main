@@ -91,7 +91,7 @@ const checker = (data) => {
     <div className={styles.parantMainContainer}>
       <Menu
         transition
-        direction="top"
+        direction="bottom"
         menuButton={
           <MenuButton className={styles.menuButton}>Parent</MenuButton>
         }

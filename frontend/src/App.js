@@ -51,6 +51,7 @@ function App() {
   } = useGlobalContext();
 
   console.log("useParams", useParams)
+  
 
   return (
     <>
@@ -78,7 +79,7 @@ function App() {
         <Route path="/myworkspace" element={<MyWorkspacePage />} />
         <Route path="/:slug/project" element={<MyProjectPage />} />
         <Route path="/settings" element={<SettingPage />} />
-        <Route path="settings/workspace" element={<WorkspaceGeneral />} />
+        <Route path="/:slug/settings" element={<WorkspaceGeneral />} />
         <Route path="/settings/members" element={<WorkspaceMember />} />
         <Route path="/:slug/project/:projectId" element={<MyTodoPage />} />
         <Route path="/:slug/project/:projectId/todo/:todoId" element={<DetailPage />} />

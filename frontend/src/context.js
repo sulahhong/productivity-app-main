@@ -409,6 +409,7 @@ const AppProvider = ({ children }) => {
 
       if (response.data) {
         setWorkspace(response.data.data);
+        return response.data.data
       }
     } catch (error) {
       console.log("error", error);
@@ -456,6 +457,24 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       console.log("error", error);
       toast.error(error.response.data.message);
+    }
+  };
+
+  //Set Workspace Logo
+  const setWorkspaceLogo = async (workspaceForm, slug) => {
+    try {
+      const response = await axios.post(
+        BASE_URL + `workspace/${slug}/logo`,
+        workspaceForm,
+        configToken
+      );
+      console.log("SET Workspace logo: ", response);
+
+      if (response.data) {
+        return true;
+      }
+    } catch (error) {
+      return false;
     }
   };
 
@@ -1019,6 +1038,7 @@ const joinProject = async (slug, projectId) => {
         getTodosDropdown,
         getUserNotifications,
         updateWorkspaceSetting,
+        setWorkspaceLogo,
       }}
     >
       {children}
