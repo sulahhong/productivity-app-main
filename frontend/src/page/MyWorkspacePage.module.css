@@ -150,12 +150,10 @@
 
 
 .todoSingleItem {
-    background-color: white;
+  background-color: white;
   border-bottom: 1px solid rgb(216, 216, 216);
   padding: 0.5rem ;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   position: relative;
   width: 100%;
 }
@@ -170,10 +168,9 @@
 }
 
 .todoDelSide{
-    display: flex;
-    align-items: center;
     color: gray;
     font-size: 1rem;
+    flex-grow: 1;
   }
 
   .menuButton {
@@ -241,12 +238,11 @@
 
   .todoOption {
     font-size: 0.8rem;
-    display: flex;
-    text-align: start;
-    justify-content: space-between;
-    gap: 0.5rem;
     color: #8b8b8b;
-    width: 55%;
+    flex-grow: 5;
+    flex-shrink: 0;
+    display: flex;
+    margin-left: auto;
 
   }
 
@@ -289,11 +285,13 @@
 }
   
 .todoItemTitle {
-  width: 45%;
   font-size: 0.9rem;
   color: gray;
-
+  flex-grow: 3;
+  flex-shrink: 0;
 }
+
+/* My Todo Page */
 
 
 @media (max-width: 750px) {

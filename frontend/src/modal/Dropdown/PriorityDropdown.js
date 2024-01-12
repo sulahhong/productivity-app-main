@@ -5,23 +5,16 @@ import {
   MdOutlineClose,
   MdCalendarToday,
   MdOutlinedFlag,
-  MdSort,
-  MdGridView,
-  MdRadioButtonUnchecked,
-  MdOutlineCheckCircleOutline,
-  MdDelete,
-  MdModeEdit,
-  MdAdd,
-  MdKeyboardArrowDown,
   MdCheck,
-  MdKeyboardArrowLeft,
-  MdVerticalSplit,
   MdSignalCellularAlt, 
-  MdSignalCellularAlt2Bar, 
-  MdSignalCellularAlt1Bar, 
   MdBlockFlipped, 
   MdErrorOutline, 
+
 } from "react-icons/md";
+import { FaSignal } from "react-icons/fa";
+import { CgSignal } from "react-icons/cg";
+
+
 import { useGlobalContext } from "../../context";
 
 
@@ -72,11 +65,11 @@ function PriorityDropdown({ todoForm, setTodoForm, todoId, type, action }) {
       case "1":
         return <MdErrorOutline />;
       case "2":
-        return <MdSignalCellularAlt />;
+        return <FaSignal />;
         case "3":
-            return <MdErrorOutline />;
+            return <CgSignal />;
           case "4":
-            return <MdErrorOutline />;
+            return <CgSignal />;
             case "5":
         return <MdBlockFlipped />;
         default:

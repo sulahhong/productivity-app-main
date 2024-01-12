@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import styles from "../page/MyWorkspacePage.module.css";
+import styles from "../page/MyTodoPage.module.css";
 import { useGlobalContext } from "../context";
 import { MdAdd, MdKeyboardArrowLeft } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
@@ -24,7 +24,25 @@ import {
   MdOutlineToday,
   MdOutlineInfo,
   MdMoreHoriz,
+  MdFilterList,
+  MdCheckBoxOutlineBlank,
+  MdOutlineCheckBox,
+  MdBlockFlipped,
+  MdErrorOutline,
+
 } from "react-icons/md";
+import {
+  FaRegCalendarAlt,
+  FaRegListAlt,
+  FaUserCircle,
+  FaRegStar,
+  FaRegEdit,
+  FaSearch,
+} from "react-icons/fa";
+
+import { FaSignal } from "react-icons/fa";
+import { CgSignal } from "react-icons/cg";
+
 import toast, { Toaster } from "react-hot-toast";
 
 function MyTodoPage() {
@@ -45,26 +63,20 @@ function MyTodoPage() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
+    const projectSeq = async () => {
+      const projectMemberResponse = await getProjectSelf(slug, projectId);
+      console.log("projectMemberResponse", projectMemberResponse);
 
-    const projectSeq = async()=>{
-      const projectMemberResponse = await getProjectSelf(slug, projectId)
-      console.log("projectMemberResponse", projectMemberResponse)
-      
-      if(projectMemberResponse.data[0] && projectMemberResponse.data[0]._id){
+      if (projectMemberResponse.data[0] && projectMemberResponse.data[0]._id) {
         getTodos(slug, projectId);
         getLabels(slug, projectId);
-      }else{
-        joinProject(slug, projectId)
+      } else {
+        joinProject(slug, projectId);
       }
-    }
+    };
 
-    projectSeq()
-    
-
-    
+    projectSeq();
   }, []);
-
-  
 
   const handleGoBack = () => {
     navigate(`/${slug}/project`);
@@ -74,7 +86,6 @@ function MyTodoPage() {
     const originalDate = new Date(date);
 
     const formattedDate = originalDate.toLocaleDateString("en-US", {
-      year: "numeric",
       month: "short",
       day: "numeric",
     });
@@ -85,6 +96,23 @@ function MyTodoPage() {
   const goToDetailPage = (todoId) => {
     console.log("Check todo Id", todoId);
     navigate(`/${slug}/project/${projectId}/todo/${todoId}`);
+  };
+
+  const getMenuItem = (item) => {
+    switch (item) {
+      case "1":
+        return <MdErrorOutline />;
+      case "2":
+        return <FaSignal />;
+      case "3":
+        return <CgSignal />;
+      case "4":
+        return <CgSignal />;
+      case "0":
+        return <MdBlockFlipped />;
+      default:
+        return null;
+    }
   };
 
   const menuClassName = ({ state }) =>
@@ -114,144 +142,168 @@ function MyTodoPage() {
   };
 
   return (
-    <div className={styles.mainContainer}>
-      <div className={styles.todoBody}>
-        <div className={styles.todoGuideBar}>
-          <div className={styles.todoGuideBarLeftside}>
+    <div className={styles.mytodoPage}>
+      <header className={styles.topBar}>
+        <div className={styles.topBarGuideMain}>
+          <div className={styles.topBarGuideItem}>
             <button
-              className={styles.todoGuideBarLeftItem}
+              className={styles.guideButton}
               onClick={() => handleGoBack()}
             >
               <MdKeyboardArrowLeft />
             </button>
-            <span className={styles.todoGuideBarLeftText}>My TodoList</span>
+            <h1>My TodoList</h1>
           </div>
-
-          <div>
-            <button
-              className={styles.todoAddButton}
-              onClick={() => setOpenTodoModal(true)}
-            >
-              <MdAdd className={styles.todoAddIcon} />
-              Add
-            </button>
+          <div className={styles.topBarGuideAside}>
+            <div className={styles.topBarGuideFilter}>
+              <button className={styles.guideButton}>
+                <MdFilterList />
+              </button>
+            </div>
+            <div className={styles.topBarGuideAdd}>
+              <button
+                className={styles.addButton}
+                onClick={() => setOpenTodoModal(true)}
+              >
+                <MdAdd className={styles.todoAddIcon} />
+                Add
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <div className={styles.todoFilter}>All Issues {todo?.length}</div>
-      <div className={styles.todoContent}>
-        {todo?.length > 0 ? (
-          todo.map((item) => (
-            <div className={styles.todoSingleItem}>
-              <div
-                className={styles.todoItemTitle}
-                onClick={() => goToDetailPage(item._id)}
-              >
-                {item.title}
-              </div>
-              <div className={styles.todoOption}>
-                <div className={styles.labelDisplaySide}>
-                  {item.status._id && (
-                    <div className={styles.todoStatus}>
-                      {item.status?.title}
+      </header>
+      <main className={styles.main}>
+        <div className={styles.mainBoard}>
+          <div className={styles.mainBoardGridContainer}>
+            {todo?.length > 0
+              ? todo.map((item) => (
+                  <div className={styles.mainBoardGridItem}>
+                    <div className={styles.checkbox}>
+                      <MdCheckBoxOutlineBlank />
                     </div>
-                  )}
-                  <div className={styles.todoStatus}>
-                    {" "}
-                    {item.priority?.title}
+                    {/* <MdOutlineCheckBox /> */}
+                    <div className={styles.priorityBox}>
+                      {getMenuItem(item.priority.sid)}
+                    </div>
+
+                    <div className={styles.statusBox}>{item.status?.title}</div>
+
+                    <div onClick={() => goToDetailPage(item._id)}>
+                      {item.title}
+                    </div>
+
+                    <div className={styles.optionGrid}>
+                      <div className={styles.labelItemsContainer}>
+                        {item.label.length > 0 &&
+                          item.label.map((obj, index) => {
+                            if (index < 3) {
+                              return (
+                                <div className={styles.labelItems}>
+                                  <div
+                                    className={styles.circle}
+                                    style={{ backgroundColor: obj.color }}
+                                  ></div>
+                                  <div>{obj.name}</div>
+                                </div>
+                              );
+                            } else if (index == 3) {
+                              return (
+                                <div className={styles.labelItems}>
+                                  <div>+ {item.label.length - 3} </div>
+                                </div>
+                              );
+                            }
+                          })}
+                      </div>
+                      <div>
+                        {item.dueDate && (
+                          <div className={styles.todoCardDueDate}>
+                            {dateFormatter(item.dueDate)}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className={styles.assigneeBox}>
+                      {item.assignee.length > 0 ?
+                        item.assignee.map((obj) => {
+                          if (obj.member.detail.avatar) {
+                            return (<div className={styles.assigneeBoxItem}>
+                              <img
+                                className={styles.assigneeBoxAvatar}
+                                src={obj.member.detail.avatar}
+                              />
+                            </div>)
+                          } else if (obj.member.detail.avatar == "") {
+                            return (
+                              <div className={styles.assigneeBoxItem}><FaUserCircle /></div>
+                            )
+                          }
+                        }) : <div className={styles.assigneeBoxItemNone}><FaUserCircle /></div>}
+                      {/* {item.assignee.length > 0 &&
+                        item.assignee.map((obj, index) => {
+                          if (index < 3) {
+                            <div>
+                              {obj.member.detail.avatar ? (
+                                <div>{obj.member.detail.avatar}</div>
+                              ) : (
+                                <div>0</div>
+                              )}
+                            </div>;
+                          } else if (index == 3) {
+                            <div>
+                              {obj.member.detail?.avatar ? (
+                                <div>{obj.member.detail?.avatar} 외 1명 </div>
+                              ) : (
+                                <div>0</div>
+                              )}
+                            </div>;
+                          }
+                        })} */}
+                    </div>
+
+                    <div>
+                      <Menu
+                        transition
+                        menuButton={
+                          <MenuButton className={styles.menuButton}>
+                            <MdMoreHoriz />
+                          </MenuButton>
+                        }
+                        menuClassName={menuClassName}
+                      >
+                        <MenuItem>
+                          <div
+                            className={styles.settingDropdownContentItem}
+                            onClick={() => goToDetailPage(item._id)}
+                          >
+                            Edit issue
+                          </div>
+                        </MenuItem>
+                        <MenuItem>
+                          <div
+                            className={styles.settingDropdownContentItem}
+                            onClick={() => handleDeleteTodo(item._id)}
+                          >
+                            Delete issue
+                          </div>
+                        </MenuItem>
+                        <MenuItem>
+                          <div
+                            className={styles.settingDropdownContentItem}
+                            onClick={handleCopyClick(item._id)}
+                          >
+                            Copy issue link
+                          </div>
+                        </MenuItem>
+                      </Menu>
+                    </div>
                   </div>
-
-                  {/* <div>{item.createBy.name}</div> */}
-
-                  {item.label.length > 0 &&
-                    item.label.map((obj, index) =>
-                    {
-                      if(index < 3){
-                        return (
-                        <div className={styles.todolabels}>
-                        <div
-                          className={styles.circle}
-                          style={{ backgroundColor: obj.color }}
-                        ></div>
-                        <div>{obj.name}</div>
-                      </div>)
-                      }else if(index == 3){
-                        return (
-                        <div className={styles.todolabels}>
-                        <div
-                          className={styles.circle}
-                          style={{ backgroundColor: obj.color }}
-                        ></div>
-                        <div>{item.label.length - 3} other labels</div>
-                      </div>)
-                      }
-                    } 
-                    
-                    )}
-
-{/* {item.label.length > 0 &&
-                    item.label.map((obj) => (
-                      <div className={styles.todolabels}>
-                        <div
-                          className={styles.circle}
-                          style={{ backgroundColor: obj.color }}
-                        ></div>
-                        <div>{obj.name}</div>
-                      </div>
-                    ))} */}
-
-                  <div className={styles.todoCardDueDate}>
-                    {item.dueDate && (
-                      <div className={styles.todoCardDueDate}>
-                        <MdCalendarToday className={styles.dueDateIcon} />
-                        {dateFormatter(item.dueDate)}
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className={styles.todoDelSide}>
-                  <Menu
-                    transition
-                    menuButton={
-                      <MenuButton className={styles.menuButton}>
-                        <MdMoreHoriz />
-                      </MenuButton>
-                    }
-                    menuClassName={menuClassName}
-                  >
-                    <MenuItem>
-                      <div
-                        className={styles.settingDropdownContentItem}
-                        onClick={() => goToDetailPage(item._id)}
-                      >
-                        Edit issue
-                      </div>
-                    </MenuItem>
-                    <MenuItem>
-                      <div
-                        className={styles.settingDropdownContentItem}
-                        onClick={() => handleDeleteTodo(item._id)}
-                      >
-                        Delete issue
-                      </div>
-                    </MenuItem>
-                    <MenuItem>
-                      <div
-                        className={styles.settingDropdownContentItem}
-                        onClick={handleCopyClick(item._id)}
-                      >
-                        Copy issue link
-                      </div>
-                    </MenuItem>
-                  </Menu>
-                </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className={styles.wspaceContent}></div>
-        )}
-      </div>
+                ))
+              : null}
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
