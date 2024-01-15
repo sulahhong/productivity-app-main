@@ -28,6 +28,7 @@ import WorkspaceMember from "./page/settings/WorkspaceMember";
 import InviteModal from "./modal/InviteModal";
 import JoinWorkspacePage from "./page/JoinWorkspacePage";
 import WorkspaceGeneral from "./page/settings/WorkspaceGeneral";
+import MyDetailPage from "./page/MyDetailPage";
 
 function App() {
   const {

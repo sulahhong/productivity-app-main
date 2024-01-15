@@ -1,0 +1,48 @@
+
+.wrapper {
+    padding-left: var(--navSideWidth) ;
+    height: 100vh;
+}
+
+
+.page {
+    padding: 1rem;
+}
+
+.pageHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--borderLineColor);
+    padding-bottom: 1rem;
+}
+
+.backButton {
+    border: none;
+    background-color: white;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: gray;
+    cursor: pointer;
+    margin-left: -1rem;
+}
+
+
+.pageMain {
+    box-shadow: inset 0 0 10px red;
+}
+
+
+
+
+
+
+@media (max-width: 750px) {
+    .wrapper {
+        padding-left: unset ;
+        
+    }
+   
+   }

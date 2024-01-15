@@ -7,17 +7,6 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import {
   MdOutlineClose,
-  MdCalendarToday,
-  MdOutlinedFlag,
-  MdSort,
-  MdGridView,
-  MdRadioButtonUnchecked,
-  MdOutlineCheckCircleOutline,
-  MdDelete,
-  MdModeEdit,
-  MdAdd,
-  MdKeyboardArrowDown,
-  MdCheck,
   MdKeyboardArrowLeft,
   MdVerticalSplit,
 } from "react-icons/md";
@@ -48,6 +37,7 @@ function DetailPage() {
     updateTodo,
     getTodoHistory,
     addTodoAttachment,
+    getTodoAttachment,
   } = useGlobalContext();
 
   const { slug, projectId, todoId } = useParams();
@@ -69,11 +59,15 @@ function DetailPage() {
 
   const [todoHistory, setTodoHistory] = useState([]);
   const [selectedAttachment, setSelectedAttachment] = useState(null);
+  const [todoAttachments, setTodoAttachments] = useState([])
 
   async function fetchData() {
     const data = await getTodoById(slug, projectId, todoId);
     console.log("DATA CHECK", data);
     setTodoForm(data.data);
+    const attachment = await getTodoAttachment(slug, projectId, todoId);
+    console.log("ATTACHMENT DATA " , attachment)
+    setTodoAttachments(attachment.data)
   }
 
   useEffect(() => {
@@ -153,10 +147,24 @@ function DetailPage() {
     setSelectedAttachment(file)
   }
 
-  const handleAttachmentUpload = async () => {
-    await addTodoAttachment(slug, projectId, todoId)
+  const handleAttachmentUpload = () => {
+    return addTodoAttachment(slug, projectId, todoId, selectedAttachment)
   }
 
+  useEffect(() => {
+    const uploadAndGet = async () => {
+      const uploadSuccess = await handleAttachmentUpload();
+      if (uploadSuccess) {
+        await getTodoAttachment(slug, projectId, todoId);
+      }
+    }
+
+    if (selectedAttachment != null) {
+      uploadAndGet();
+    }
+
+    console.log("ATTACHMENT")
+  },[selectedAttachment])
   
 
   return (
@@ -316,7 +324,11 @@ function DetailPage() {
               />
             </div>
           </div>
+          {todoAttachments?.map((item) => (
+              <div>{item.fileName}</div>
+          ))}
         </div>
+
       </div>
       <TodoHistory
         slug={slug}

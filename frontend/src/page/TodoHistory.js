@@ -129,7 +129,9 @@ function TodoHistory({
     } else if (item.type == "comment") {
       return (
         <div className={styles.comment}>
-          <div className={styles.commentAvatar}>avatar</div>
+          <div className={styles.commentAvatar}>
+            <img className={styles.userAvatar} src={item.user.detail.avatar} />
+          </div>
           <CommentItem
             item={item}
             slug={slug}

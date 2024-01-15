@@ -145,3 +145,20 @@
     font-size: 0.9rem;
     font-weight: 600;
 }
+
+.replyContents {
+    display: flex;
+    gap: 1rem;
+}
+
+.replyIcon {
+    font-size: 1rem;
+    transform: rotate(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.replyInnerItem {
+    padding-left: 2rem;
+}

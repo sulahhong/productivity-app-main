@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./CommentPage.module.css";
 import { MdAttachFile, MdOutlineReply, MdMoreHoriz } from "react-icons/md";
+import { CgMailReply } from "react-icons/cg";
 import { useGlobalContext } from "../context";
 
 function CommentItem({ item, slug, projectId, todoId, fetchDataTodoHist }) {
@@ -40,10 +41,14 @@ function CommentItem({ item, slug, projectId, todoId, fetchDataTodoHist }) {
       </div>
       {item.replies.map((reply) => (
         <div className={styles.commentReplyItemWrapper}>
-          <div>
+          <div className={styles.replyContents}>
+          <div className={styles.replyIcon}><CgMailReply /></div>
             <div className={styles.replyActor}>{reply.actor.displayName}</div>
-            <div>{reply.content}</div>
+            {/* <div><img src={} /></div> */}
           </div>
+            <div >     
+            <div className={styles.replyInnerItem}>{reply.content}</div>
+            </div>
         </div>
       ))}
 

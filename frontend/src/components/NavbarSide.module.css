@@ -283,8 +283,8 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
-    padding: 1rem ;
-    height: 3rem;
+    padding: 0.5rem ;
+    /* height: 3rem; */
 }
 
 @media (max-width: 750px) {

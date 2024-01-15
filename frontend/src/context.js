@@ -696,24 +696,30 @@ const joinProject = async (slug, projectId) => {
 
 
   //Add Todo Attachments
-  const addTodoAttachment = async (slug, projectId, todoId) => {
+  const addTodoAttachment = async (slug, projectId, todoId, file) => {
     try {
-      let data = {}
+      const formData = new FormData();
+      formData.append("attachment", file)
+
       const response = await axios.post(
         BASE_URL +
           `workspace/${slug}/project/${projectId}/todo/${todoId}/attachment`,
-          data,
-        configToken
-      );
-      console.log("POST ADD TODO ATTACHMENT: ", response);
-
-      if (response.data) {
-        return response.data;
-      }
-    } catch (error) {
-      console.log("error", error);
-      toast.error(error.response.data.message);
-    }
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data", // 필수: 파일을 업로드할 때는 Content-Type을 지정해야함
+              Authorization: `Bearer ${user.token}`,
+            },
+          });
+          console.log("Image uploaded successfully:", response.data);
+          if (response.data) {
+            return true;
+          }
+          toast.success("Image uploaded successfully");
+        } catch (error) {
+          toast.error(error.response.data.message);
+          return false;
+        }
   };
 
     //GET Todo Attachments
@@ -1035,6 +1041,7 @@ const joinProject = async (slug, projectId) => {
         getProjectSelf,
         joinProject,
         addTodoAttachment,
+        getTodoAttachment,
         getTodosDropdown,
         getUserNotifications,
         updateWorkspaceSetting,

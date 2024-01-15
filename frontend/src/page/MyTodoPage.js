@@ -29,7 +29,7 @@ import {
   MdOutlineCheckBox,
   MdBlockFlipped,
   MdErrorOutline,
-
+  MdDragIndicator
 } from "react-icons/md";
 import {
   FaRegCalendarAlt,
@@ -178,6 +178,7 @@ function MyTodoPage() {
             {todo?.length > 0
               ? todo.map((item) => (
                   <div className={styles.mainBoardGridItem}>
+                    <div className={styles.dragIndicator}><MdDragIndicator /></div>
                     <div className={styles.checkbox}>
                       <MdCheckBoxOutlineBlank />
                     </div>
@@ -188,7 +189,7 @@ function MyTodoPage() {
 
                     <div className={styles.statusBox}>{item.status?.title}</div>
 
-                    <div onClick={() => goToDetailPage(item._id)}>
+                    <div className={styles.titleBox} onClick={() => goToDetailPage(item._id)}>
                       {item.title}
                     </div>
 
