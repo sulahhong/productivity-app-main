@@ -325,7 +325,7 @@ function DetailPage() {
             </div>
           </div>
           {todoAttachments?.map((item) => (
-              <div>{item.fileName}</div>
+              <div className={styles.attachmentInputBoxItem}>{item.fileName}</div>
           ))}
         </div>
 

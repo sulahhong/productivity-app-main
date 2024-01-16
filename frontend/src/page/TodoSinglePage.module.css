@@ -531,12 +531,26 @@
 .attachmentContainer {
     border-top: 1px solid rgb(209, 206, 206);
     padding-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: end;
 }
 
 .attachmentInputBox {
     display: inline-block;
     border: 1px dashed rgb(211, 214, 218);
     background-color: rgb(239, 241, 243);
+    /* box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 4px; */
+    margin-top: 1rem;
+    padding: 1rem 2rem;
+    cursor: pointer;
+}
+
+.attachmentInputBoxItem {
+    display: inline-block;
+    border: 1px solid rgb(211, 214, 218);
+    background-color: white;
+    border-radius: 0.5rem;
     /* box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 4px; */
     margin-top: 1rem;
     padding: 1rem 2rem;

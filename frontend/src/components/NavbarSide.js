@@ -77,6 +77,10 @@ function NavbarSide() {
     console.log("loca", window.location)
   }, [])
 
+  // useEffect(() => {
+  //   fetchData()
+  // }, [profile])
+
 
     useEffect(() => {
     let handler = (e) => {

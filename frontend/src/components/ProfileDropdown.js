@@ -23,15 +23,15 @@ function ProfileDropdown({profile, setProfile}) {
 
   const navigate = useNavigate();
 
-  // async function fetchData() {
-  //   const data = await getMe();
-  //   console.log("NAVBAR HI", data)
-  //   setProfile(data)
-  // }
+  async function fetchData() {
+    const data = await getMe();
+    console.log("NAVBAR HI", data)
+    setProfile(data)
+  }
 
-  // useEffect(() => {
-  //   fetchData()
-  // }, [])
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   const handleLogout = () => {
 
