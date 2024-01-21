@@ -741,6 +741,25 @@ const joinProject = async (slug, projectId) => {
       }
     };
 
+    // Delete Todo Attachments 
+    const deleteTodoAttachments = async (slug, projectId, todoId, attachmentId) => {
+      try {
+        const response = await axios.delete(
+          BASE_URL + `workspace/${slug}/project/${projectId}/todo/${todoId}/attachment/${attachmentId}`,
+          configToken
+        );
+        console.log("DELETE Todo Attachment: ", response);
+  
+        if (response.data) {
+          toast.success("Successfully deleted!");
+        }
+      } catch (error) {
+        console.log("error", error);
+        toast.error(error.response.data.message);
+      }
+    };
+
+
 
   //Get Labels
   const getLabels = async (slug, projectId) => {
@@ -820,8 +839,6 @@ const joinProject = async (slug, projectId) => {
       }
     } catch (error) {
       return false;
-      console.log("error", error);
-      toast.error(error.response.data.message);
     }
   };
 
@@ -928,7 +945,7 @@ const joinProject = async (slug, projectId) => {
     try {
       const response = await axios.get(
         BASE_URL +
-          'users/notification',
+          'users/notification?size=10',
         configToken
       );
       console.log("RES Notification: ", response);
@@ -1046,6 +1063,7 @@ const joinProject = async (slug, projectId) => {
         getUserNotifications,
         updateWorkspaceSetting,
         setWorkspaceLogo,
+        deleteTodoAttachments,
       }}
     >
       {children}

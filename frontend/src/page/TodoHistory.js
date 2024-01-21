@@ -3,6 +3,7 @@ import styles from "./TodoHistory.module.css";
 import { useGlobalContext } from "../context";
 import { MdOutlineReply, MdModeEdit } from "react-icons/md";
 import CommentItem from "./CommentItem";
+import { getDateHourMinute, getDateHourMinuteEng, getFormattedDateaAndHours, getStringDate } from "../utill/date";
 
 function TodoHistory({
   slug,
@@ -67,13 +68,34 @@ function TodoHistory({
         value = { text: JSON.parse(item.newValue).member.detail?.displayName,
                   color: ""};
         break;
-      // case "parent":
-      //   value = {
-      //     text: JSON.parse(item.newValue)
-      //   }
+      case "parent":
+        value = {
+          text: JSON.parse(item.newValue).project.identifier + " - " + JSON.parse(item.newValue).sid,
+          color: ""
+        };
+        break;
+      case "attachment":
+        value = {
+          text: JSON.parse(item.newValue).fileName,
+          color: ""
+        }
+      break;
     }
     return value;
   };
+
+  const calcTime = (item) => {
+    const datestring = item.createdAt ;
+    const date = new Date(datestring);
+    let displayDate = getStringDate(date)
+
+    //timeDiff 계산 
+
+    let formattedDate = getDateHourMinuteEng(date)
+
+    return formattedDate
+
+  }
 
   const historyHtmlParser = (item, value) => {
     if (item.field == "label") {
@@ -111,6 +133,7 @@ function TodoHistory({
           <div className={styles.historyItem}>
             <div className={styles.historyValue}>{comment}</div>{" "}
             {historyHtmlParser(item, value)}
+            <div className={styles.historyCreatedAt}>{calcTime(item)}</div>
           </div>
         </div>
       );

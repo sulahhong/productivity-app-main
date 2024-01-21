@@ -31,11 +31,22 @@
 
 
 .historyItem{
-
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    
 }
 
 .historyValue {
     display: inline;
+}
+
+.historyCreatedAt {
+    color: rgb(175, 174, 174);
+    font-size: 0.7rem;
+    padding-left: 0.5rem;
+    display: flex;
+    align-items: center;
 }
 
 .historyWrapper {

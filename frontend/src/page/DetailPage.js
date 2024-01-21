@@ -38,6 +38,7 @@ function DetailPage() {
     getTodoHistory,
     addTodoAttachment,
     getTodoAttachment,
+    deleteTodoAttachments,
   } = useGlobalContext();
 
   const { slug, projectId, todoId } = useParams();
@@ -59,15 +60,15 @@ function DetailPage() {
 
   const [todoHistory, setTodoHistory] = useState([]);
   const [selectedAttachment, setSelectedAttachment] = useState(null);
-  const [todoAttachments, setTodoAttachments] = useState([])
+  const [todoAttachments, setTodoAttachments] = useState([]);
 
   async function fetchData() {
     const data = await getTodoById(slug, projectId, todoId);
     console.log("DATA CHECK", data);
     setTodoForm(data.data);
     const attachment = await getTodoAttachment(slug, projectId, todoId);
-    console.log("ATTACHMENT DATA " , attachment)
-    setTodoAttachments(attachment.data)
+    console.log("ATTACHMENT DATA ", attachment);
+    setTodoAttachments(attachment.data);
   }
 
   useEffect(() => {
@@ -138,34 +139,50 @@ function DetailPage() {
     }
   };
 
-  const handleIconClick = () => {
+  const handleClickToAddAttachment = () => {
     fileInputRef.current.click();
   };
 
   const handleAttachmentChange = (e) => {
     const file = e.target.files[0];
-    setSelectedAttachment(file)
-  }
+    setSelectedAttachment(file);
+  };
 
   const handleAttachmentUpload = () => {
-    return addTodoAttachment(slug, projectId, todoId, selectedAttachment)
-  }
+    return addTodoAttachment(slug, projectId, todoId, selectedAttachment);
+  };
 
   useEffect(() => {
     const uploadAndGet = async () => {
       const uploadSuccess = await handleAttachmentUpload();
       if (uploadSuccess) {
-        await getTodoAttachment(slug, projectId, todoId);
+      const data =  await getTodoAttachment(slug, projectId, todoId);
+      setTodoAttachments(data)
       }
-    }
+    };
 
     if (selectedAttachment != null) {
       uploadAndGet();
     }
 
-    console.log("ATTACHMENT")
-  },[selectedAttachment])
-  
+    console.log("ATTACHMENT");
+  }, [selectedAttachment]);
+
+  const handleTodoAttachmentDelete = async(attachmentId) => {
+   await deleteTodoAttachments(slug, projectId, todoId, attachmentId)
+   await fetchData()
+  }
+
+  const goToFileImageUrl = (item) => {
+    console.log("attachment url", item)
+    window.open(item.fileUrl, '_blank');
+    
+  // window.open을 사용하여 새 창을 열고 이미지 URL을 표시
+  // window.open(item.fileUrl, '_blank');
+
+  // 또는 현재 창에서 열고 싶으면 아래 코드 사용
+  // window.location.href = item.fileUrl;
+  }
 
   return (
     <div className={styles.singlePageContainer}>
@@ -270,16 +287,15 @@ function DetailPage() {
             />
 
             <ParentDropdown
-               todoForm={todoForm}
-               setTodoForm={setTodoForm}
-               todoId={todoId}
-               action={handleUpdateTodoAPI}
-               slug={slug}
-               projectId={projectId}
+              todoForm={todoForm}
+              setTodoForm={setTodoForm}
+              todoId={todoId}
+              action={handleUpdateTodoAPI}
+              slug={slug}
+              projectId={projectId}
             />
-
           </div>
-          
+
           <div className={styles.labelListContainer}>
             {todoForm.label.length > 0 &&
               todoForm.label.map((item) => (
@@ -300,20 +316,23 @@ function DetailPage() {
           </div>
         </div>
 
-          <div className={styles.subTodoContainer}>
-            <h1>Sub Todo</h1>
-            <div className={styles.subTodoInputBox}>
-              <input className={styles.subTodoInput} placeholder="add new sub Todo.." />
-              <button>입력</button>
-            </div>
+        <div className={styles.subTodoContainer}>
+          <h1>Sub Todo</h1>
+          <div className={styles.subTodoInputBox}>
+            <input
+              className={styles.subTodoInput}
+              placeholder="add new sub Todo.."
+            />
+            <button>입력</button>
           </div>
+        </div>
 
         <div className={styles.attachmentContainer}>
           <div className={styles.attachmentInputWrapper}>
-            <h1>Attachments</h1>
+            <h1 className={styles.attachmentTitle}>Attachments</h1>
             <div
               className={styles.attachmentInputBox}
-              onClick={handleIconClick}
+              onClick={handleClickToAddAttachment}
             >
               <h1>click to add</h1>
               <input
@@ -325,10 +344,24 @@ function DetailPage() {
             </div>
           </div>
           {todoAttachments?.map((item) => (
-              <div className={styles.attachmentInputBoxItem}>{item.fileName}</div>
+            <div className={styles.attachmentInputBoxItem}>
+            <div className={styles.attachmentInputBoxInner}
+              onClick={() => goToFileImageUrl(item)}
+            >
+              <div></div>
+              <div>{item.fileName}</div>
+              <div>{}</div>
+
+            </div>
+              <div
+                className={styles.deleteButton}
+                onClick={() => handleTodoAttachmentDelete(item._id)}
+              >
+                <button  type="button">X</button>
+              </div>
+              </div>
           ))}
         </div>
-
       </div>
       <TodoHistory
         slug={slug}
@@ -336,7 +369,6 @@ function DetailPage() {
         todoId={todoId}
         fetchDataTodoHist={fetchDataTodoHist}
         todoHistory={todoHistory}
-
       />
       <CommentPage
         slug={slug}
