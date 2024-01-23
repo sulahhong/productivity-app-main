@@ -80,6 +80,8 @@ const AppProvider = ({ children }) => {
   const [viewTodos, setViewTodos] = useState(todos);
   const [viewCategory, setViewCategory] = useState("all");
   const [navbarSideIsOpen, setNavbarSideIsOpen] = useState(false);
+  const [navbarSideSettingsIsOpen, setNavbarSideSettingsIsOpen] =
+    useState(false);
   const [projects, setProjects] = useState(getLocalStorageProject());
   const [targetProjectGlobal, setTargetProjectGlobal] = useState({});
   const [isEditingProject, setIsEditingProject] = useState(false);
@@ -288,10 +290,10 @@ const AppProvider = ({ children }) => {
   //Register User
   const registerUser = async (registerForm, inviteInfo) => {
     try {
-      let inviteParam = inviteInfo ? inviteInfo: ''
+      let inviteParam = inviteInfo ? inviteInfo : "";
 
       const response = await axios.post(
-        BASE_URL + "users/register"+inviteParam,
+        BASE_URL + "users/register" + inviteParam,
         registerForm
       );
       console.log("REGISTER RES: ", response);
@@ -301,12 +303,11 @@ const AppProvider = ({ children }) => {
         setUser(response.data.user);
         toast.success("Successfully created!");
 
-        if(response.data.redirectUrl){
+        if (response.data.redirectUrl) {
           navigate(response.data.redirectUrl);
-        }else{
+        } else {
           navigate("/myworkspace");
         }
-        
       }
     } catch (error) {
       toast.error(error.response.data.message);
@@ -409,7 +410,7 @@ const AppProvider = ({ children }) => {
 
       if (response.data) {
         setWorkspace(response.data.data);
-        return response.data.data
+        return response.data.data;
       }
     } catch (error) {
       console.log("error", error);
@@ -441,12 +442,11 @@ const AppProvider = ({ children }) => {
   };
 
   //Update Workspace
-  const updateWorkspaceSetting = async (slug) => {
+  const updateWorkspaceSetting = async (workspaceForm, slug) => {
     try {
-      let data = {}
       const response = await axios.put(
-        BASE_URL + `workspace/${slug}/project`,
-        data,
+        BASE_URL + `workspace/${slug}`,
+        workspaceForm,
         configToken
       );
       console.log("GET PROJECT: ", response);
@@ -477,6 +477,9 @@ const AppProvider = ({ children }) => {
       return false;
     }
   };
+
+  //Delete Workspace 
+  
 
   // GET project by Wspace
   const getProjectByWspace = async (slug) => {
@@ -517,7 +520,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  //GET project Self 
+  //GET project Self
   const getProjectSelf = async (slug, projectId) => {
     console.log("SLUG :", slug);
     try {
@@ -528,7 +531,6 @@ const AppProvider = ({ children }) => {
       console.log("GET Project Self: ", response);
 
       if (response.data) {
-        
         return response.data;
       }
     } catch (error) {
@@ -537,26 +539,25 @@ const AppProvider = ({ children }) => {
     }
   };
 
-// join project
-const joinProject = async (slug, projectId) => {
-  try {
-    let data = {}
-    const response = await axios.post(
-      BASE_URL + `workspace/${slug}/project/${projectId}/join`,
-      data,
-      configToken
-    );
-    console.log("JOIN Project: ", response);
+  // join project
+  const joinProject = async (slug, projectId) => {
+    try {
+      let data = {};
+      const response = await axios.post(
+        BASE_URL + `workspace/${slug}/project/${projectId}/join`,
+        data,
+        configToken
+      );
+      console.log("JOIN Project: ", response);
 
-    if (response.data) {
-      
-      return response.data;
+      if (response.data) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
     }
-  } catch (error) {
-    console.log("error", error);
-    toast.error(error.response.data.message);
-  }
-};
+  };
 
   //Create todo
 
@@ -567,7 +568,7 @@ const joinProject = async (slug, projectId) => {
         priority: todoForm.priority.sid,
         status: todoForm.status.sid,
         label: todoForm.label.map((item) => item._id),
-        assignee: todoForm.assignee.map((item) => item._id)
+        assignee: todoForm.assignee.map((item) => item._id),
       };
 
       const response = await axios.post(
@@ -617,7 +618,7 @@ const joinProject = async (slug, projectId) => {
       if (response.data) {
         return response.data;
       } else {
-        return null
+        return null;
       }
     } catch (error) {
       console.log("error", error);
@@ -649,14 +650,14 @@ const joinProject = async (slug, projectId) => {
   //Update todo
   const updateTodo = async (slug, projectId, todoId, todoForm) => {
     try {
-      console.log("TODOFORM", todoForm)
+      console.log("TODOFORM", todoForm);
       const data = {
         ...todoForm,
         priority: todoForm.priority.sid.toString(),
         status: todoForm.status.sid.toString(),
         label: todoForm.label.map((item) => item._id),
         assignee: todoForm.assignee.map((item) => item._id),
-        parent: todoForm.parent ? todoForm.parent._id : null
+        parent: todoForm.parent ? todoForm.parent._id : null,
       };
 
       const response = await axios.put(
@@ -693,73 +694,76 @@ const joinProject = async (slug, projectId) => {
     }
   };
 
-
-
   //Add Todo Attachments
   const addTodoAttachment = async (slug, projectId, todoId, file) => {
     try {
       const formData = new FormData();
-      formData.append("attachment", file)
+      formData.append("attachment", file);
 
       const response = await axios.post(
         BASE_URL +
           `workspace/${slug}/project/${projectId}/todo/${todoId}/attachment`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data", // 필수: 파일을 업로드할 때는 Content-Type을 지정해야함
-              Authorization: `Bearer ${user.token}`,
-            },
-          });
-          console.log("Image uploaded successfully:", response.data);
-          if (response.data) {
-            return true;
-          }
-          toast.success("Image uploaded successfully");
-        } catch (error) {
-          toast.error(error.response.data.message);
-          return false;
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // 필수: 파일을 업로드할 때는 Content-Type을 지정해야함
+            Authorization: `Bearer ${user.token}`,
+          },
         }
+      );
+      console.log("Image uploaded successfully:", response.data);
+      if (response.data) {
+        return true;
+      }
+      toast.success("Image uploaded successfully");
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return false;
+    }
   };
 
-    //GET Todo Attachments
-    const getTodoAttachment = async (slug, projectId, todoId) => {
-      try {
-        const response = await axios.get(
-          BASE_URL +
-            `workspace/${slug}/project/${projectId}/todo/${todoId}/attachment`,
-          configToken
-        );
-        console.log("POST ADD TODO ATTACHMENT: ", response);
-  
-        if (response.data) {
-          return response.data;
-        }
-      } catch (error) {
-        console.log("error", error);
-        toast.error(error.response.data.message);
+  //GET Todo Attachments
+  const getTodoAttachment = async (slug, projectId, todoId) => {
+    try {
+      const response = await axios.get(
+        BASE_URL +
+          `workspace/${slug}/project/${projectId}/todo/${todoId}/attachment`,
+        configToken
+      );
+      console.log("POST ADD TODO ATTACHMENT: ", response);
+
+      if (response.data) {
+        return response.data;
       }
-    };
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
 
-    // Delete Todo Attachments 
-    const deleteTodoAttachments = async (slug, projectId, todoId, attachmentId) => {
-      try {
-        const response = await axios.delete(
-          BASE_URL + `workspace/${slug}/project/${projectId}/todo/${todoId}/attachment/${attachmentId}`,
-          configToken
-        );
-        console.log("DELETE Todo Attachment: ", response);
-  
-        if (response.data) {
-          toast.success("Successfully deleted!");
-        }
-      } catch (error) {
-        console.log("error", error);
-        toast.error(error.response.data.message);
+  // Delete Todo Attachments
+  const deleteTodoAttachments = async (
+    slug,
+    projectId,
+    todoId,
+    attachmentId
+  ) => {
+    try {
+      const response = await axios.delete(
+        BASE_URL +
+          `workspace/${slug}/project/${projectId}/todo/${todoId}/attachment/${attachmentId}`,
+        configToken
+      );
+      console.log("DELETE Todo Attachment: ", response);
+
+      if (response.data) {
+        toast.success("Successfully deleted!");
       }
-    };
-
-
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   //Get Labels
   const getLabels = async (slug, projectId) => {
@@ -842,63 +846,62 @@ const joinProject = async (slug, projectId) => {
     }
   };
 
-  // Invite Workspace 
-  const inviteWorkspace = async (slug, inviteForm ) => {
+  // Invite Workspace
+  const inviteWorkspace = async (slug, inviteForm) => {
     try {
       const data = {
-        user: [{
-          email: inviteForm.email,
-          role: inviteForm.role
-        }]
-      }
+        user: [
+          {
+            email: inviteForm.email,
+            role: inviteForm.role,
+          },
+        ],
+      };
       const response = await axios.post(
-        BASE_URL +
-          `workspace/${slug}/invite`,
-       data,
+        BASE_URL + `workspace/${slug}/invite`,
+        data,
         configToken
       );
       console.log("Invite Workspace: ", response);
 
-
       if (response.data) {
-        console.log("GG")
+        console.log("GG");
 
-        if(response.data.notEmail.length > 0){
-          
-          const notEmail = response.data.notEmail
-          let list = ''
-          for(let i = 0; i<notEmail.length; i++){
-            list = list + notEmail[i]
+        if (response.data.notEmail.length > 0) {
+          const notEmail = response.data.notEmail;
+          let list = "";
+          for (let i = 0; i < notEmail.length; i++) {
+            list = list + notEmail[i];
           }
-          console.log("HH!", list)
+          console.log("HH!", list);
           toast.error(`Following are not email: ${list}`);
         }
 
-        if(response.data.sentList.length > 0){
-          const sentList = response.data.sentList
-          let list = ''
-          for(let i = 0; i<sentList.length; i++){
-            list = list + sentList[i]
+        if (response.data.sentList.length > 0) {
+          const sentList = response.data.sentList;
+          let list = "";
+          for (let i = 0; i < sentList.length; i++) {
+            list = list + sentList[i];
           }
 
           toast.error(`Following are sentList: ${list}`);
         }
-      
-        if(response.data.inviteExists.length > 0){
-          const inviteExists = response.data.inviteExists
-          let list = ''
-          for(let i = 0; i<inviteExists.length; i++){
-            list = list + inviteExists[i]
+
+        if (response.data.inviteExists.length > 0) {
+          const inviteExists = response.data.inviteExists;
+          let list = "";
+          for (let i = 0; i < inviteExists.length; i++) {
+            list = list + inviteExists[i];
           }
 
           toast.error(`Following are inviteExists: ${list}`);
         }
 
-        if(response.data.memberExists.length > 0){
-          const memberExists = response.data.memberExists
-          let list = ''
-          for(let i = 0; i<memberExists.length; i++){
-            list = list + memberExists[i]
+        if (response.data.memberExists.length > 0) {
+          const memberExists = response.data.memberExists;
+          let list = "";
+          for (let i = 0; i < memberExists.length; i++) {
+            list = list + memberExists[i];
           }
 
           toast.error(`Following are memberExists: ${list}`);
@@ -906,34 +909,32 @@ const joinProject = async (slug, projectId) => {
 
         // toast.success("Successfully created!");
         return true;
-      } 
+      }
     } catch (error) {
       return false;
     }
   };
 
-  // Join Workspace 
+  // Join Workspace
   const respondWorkspaceInvitation = async (joinYn, inviteId) => {
     try {
       const data = {
-        joinYn: joinYn
-      }
+        joinYn: joinYn,
+      };
       const response = await axios.post(
-        BASE_URL +
-          `workspace/join/${inviteId}`,
-          data,
+        BASE_URL + `workspace/join/${inviteId}`,
+        data,
         configToken
       );
       console.log("RES Invite: ", response);
 
       if (response.data) {
         toast.success("Successfully created!");
-        navigate('/myworkspace')
-        
+        navigate("/myworkspace");
       }
     } catch (error) {
       if (error.response.data.redirectUrl) {
-        navigate(error.response.data.redirectUrl)
+        navigate(error.response.data.redirectUrl);
       }
       console.log("error", error);
       toast.error(error.response.data.message);
@@ -941,17 +942,16 @@ const joinProject = async (slug, projectId) => {
   };
 
   // Get User Notifications
-    const getUserNotifications = async () => {
+  const getUserNotifications = async () => {
     try {
       const response = await axios.get(
-        BASE_URL +
-          'users/notification?size=10',
+        BASE_URL + "users/notification?size=10",
         configToken
       );
       console.log("RES Notification: ", response);
 
       if (response.data) {
-        return response.data
+        return response.data;
       }
     } catch (error) {
       console.log("error", error);
@@ -1064,6 +1064,8 @@ const joinProject = async (slug, projectId) => {
         updateWorkspaceSetting,
         setWorkspaceLogo,
         deleteTodoAttachments,
+        navbarSideSettingsIsOpen,
+        setNavbarSideSettingsIsOpen,
       }}
     >
       {children}

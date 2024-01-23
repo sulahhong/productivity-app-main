@@ -12,40 +12,50 @@ import {
 import { useGlobalContext } from "../../context";
 
 function WorkspaceGeneral() {
-    const { updateWorkspaceSetting, setWorkspaceLogo, getJoinedWorkspace  } = useGlobalContext();  
-    const [workspaceForm, setWorkspaceForm] = useState({});
+  const { updateWorkspaceSetting, setWorkspaceLogo, getJoinedWorkspace } =
+    useGlobalContext();
+  const [workspaceForm, setWorkspaceForm] = useState({
+  });
 
-    const path = window.location.pathname;
-    const pathSegments = path.split('/');
-  
-    const slug = pathSegments[1];
-    const projectId = pathSegments[3];
+  const path = window.location.pathname;
+  const pathSegments = path.split("/");
 
-  console.log("SLUG CHECK", slug)
+  const slug = pathSegments[1];
+  const projectId = pathSegments[3];
+
+  console.log("SLUG CHECK", slug);
 
   async function fetchData() {
     const data = await getJoinedWorkspace();
-    console.log("NAVBAR HI", data)
+    console.log("NAVBAR HI", data);
 
-    let findWorkspace = data.filter((item) => item.slug == slug)
+    let findWorkspace = data.filter((item) => item.slug == slug);
 
-    console.log("FILTER" , findWorkspace)
+    console.log("FILTER", findWorkspace);
 
-    setWorkspaceForm(findWorkspace[0])
+    setWorkspaceForm(findWorkspace[0]);
   }
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
+  const handleSettingChange = (e) => {
+    setWorkspaceForm((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
+}
 
-    const handleIconClick = () => {
-      
-    }
+  const handleIconClick = () => {};
 
-    const handleUpdateUser = () => {
+  const handleUpdateWorkspace = () => {
+    updateWorkspaceSetting(workspaceForm, slug)
+  };
 
-    }
+  const handleImageChange = () => {
+
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -54,56 +64,55 @@ function WorkspaceGeneral() {
         <p className={styles.titleDes}>Manage your Workspace</p>
       </div>
       <div className={styles.workspacePhoto}>
-        {/* <div className={styles.workspaceWrapper} onClick={handleIconClick}>
-          {avatar ? (
+        <div className={styles.workspaceWrapper} onClick={handleIconClick}>
+          {/* {avatar ? (
             <div className={styles.workspacePhoto}>
               <img className={styles.workspaceLogoItem} src={avatar} />
             </div>
-          ) : (
+          ) : ( */}
             <div className={styles.defaultIcon}>
               <FaUserCircle />
             </div>
-          )}
+          
           <input
-            ref={fileInputRef}
+            // ref={fileInputRef}
             type="file"
             style={{ display: "none" }}
             onChange={handleImageChange}
           />
-        </div> */}
+        </div>
       </div>
-      {/* <div className={styles.contents}>
-        <div className={styles.contentsItem}>
-          <label className={styles.itemLabel}>Your Email</label>
-          <input className={styles.itemInput} placeholder="email"
-            name="email"
-            value={email}
-          />
-        </div>
-        <div className={styles.contentsItem}>
-          <label className={styles.itemLabel}>Your Name</label>
-          <input className={styles.itemInput} placeholder="name" 
+    
+
+      <div className={styles.contents}>
+      <div className={styles.contentsItem}>
+        <label className={styles.itemLabel}>Workspace Name</label>
+        <input
+          className={styles.itemInput}
+          placeholder="name"
           name="name"
-          value={name}
+          value={workspaceForm.name}
           onChange={handleSettingChange}
-          />
-        </div>
+        />
+      </div>
         <div className={styles.contentsItem}>
-          <label className={styles.itemLabel}>Your Display Name</label>
+          <label className={styles.itemLabel}>Slug Name</label>
           <input
             className={styles.itemInput}
-            placeholder="displayName"
-            name="displayName"
-            value={displayName}
-            onChange={handleSettingChange}
+            placeholder="slug"
+            name="slug"
+            value={workspaceForm.slug}
           />
         </div>
-      </div> */}
-      <div className={styles.footer}>
-        <button className={styles.saveBtn} onClick={handleUpdateUser}>Save</button>
       </div>
+      <div className={styles.footer}>
+        <button className={styles.saveBtn} onClick={handleUpdateWorkspace}>
+          Update Workspace
+        </button>
+      </div>
+        <div className={styles.footer}>Delete Workspace</div>
     </div>
-  )
+  );
 }
 
-export default WorkspaceGeneral
+export default WorkspaceGeneral;

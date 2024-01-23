@@ -42,7 +42,7 @@ function MyWorkspaceDropdown({profile, setProfile}) {
   }
 
   const handleGoToMembersSettings = () => {
-    navigate('/settings/members')
+    navigate(`/${slug}/settings/members`)
   }
 
   const handleGoToWorkspaceSettings = () => {

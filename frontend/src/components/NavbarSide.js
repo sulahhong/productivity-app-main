@@ -57,32 +57,30 @@ function NavbarSide() {
   const [profile, setProfile] = useState({});
 
   const navigate = useNavigate();
-  
+
   let workspaceRef = useRef(null);
   // let userProfileRef = useRef(null);
 
   async function fetchData() {
     const data = await getMe();
-    console.log("NAVBAR HI", data)
-    setProfile(data)
+    console.log("NAVBAR HI", data);
+    setProfile(data);
 
-    if(window.location.pathname == "/"){
-      navigate(`/${data.lastWorkspaceSlug}/project`)
+    if (window.location.pathname == "/") {
+      navigate(`/${data.lastWorkspaceSlug}/project`);
     }
-    
   }
 
   useEffect(() => {
-    fetchData()
-    console.log("loca", window.location)
-  }, [])
+    fetchData();
+    console.log("loca", window.location);
+  }, []);
 
   // useEffect(() => {
   //   fetchData()
   // }, [profile])
 
-
-    useEffect(() => {
+  useEffect(() => {
     let handler = (e) => {
       if (!workspaceRef.current?.contains(e.target)) {
         setOpenUserWorkspace(false);
@@ -107,7 +105,6 @@ function NavbarSide() {
   //     document.removeEventListener("mousedown", handler);
   //   };
   // });
-
 
   const goHome = () => {
     navigate("/");
@@ -175,35 +172,30 @@ function NavbarSide() {
   };
 
   const handleCreateWorkspace = () => {
-    setOpenWorkspaceModal(!openWorkspaceModal)
+    setOpenWorkspaceModal(!openWorkspaceModal);
   };
 
   const handleMyWorkspace = () => {
-    console.log("yyyyyyy")
-    navigate('/myworkspace')
-  }
+    console.log("yyyyyyy");
+    navigate("/myworkspace");
+  };
 
   const handleGoToSettings = () => {
-    navigate('/')
-  }
+    navigate("/");
+  };
 
   const handleGoToMembersSettings = () => {
-    navigate('/')
-  }
+    navigate("/");
+  };
 
   const handleLogout = () => {
+    logoutUser();
+  };
 
-    logoutUser()
-  }
+  const handleGoToLogin = () => {};
 
-  const handleGoToLogin = () => {
+  const handleGoToRegister = () => {};
 
-  }
-
-  const handleGoToRegister = () => {
-
-  }
-  
   return (
     <div
       className={
@@ -214,91 +206,9 @@ function NavbarSide() {
     >
       <div className={styles.navbarSideTopPart}>
         <div className={styles.userSettings}>
-        <MyWorkspaceDropdown profile={profile} setProfile={setProfile} />
-        <ProfileDropdown profile={profile} setProfile={setProfile} />
-        
+          <MyWorkspaceDropdown profile={profile} setProfile={setProfile} />
+          <ProfileDropdown profile={profile} setProfile={setProfile} />
         </div>
-        {/* <div className={styles.navbarSideUserInfo}>
-          <div
-            className={styles.navbarSideUserWorkspace}
-            onClick={() => setOpenUserWorkspace(!openUserWorkspace)}
-          >
-            <div className={styles.UserWorkspaceIcon}>
-              <FaRegStar />
-            </div>
-            <div className={styles.UserWorkspaceName}
-            ref={workspaceRef}
-
-            >workspace</div>
-          </div>
-          {openUserWorkspace && (
-            <div className={styles.userWorkspaceContent}>
-              <div className={styles.userWorkspaceContentItem}>
-                Workspace :{user.userEmail}
-              </div>
-              <div className={styles.userWorkspaceContentItem}
-                onClick={() => handleMyWorkspace()}
-              >
-                My Workspace
-              </div>
-              <div
-                className={styles.userWorkspaceContentItem}
-                onClick={() => handleCreateWorkspace()}
-              >
-                <MdAdd /> Create Workspace
-              </div>
-              <div className={styles.userWorkspaceContentItem}>
-                Workspace Settings
-              </div>
-              <div className={styles.userWorkspaceContentItem}
-                onClick={() => handleGoToMembersSettings()}
-              >
-                Workspace Invites
-              </div>
-              <div className={styles.userWorkspaceContentItem} 
-              onClick={() => handleLogout()}
-              >Logout</div>
-            </div>
-          )}
-     
-          <div
-            className={styles.navbarSideUserProfile}
-            // ref={userProfileRef}
-            onClick={() => setOpenUserProfile(!openUserProfile)}
-          >
-            {profile?.avatar ? (<div className={styles.userAvatar}><img src={profile.avatar}/></div>) :  <FaUserCircle />}
-          </div>
-          {openUserProfile && profile?.name ? (
-            <div className={styles.userProfileContent}>
-              <div className={styles.userProfileContentItem1}>
-                <div className={styles.userProfileContentItem1}>
-                {profile?.avatar ? (<div className={styles.userAvatar}><img src={profile.avatar}/></div>) :  <FaUserCircle />}
-                </div>
-                <div className={styles.userProfileContentItem1}>
-                  {profile.displayName}
-                </div>
-              </div>
-
-              <div className={styles.userProfileContentItem} onClick={handleGoToSettings}>View profile</div>
-              <div className={styles.userProfileContentItem} 
-               onClick={() => handleLogout()}
-              >Logout</div>
-            </div>
-          ) : (
-            <div className={styles.userProfileContent}>
-              <div className={styles.userProfileContentItem1}>
-                <div className={styles.userProfileContentItem1}>
-                <FaUserCircle />
-                </div>
-              </div>
-
-              <div className={styles.userProfileContentItem} onClick={handleGoToLogin}>Login</div>
-              <div className={styles.userProfileContentItem} 
-               onClick={handleGoToRegister}
-              >Register</div>
-            </div>
-          ) }
-        </div> */}
         <div className={styles.navbarSideNewIssueBar}>
           <button
             className={styles.newIssuePart1}
@@ -378,7 +288,7 @@ function NavbarSide() {
               );
             }
           })}
-          <NotificationsMenu />
+        <NotificationsMenu />
       </div>
     </div>
   );

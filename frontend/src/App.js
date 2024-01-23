@@ -1,5 +1,11 @@
 import React, { useEffect, useReducer, useRef } from "react";
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useParams,
+  useLocation,
+} from "react-router-dom";
 import "./App.css";
 import NavbarSide from "./components/NavbarSide";
 import NavbarTop from "./components/NavbarTop";
@@ -29,6 +35,7 @@ import InviteModal from "./modal/InviteModal";
 import JoinWorkspacePage from "./page/JoinWorkspacePage";
 import WorkspaceGeneral from "./page/settings/WorkspaceGeneral";
 import MyDetailPage from "./page/MyDetailPage";
+import NavbarSideSettings from "./components/NavbarSideSettings";
 
 function App() {
   const {
@@ -43,23 +50,27 @@ function App() {
     openSideModal,
     openWorkspaceModal,
     setOpenWorkspaceModal,
-    openProjectModal, 
+    openProjectModal,
     openTodoModal,
     setOpenTodoModal,
-    openLabelModal, setOpenLabelModal,
+    openLabelModal,
+    setOpenLabelModal,
     openInviteModal,
     setOpenInviteModal,
   } = useGlobalContext();
 
-  console.log("useParams", useParams)
-  
+  const location = useLocation();
+  console.log("LOCATION", location)
+  const isSettingsPage = location.pathname.includes("settings");
+
+  console.log("useParams", useParams);
 
   return (
     <>
-    
       <NavbarTop />
-     <NavbarSide />
-    
+
+      {isSettingsPage ? <NavbarSideSettings /> : <NavbarSide />}
+
       {openModal && <TodoModal />}
       {openTodoModal && <NewTodoModal />}
       {openLabelModal && <LabelModal />}
@@ -71,7 +82,10 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/workspace-join/:inviteId" element={<JoinWorkspacePage />} />
+        <Route
+          path="/workspace-join/:inviteId"
+          element={<JoinWorkspacePage />}
+        />
         <Route path="/" element={<Home />} />
         <Route path="/diary" element={<Diary />} />
         <Route path="/todo" element={<Todo />} />
@@ -81,12 +95,14 @@ function App() {
         <Route path="/:slug/project" element={<MyProjectPage />} />
         <Route path="/settings" element={<SettingPage />} />
         <Route path="/:slug/settings" element={<WorkspaceGeneral />} />
-        <Route path="/settings/members" element={<WorkspaceMember />} />
+        <Route path="/:slug/settings/members" element={<WorkspaceMember />} />
         <Route path="/:slug/project/:projectId" element={<MyTodoPage />} />
-        <Route path="/:slug/project/:projectId/todo/:todoId" element={<DetailPage />} />
+        <Route
+          path="/:slug/project/:projectId/todo/:todoId"
+          element={<DetailPage />}
+        />
       </Routes>
-      
-      </>
+    </>
   );
 }
 
