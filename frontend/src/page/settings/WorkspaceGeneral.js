@@ -10,20 +10,26 @@ import {
   FaSearch,
 } from "react-icons/fa";
 import { useGlobalContext } from "../../context";
+import { useNavigate, useParams } from "react-router-dom";
 
 function WorkspaceGeneral() {
-  const { updateWorkspaceSetting, setWorkspaceLogo, getJoinedWorkspace } =
+  const { updateWorkspaceSetting, setWorkspaceLogo, getJoinedWorkspace, deleteWorkspace } =
     useGlobalContext();
   const [workspaceForm, setWorkspaceForm] = useState({
   });
 
-  const path = window.location.pathname;
-  const pathSegments = path.split("/");
+  const navigate = useNavigate();
 
-  const slug = pathSegments[1];
-  const projectId = pathSegments[3];
+  // const path = window.location.pathname;
+  // const pathSegments = path.split("/");
 
-  console.log("SLUG CHECK", slug);
+  // const slug = pathSegments[1];
+  // const projectId = pathSegments[3];
+  // console.log("SLUG CHECK", slug);
+
+  const { slug } = useParams();
+  console.log("PARAMS", slug)
+
 
   async function fetchData() {
     const data = await getJoinedWorkspace();
@@ -45,6 +51,11 @@ function WorkspaceGeneral() {
       ...prevState,
       [e.target.name]: e.target.value
     }))
+}
+
+const handleDeleteWorkspace = async() => {
+ await deleteWorkspace(slug)
+ await navigate("/myworkspace")
 }
 
   const handleIconClick = () => {};
@@ -110,7 +121,9 @@ function WorkspaceGeneral() {
           Update Workspace
         </button>
       </div>
-        <div className={styles.footer}>Delete Workspace</div>
+        <div className={styles.footer} >
+          <button className={styles.deleteBtn} onClick={handleDeleteWorkspace} > Delete Workspace</button>
+         </div>
     </div>
   );
 }

@@ -479,7 +479,41 @@ const AppProvider = ({ children }) => {
   };
 
   //Delete Workspace 
-  
+  const deleteWorkspace = async (slug) => {
+    try {
+      const response = await axios.delete(
+        BASE_URL + `workspace/${slug}`,
+        configToken
+      );
+      console.log("Delete Workspace : ", response);
+
+      if (response.data) {
+        return true;
+      }
+    } catch (error) {
+      return false;
+    }
+  };
+
+// Get workspace members
+const getWorkspaceMembers = async (slug) => {
+  try {
+    const response = await axios.get(
+      BASE_URL + `workspace/${slug}/members`,
+      configToken
+    );
+    console.log("GET workspace members: ", response);
+
+    if (response.data) {
+      return response.data.data;
+    }
+  } catch (error) {
+    return toast.error(error.response.data.message);
+    console.log("error", error);
+    toast.error(error.response.data.message);
+  }
+};
+
 
   // GET project by Wspace
   const getProjectByWspace = async (slug) => {
@@ -1066,6 +1100,8 @@ const AppProvider = ({ children }) => {
         deleteTodoAttachments,
         navbarSideSettingsIsOpen,
         setNavbarSideSettingsIsOpen,
+        deleteWorkspace,
+        getWorkspaceMembers,
       }}
     >
       {children}
