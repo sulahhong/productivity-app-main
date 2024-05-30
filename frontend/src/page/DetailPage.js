@@ -9,6 +9,8 @@ import {
   MdOutlineClose,
   MdKeyboardArrowLeft,
   MdVerticalSplit,
+  MdMoreHoriz,
+  MdAdd,
 } from "react-icons/md";
 import Comments from "../components/Comments";
 import SideOptionModal from "../components/SideOptionModal";
@@ -67,8 +69,8 @@ function DetailPage() {
     formState: { errors: subTodoErrors },
   } = useForm({
     defaultValues: {
-      title: '',
-      description: '',
+      title: "",
+      description: "",
     },
   });
 
@@ -88,8 +90,8 @@ function DetailPage() {
     console.log("ATTACHMENT DATA ", attachment);
     setTodoAttachments(attachment.data);
     const subIssue = await getSubTodos(slug, projectId, todoId);
-    console.log("SUBTODO ", subIssue)
-    setSubIssues(subIssue.data)
+    console.log("SUBTODO ", subIssue);
+    setSubIssues(subIssue.data);
   }
 
   useEffect(() => {
@@ -213,11 +215,11 @@ function DetailPage() {
       status: statusOpt[0],
     };
     const success = await createTodo(newTodo, slug, projectId);
-  if (success) {
-    resetSubTodo(); 
-    setSubIssuesOn(false);
-    fetchData();
-  }
+    if (success) {
+      resetSubTodo();
+      setSubIssuesOn(false);
+      fetchData();
+    }
   };
 
   const handleSubTodoClick = (subTodoId) => {
@@ -362,22 +364,58 @@ function DetailPage() {
 
         <div className={styles.subTodoContainer}>
           <div className={styles.subTodoTitleButton}>
-            <h1 onClick={() => setSubIssuesOn(true)}> Sub-Issues</h1>
-          </div>
-          <div>
-            {subIssues.length > 0 && (subIssues.map((item) => (
-              <div className={styles.subTodoListContainer}  >
-                <div className={styles.subTodoTitle} onClick={() => handleSubTodoClick(item._id)}>
-                  <div>{item.project.description}-{item.sid}</div>
-                  <div>{item.title}</div>
-                  <div></div>
+            {subIssues.length > 0 ? (
+              <div className={`${styles.subTodoTitleButton} ${styles.noList}`}>
+                <div>
+                  <h1> Sub-Issues</h1>
                 </div>
-                <div className={styles.subTodoTitle}>
-                  <div>Priority</div>
-                  <div>Asignee</div>
+                <div className={styles.subTodoTitleButtonBox}>
+                  <button
+                    type="button"
+                    onClick={() => setSubIssuesOn(true)}
+                    className={`${styles.subTodoTitleButton} ${styles.list}`}
+                  >
+                    <MdAdd />
+                  </button>
+                  <button
+                    type="button"
+                    className={`${styles.subTodoTitleButton} ${styles.list}`}
+                  >
+                    <MdMoreHoriz />
+                  </button>
                 </div>
               </div>
-            )))}
+            ) : (
+              <div className={`${styles.subTodoTitleButton} ${styles.noList}`}>
+                <div>
+                  <h1 onClick={() => setSubIssuesOn(true)}>
+                    {" "}
+                    + Add Sub-Issues
+                  </h1>
+                </div>
+              </div>
+            )}
+          </div>
+          <div>
+            {subIssues.length > 0 &&
+              subIssues.map((item) => (
+                <div className={styles.subTodoListContainer}>
+                  <div
+                    className={styles.subTodoTitle}
+                    onClick={() => handleSubTodoClick(item._id)}
+                  >
+                    <div>
+                      {item.project.description}-{item.sid}
+                    </div>
+                    <div>{item.title}</div>
+                    <div></div>
+                  </div>
+                  <div className={styles.subTodoTitle}>
+                    <div>Priority</div>
+                    <div>Asignee</div>
+                  </div>
+                </div>
+              ))}
             {subIssuesOn && (
               <form onSubmit={handleSubmitSubTodo(handleSubTodoSubmit)}>
                 <div className={styles.subTodoForm}>
@@ -410,13 +448,18 @@ function DetailPage() {
                       />
                     </div>
                   </div>
-                  <div>
-
-                  </div>
+                  <div></div>
                   <div className={styles.subTodoButtonBox}>
-                    <button className={styles.subTodoButton} type="button" onClick={() => setSubIssuesOn(false)}>Cancel</button>
-                    <button className={styles.subTodoButton} type="submit">Save</button>
-                    
+                    <button
+                      className={styles.subTodoButton}
+                      type="button"
+                      onClick={() => setSubIssuesOn(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button className={styles.subTodoButton} type="submit">
+                      Save
+                    </button>
                   </div>
                 </div>
               </form>
