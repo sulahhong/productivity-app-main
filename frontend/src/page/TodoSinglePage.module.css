@@ -600,6 +600,22 @@
     padding-bottom: 1rem; */
 }
 
+.subTodoTitleButton.noList {
+    margin-bottom: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+
+.subTodoTitleButton.list {
+    margin-bottom: 0;
+    border: none;
+    background-color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: gray;
+}
+
 .subTodoListContainer {
     font-size: 0.9rem;
     padding: 0.5rem;
@@ -625,8 +641,11 @@
   gap: 1rem;
 }
 
-.subTodoButton {
+.subTodoTitleButtonBox {
 
+}
+
+.subTodoButton {
     padding: 0.2rem 1rem;
 }
 
