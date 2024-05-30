@@ -80,8 +80,7 @@ const AppProvider = ({ children }) => {
   const [viewTodos, setViewTodos] = useState(todos);
   const [viewCategory, setViewCategory] = useState("all");
   const [navbarSideIsOpen, setNavbarSideIsOpen] = useState(false);
-  const [navbarSideSettingsIsOpen, setNavbarSideSettingsIsOpen] =
-    useState(false);
+  const [navbarSideSettingsIsOpen, setNavbarSideSettingsIsOpen] = useState(false);
   const [projects, setProjects] = useState(getLocalStorageProject());
   const [targetProjectGlobal, setTargetProjectGlobal] = useState({});
   const [isEditingProject, setIsEditingProject] = useState(false);
@@ -381,6 +380,24 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  //Get User Activity 
+  const getUserActivity = async () => {
+    try {
+      const response = await axios.get(
+        BASE_URL + 'users/me/activity',
+        configToken
+      );
+      console.log("GET user activity: ", response);
+
+      if (response.data) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
   //Get Project Members
   const getProjectMembers = async (slug, projectId) => {
     try {
@@ -601,8 +618,9 @@ const getWorkspaceMembers = async (slug) => {
         ...todoForm,
         priority: todoForm.priority.sid,
         status: todoForm.status.sid,
-        label: todoForm.label.map((item) => item._id),
-        assignee: todoForm.assignee.map((item) => item._id),
+        label: todoForm.label?.map((item) => item._id) || [],
+        assignee: todoForm.assignee?.map((item) => item._id) || [],
+        parent: todoForm.parent,
       };
 
       const response = await axios.post(
@@ -611,13 +629,13 @@ const getWorkspaceMembers = async (slug) => {
         configToken
       );
       console.log("CREATE NEW TODO :", response);
-      if (response.data) {
+      if (response?.data) {
         toast.success("Successfully created!");
         return true;
       }
     } catch (error) {
       console.log("error", error);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 
@@ -834,6 +852,24 @@ const getWorkspaceMembers = async (slug) => {
       if (response.data) {
         toast.success("Successfully created!");
         return true;
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  // Get SubTodos
+  const getSubTodos = async (slug, projectId, todoId) => {
+    try {
+      const response = await axios.get(
+        BASE_URL + `workspace/${slug}/project/${projectId}/todo/${todoId}/subtodo`,
+        configToken
+      );
+      console.log("GET Sub Todos: ", response);
+
+      if (response.data) {
+        return response.data;
       }
     } catch (error) {
       console.log("error", error);
@@ -1102,6 +1138,8 @@ const getWorkspaceMembers = async (slug) => {
         setNavbarSideSettingsIsOpen,
         deleteWorkspace,
         getWorkspaceMembers,
+        getUserActivity, 
+        getSubTodos, 
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useGlobalContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./TodoSinglePage.module.css";
@@ -24,6 +24,7 @@ import TodoHistory from "./TodoHistory";
 import CommentPage from "./CommentPage";
 import AssigneeDropdown from "../modal/Dropdown/AssigneeDropdown";
 import ParentDropdown from "../modal/Dropdown/ParentDropdown";
+import { useForm } from "react-hook-form";
 
 function DetailPage() {
   const {
@@ -39,10 +40,13 @@ function DetailPage() {
     addTodoAttachment,
     getTodoAttachment,
     deleteTodoAttachments,
+    getSubTodos,
+    createTodo,
   } = useGlobalContext();
 
   const { slug, projectId, todoId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const fileInputRef = useRef(null);
 
   const [todoForm, setTodoForm] = useState({
@@ -56,11 +60,25 @@ function DetailPage() {
     assignee: [],
   });
 
+  const {
+    register: registerSubTodo,
+    handleSubmit: handleSubmitSubTodo,
+    reset: resetSubTodo,
+    formState: { errors: subTodoErrors },
+  } = useForm({
+    defaultValues: {
+      title: '',
+      description: '',
+    },
+  });
+
   const { title, description, priority, status, dueDate, label } = todoForm;
 
   const [todoHistory, setTodoHistory] = useState([]);
   const [selectedAttachment, setSelectedAttachment] = useState(null);
   const [todoAttachments, setTodoAttachments] = useState([]);
+  const [subIssuesOn, setSubIssuesOn] = useState(false);
+  const [subIssues, setSubIssues] = useState([]);
 
   async function fetchData() {
     const data = await getTodoById(slug, projectId, todoId);
@@ -69,6 +87,9 @@ function DetailPage() {
     const attachment = await getTodoAttachment(slug, projectId, todoId);
     console.log("ATTACHMENT DATA ", attachment);
     setTodoAttachments(attachment.data);
+    const subIssue = await getSubTodos(slug, projectId, todoId);
+    console.log("SUBTODO ", subIssue)
+    setSubIssues(subIssue.data)
   }
 
   useEffect(() => {
@@ -156,8 +177,8 @@ function DetailPage() {
     const uploadAndGet = async () => {
       const uploadSuccess = await handleAttachmentUpload();
       if (uploadSuccess) {
-      const data =  await getTodoAttachment(slug, projectId, todoId);
-      setTodoAttachments(data)
+        const data = await getTodoAttachment(slug, projectId, todoId);
+        setTodoAttachments(data);
       }
     };
 
@@ -168,21 +189,44 @@ function DetailPage() {
     console.log("ATTACHMENT");
   }, [selectedAttachment]);
 
-  const handleTodoAttachmentDelete = async(attachmentId) => {
-   await deleteTodoAttachments(slug, projectId, todoId, attachmentId)
-   await fetchData()
-  }
+  const handleTodoAttachmentDelete = async (attachmentId) => {
+    await deleteTodoAttachments(slug, projectId, todoId, attachmentId);
+    await fetchData();
+  };
 
   const goToFileImageUrl = (item) => {
-    console.log("attachment url", item)
-    window.open(item.fileUrl, '_blank');
-    
-  // window.open을 사용하여 새 창을 열고 이미지 URL을 표시
-  // window.open(item.fileUrl, '_blank');
+    console.log("attachment url", item);
+    window.open(item.fileUrl, "_blank");
 
-  // 또는 현재 창에서 열고 싶으면 아래 코드 사용
-  // window.location.href = item.fileUrl;
+    // window.open을 사용하여 새 창을 열고 이미지 URL을 표시
+    // window.open(item.fileUrl, '_blank');
+
+    // 또는 현재 창에서 열고 싶으면 아래 코드 사용
+    // window.location.href = item.fileUrl;
+  };
+
+  const handleSubTodoSubmit = async (data) => {
+    const newTodo = {
+      ...data,
+      parent: todoId,
+      priority: priorityOpt[0],
+      status: statusOpt[0],
+    };
+    const success = await createTodo(newTodo, slug, projectId);
+  if (success) {
+    resetSubTodo(); 
+    setSubIssuesOn(false);
+    fetchData();
   }
+  };
+
+  const handleSubTodoClick = (subTodoId) => {
+    navigate(`/${slug}/project/${projectId}/todo/${subTodoId}`);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [location.pathname]);
 
   return (
     <div className={styles.singlePageContainer}>
@@ -191,7 +235,7 @@ function DetailPage() {
           <div className={styles.singlePageBodyTitle2}>
             <button
               className={styles.singlePageBackButton}
-              onClick={() => navigate(-1)}
+              onClick={() => navigate(`/${slug}/project/${projectId}`)}
             >
               <MdKeyboardArrowLeft />
             </button>
@@ -317,13 +361,66 @@ function DetailPage() {
         </div>
 
         <div className={styles.subTodoContainer}>
-          <h1>Sub Todo</h1>
-          <div className={styles.subTodoInputBox}>
-            <input
-              className={styles.subTodoInput}
-              placeholder="add new sub Todo.."
-            />
-            <button>입력</button>
+          <div className={styles.subTodoTitleButton}>
+            <h1 onClick={() => setSubIssuesOn(true)}> Sub-Issues</h1>
+          </div>
+          <div>
+            {subIssues.length > 0 && (subIssues.map((item) => (
+              <div className={styles.subTodoListContainer}  >
+                <div className={styles.subTodoTitle} onClick={() => handleSubTodoClick(item._id)}>
+                  <div>{item.project.description}-{item.sid}</div>
+                  <div>{item.title}</div>
+                  <div></div>
+                </div>
+                <div className={styles.subTodoTitle}>
+                  <div>Priority</div>
+                  <div>Asignee</div>
+                </div>
+              </div>
+            )))}
+            {subIssuesOn && (
+              <form onSubmit={handleSubmitSubTodo(handleSubTodoSubmit)}>
+                <div className={styles.subTodoForm}>
+                  <div className={styles.subTodoInputBox}>
+                    <div className={styles.subTodoInputItem}>
+                      <input
+                        className={styles.subTodoInput}
+                        type="text"
+                        placeholder="Issue title"
+                        id="title"
+                        {...registerSubTodo("title", {
+                          required: "제목은 필수 입력 값입니다",
+                          minLength: 2,
+                        })}
+                      />
+                    </div>
+                    {/* 에러처리 이곳에 */}
+                  </div>
+                  <div className={styles.subTodoInputBox}>
+                    <div className={styles.subTodoInputItem}>
+                      <input
+                        className={styles.subTodoInput}
+                        type="text"
+                        placeholder="Add description"
+                        id="description"
+                        {...registerSubTodo("description", {
+                          required: "내용은 필수 입력 값입니다",
+                          minLength: 2,
+                        })}
+                      />
+                    </div>
+                  </div>
+                  <div>
+
+                  </div>
+                  <div className={styles.subTodoButtonBox}>
+                    <button className={styles.subTodoButton} type="button" onClick={() => setSubIssuesOn(false)}>Cancel</button>
+                    <button className={styles.subTodoButton} type="submit">Save</button>
+                    
+                  </div>
+                </div>
+              </form>
+            )}
           </div>
         </div>
 
@@ -345,21 +442,21 @@ function DetailPage() {
           </div>
           {todoAttachments?.map((item) => (
             <div className={styles.attachmentInputBoxItem}>
-            <div className={styles.attachmentInputBoxInner}
-              onClick={() => goToFileImageUrl(item)}
-            >
-              <div></div>
-              <div>{item.fileName}</div>
-              <div>{}</div>
-
-            </div>
+              <div
+                className={styles.attachmentInputBoxInner}
+                onClick={() => goToFileImageUrl(item)}
+              >
+                <div></div>
+                <div>{item.fileName}</div>
+                <div>{}</div>
+              </div>
               <div
                 className={styles.deleteButton}
                 onClick={() => handleTodoAttachmentDelete(item._id)}
               >
-                <button  type="button">X</button>
+                <button type="button">X</button>
               </div>
-              </div>
+            </div>
           ))}
         </div>
       </div>

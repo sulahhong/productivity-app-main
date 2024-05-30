@@ -571,26 +571,64 @@
 
 .subTodoContainer {
     border-top: 1px solid rgb(209, 206, 206);
-    padding: 1rem 0;
+    padding-top: 1rem;
+}
+
+.subTodoForm {
+    font-size: 1rem;
+    border: 1px solid rgb(209, 206, 206);
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    padding: 0.5rem;
 }
 
 .subTodoInputBox {
-    margin-top: 1rem;
-    padding: 1rem 0.5rem;
-    border: 1px solid rgb(211, 214, 218);
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
 
 }
 
 .subTodoInput {
     padding: 0.5rem;
     border: none;
+    font-size: 1rem;
+    width: 100%;
 }
 
+.subTodoTitleButton {
+    margin-bottom: 1rem;
+    cursor: pointer;
+    /* border-bottom: 1px solid rgb(209, 206, 206); 
+    padding-bottom: 1rem; */
+}
+
+.subTodoListContainer {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+ 
+}
+
+.subTodoListContainer:first-child {
+    border-top: 1px solid rgb(209, 206, 206);
+}
+
+.subTodoTitle {
+    display: flex;
+    gap: 0.4rem;
+    cursor: pointer;
+}
+
+.subTodoButtonBox {
+    padding: 0.5rem;
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
+}
+
+.subTodoButton {
+
+    padding: 0.2rem 1rem;
+}
 
 @media (max-width: 750px) {
     .singlePageContainer {

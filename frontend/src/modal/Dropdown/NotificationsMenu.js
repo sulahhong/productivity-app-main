@@ -22,6 +22,23 @@ function NotificationsMenu() {
 const { getUserNotifications } = useGlobalContext();
 
 const [notifications, setNotifications] = useState([]);
+const [notiDropdown, setNotiDropdown] = useState(false);
+const [activeTab, setActiveTab] = useState('My Issues');
+
+let notificationRef = useRef(null);
+
+useEffect(() => {
+  let handler = (e) => {
+    if (!notificationRef.current?.contains(e.target)) {
+      setNotiDropdown(false);
+    }
+  };
+  document.addEventListener("mousedown", handler);
+
+  return () => {
+    document.removeEventListener("mousedown", handler);
+  };
+});
 
 async function fetchData() {
     const data = await getUserNotifications();
@@ -29,55 +46,78 @@ async function fetchData() {
 }
 
 useEffect(() => {
-    
+  // user가 있으면 으로 조건 걸어야함 
+  fetchData()
 }, [])
 
-    const menuClassName = ({ state }) =>
-    state === "opening"
-      ? styles.menuOpening
-      : state === "closing"
-      ? styles.menuClosing
-      : styles.menu;
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
 
-  const menuItemClassName = ({ hover, disabled }) =>
-    disabled
-      ? styles.menuItemDisabled
-      : hover
-      ? styles.menuItemHover
-      : styles.menuItem;
+  const renderNotifications = () => {
+    if (activeTab === 'My Issues') {
+      return notifications.map((list) => (
+        <div className={styles.notiDropdownContentItem} key={list.id}>
+          {list.message}
+        </div>
+      ));
+    } else if (activeTab === 'Created by me') {
+      return notifications.map((list) => (
+        <div className={styles.notiDropdownContentItem} key={list.id}>
+          {list.message}
+        </div>
+      ));
+    } else if (activeTab === 'Subscribed') {
+      return notifications.map((list) => (
+        <div className={styles.notiDropdownContentItem} key={list.id}>
+          {list.message}
+        </div>
+      ));
+    } 
 
-  const submenuItemClassName = (modifiers) =>
-    `${styles.submenuItem} ${menuItemClassName(modifiers)}`;
-
-  const MenuItem = (props) => (
-    <MenuItemInner {...props} className={menuItemClassName} />
-  );
+    return null;
+  };
 
 
   return (
-    <div className={styles.mainContainer}>
-      <Menu
-        transition
-        direction="right"
-        gap={15}
-        menuButton={
-          <MenuButton onClick={() => fetchData()} className={styles.menuButton}>
-            <MdNotifications />
-            Notifications
-          </MenuButton>
-        }
-        menuClassName={menuClassName}
-      >
-
-        {notifications.map((item) => (
-            <div>
-                <MenuItem>{item.message}</MenuItem>
-            </div>
-        ))
-
-        }
-      </Menu>
+    <div className={styles.parent}>
+      <div className={styles.menu} onClick={() => setNotiDropdown(!notiDropdown)}>
+        <div><MdNotifications /></div>
+        <div>Notifications</div>
+        </div>
+      {notiDropdown && (
+        <div className={styles.notiDropdownContent} ref={notificationRef}>
+        <div className={styles.notiDropdownHeader}>
+          <div>notification</div>
+          <div>
+            <button className={styles.notiHeaderContent}><MdOutlineClose /></button>
+          </div>
+        </div>
+        <div className={styles.notiHeaderMenu}>
+        <button
+            className={`${styles.notiHeaderMenuItems} ${activeTab === 'My Issues' ? styles.is_active : ''}`}
+            onClick={() => handleTabClick('My Issues')}
+          >
+            My Issues
+          </button>
+          <button
+            className={`${styles.notiHeaderMenuItems} ${activeTab === 'Created by me' ? styles.is_active : ''}`}
+            onClick={() => handleTabClick('Created by me')}
+          >
+            Created by me
+          </button>
+          <button
+            className={`${styles.notiHeaderMenuItems} ${activeTab === 'Subscribed' ? styles.is_active : ''}`}
+            onClick={() => handleTabClick('Subscribed')}
+          >
+            Subscribed
+          </button>
+        </div>
+        {renderNotifications()}
+        </div>
+      )}
     </div>
+    
   );
 }
 

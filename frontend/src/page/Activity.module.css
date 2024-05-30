@@ -1,0 +1,47 @@
+/*reset*/
+.wrapper {
+    margin: unset;
+    padding-left: var(--navSideWidth) ;
+}
+
+/*components*/
+.wrapper {
+    padding-left: var(--navSideWidth) ;
+    background-color: white;
+    color: rgb(168, 168, 168);
+}
+
+.main {
+    width: 60%; 
+    /* margin: 3rem auto;
+    margin-bottom: 0; */
+    margin: 3rem auto 0 auto ;
+    padding: 1rem;
+    border-bottom: 1px solid rgb(168, 168, 168);
+}
+
+.contents {
+    width: 60%; 
+    /* margin: 3rem auto;
+    margin-bottom: 0; */
+    margin:  0 auto ;
+    padding: 1rem;
+    border-bottom: 1px solid rgb(168, 168, 168);
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 400;
+
+}
+
+.titleDes {
+    font-size: 0.8rem;
+    letter-spacing: 3;
+}
+
+.content {
+    width: 100%;
+    padding: 0.5rem;
+    border-bottom: 1px solid gray;
+}

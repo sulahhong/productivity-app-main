@@ -13,11 +13,15 @@ function NavbarSideSettings() {
     useGlobalContext();
 
   const navigate = useNavigate();
-//   const {slug} = useParams();
   const path = window.location.pathname;
   const pathSegments = path.split('/');
 
   const slug = pathSegments[1];
+
+//   const path = window.location.pathname;
+//   const pathSegments = path.split('/');
+
+//   const slug = pathSegments[1];
 
   return (
     <div
@@ -36,16 +40,16 @@ function NavbarSideSettings() {
       <div className={styles.main}>
         <h2>Workspace</h2>
         <ul>
-          <li onClick={() => navigate(`/${slug}/settings`)}>General</li>
+          <li onClick={() => navigate(`/${slug}/settings/workspace`)}>General</li>
           <li onClick={() => navigate(`/${slug}/settings/members`)}>Members</li>
         </ul>
       </div>
       <div className={styles.main}>
         <h2>My Account</h2>
         <ul>
-          <li onClick={() => navigate(`/settings`)}>Profile</li>
+          <li onClick={() => navigate(`/${slug}/settings/user/me`)}>Profile</li>
           <li>Preferences</li>
-          <li>Activity</li>
+          <li onClick={() => navigate(`/${slug}/settings/user/me/activity`)}>Activity</li>
         </ul>
       </div>
       <div></div>

@@ -10,6 +10,7 @@ import {
   FaSearch,
 } from "react-icons/fa";
 import { useGlobalContext } from "../context";
+import { useParams } from "react-router-dom";
 
 function SettingPage() {
   const { uploadUserAvatar, getMe, updateUser } = useGlobalContext();
@@ -23,6 +24,9 @@ function SettingPage() {
   });
 
   const { name, email, avatar, displayName } = profileForm;
+
+  const { slug } = useParams();
+  console.log("PARAMS", slug)
 
   async function fetchData() {
     const data = await getMe(name, email, avatar, displayName);
@@ -39,7 +43,7 @@ function SettingPage() {
   const handleIconClick = () => {
     fileInputRef.current.click();
   };
-
+ 
   const handleImageChange = (event) => {
     console.log("IMG");
 

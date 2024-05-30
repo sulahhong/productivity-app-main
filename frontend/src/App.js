@@ -36,6 +36,7 @@ import JoinWorkspacePage from "./page/JoinWorkspacePage";
 import WorkspaceGeneral from "./page/settings/WorkspaceGeneral";
 import MyDetailPage from "./page/MyDetailPage";
 import NavbarSideSettings from "./components/NavbarSideSettings";
+import Activity from "./page/Activity";
 
 function App() {
   const {
@@ -71,6 +72,8 @@ function App() {
 
       {isSettingsPage ? <NavbarSideSettings /> : <NavbarSide />}
 
+
+
       {openModal && <TodoModal />}
       {openTodoModal && <NewTodoModal />}
       {openLabelModal && <LabelModal />}
@@ -93,9 +96,10 @@ function App() {
         <Route path="/todo/:id" element={<TodoSinglePage />} />
         <Route path="/myworkspace" element={<MyWorkspacePage />} />
         <Route path="/:slug/project" element={<MyProjectPage />} />
-        <Route path="/settings" element={<SettingPage />} />
-        <Route path="/:slug/settings" element={<WorkspaceGeneral />} />
+        <Route path="/:slug/settings/user/me" element={<SettingPage />} />
+        <Route path="/:slug/settings/workspace" element={<WorkspaceGeneral />} />
         <Route path="/:slug/settings/members" element={<WorkspaceMember />} />
+        <Route path="/:slug/settings/user/me/activity" element={<Activity />} />
         <Route path="/:slug/project/:projectId" element={<MyTodoPage />} />
         <Route
           path="/:slug/project/:projectId/todo/:todoId"

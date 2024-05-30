@@ -46,7 +46,7 @@ function MyWorkspaceDropdown({profile, setProfile}) {
   }
 
   const handleGoToWorkspaceSettings = () => {
-    navigate(`/${slug}/settings`)
+    navigate(`/${slug}/settings/workspace`)
   }
 
   const handleCreateWorkspace = () => {

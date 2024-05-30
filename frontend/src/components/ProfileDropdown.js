@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Menu,
   MenuButton,
@@ -22,16 +22,22 @@ function ProfileDropdown({profile, setProfile}) {
   } = useGlobalContext();
 
   const navigate = useNavigate();
+  const path = window.location.pathname;
+  const pathSegments = path.split('/');
 
-  async function fetchData() {
-    const data = await getMe();
-    console.log("NAVBAR HI", data)
-    setProfile(data)
-  }
+  const slug = pathSegments[1];
 
-  useEffect(() => {
-    fetchData()
-  }, [])
+  console.log(slug)
+
+
+  // async function fetchData() {
+  //   const data = await getMe();
+  //   setProfile(data)
+  // }
+
+  // useEffect(() => {
+  //   fetchData()
+  // }, [])
 
   const handleLogout = () => {
 
@@ -39,7 +45,7 @@ function ProfileDropdown({profile, setProfile}) {
   }
 
   const handleGoToSettings = () => {
-    navigate('/settings')
+    navigate(`/${slug}/settings/user/me`)
   }
 
 
@@ -76,7 +82,7 @@ const MenuItem = (props) => (
           }
           menuClassName={menuClassName}
     >
-      <div >{profile.email}</div>
+      {/* <div >{profile.email}</div> */}
       <MenuItem>view profile</MenuItem>
       <MenuItem onClick={handleGoToSettings}>profile settings</MenuItem>
       <MenuItem onClick={handleLogout}>Sign Out</MenuItem>

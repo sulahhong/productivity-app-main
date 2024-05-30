@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./NavbarSide.module.css";
 import { useGlobalContext } from "../context";
 import {
@@ -55,6 +55,11 @@ function NavbarSide() {
   const [openUserWorkspace, setOpenUserWorkspace] = useState(false);
   const [openUserProfile, setOpenUserProfile] = useState(false);
   const [profile, setProfile] = useState({});
+  
+  const path = window.location.pathname;
+  const pathSegments = path.split('/');
+
+  const slug = pathSegments[1];
 
   const navigate = useNavigate();
 
@@ -72,8 +77,12 @@ function NavbarSide() {
   }
 
   useEffect(() => {
-    fetchData();
-    console.log("loca", window.location);
+
+    if(user){
+      fetchData();
+      console.log("loca", window.location);
+    } 
+   
   }, []);
 
   // useEffect(() => {
@@ -206,8 +215,8 @@ function NavbarSide() {
     >
       <div className={styles.navbarSideTopPart}>
         <div className={styles.userSettings}>
-          <MyWorkspaceDropdown profile={profile} setProfile={setProfile} />
-          <ProfileDropdown profile={profile} setProfile={setProfile} />
+          <MyWorkspaceDropdown />
+          <ProfileDropdown profile={profile} setProfile={setProfile} slug={slug}/>
         </div>
         <div className={styles.navbarSideNewIssueBar}>
           <button

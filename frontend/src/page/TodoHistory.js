@@ -3,7 +3,12 @@ import styles from "./TodoHistory.module.css";
 import { useGlobalContext } from "../context";
 import { MdOutlineReply, MdModeEdit } from "react-icons/md";
 import CommentItem from "./CommentItem";
-import { getDateHourMinute, getDateHourMinuteEng, getFormattedDateaAndHours, getStringDate } from "../utill/date";
+import {
+  getDateHourMinute,
+  getDateHourMinuteEng,
+  getFormattedDateaAndHours,
+  getStringDate,
+} from "../utill/date";
 
 function TodoHistory({
   slug,
@@ -40,7 +45,7 @@ function TodoHistory({
 
   const historyDataParser = (item) => {
     let value = { text: "", color: "" };
-    console.log("JSONPARSER", JSON.parse(item.newValue))
+    console.log("JSONPARSER", JSON.parse(item.newValue));
 
     switch (item.field) {
       case "1":
@@ -65,37 +70,41 @@ function TodoHistory({
         };
         break;
       case "assignee":
-        value = { text: JSON.parse(item.newValue).member.detail?.displayName,
-                  color: ""};
+        value = {
+          text: JSON.parse(item.newValue).member.detail?.displayName,
+          color: "",
+        };
         break;
       case "parent":
         value = {
-          text: JSON.parse(item.newValue).project.identifier + " - " + JSON.parse(item.newValue).sid,
-          color: ""
+          text:
+            JSON.parse(item.newValue).project.identifier +
+            " - " +
+            JSON.parse(item.newValue).sid,
+          color: "",
         };
         break;
       case "attachment":
         value = {
           text: JSON.parse(item.newValue).fileName,
-          color: ""
-        }
-      break;
+          color: "",
+        };
+        break;
     }
     return value;
   };
 
   const calcTime = (item) => {
-    const datestring = item.createdAt ;
+    const datestring = item.createdAt;
     const date = new Date(datestring);
-    let displayDate = getStringDate(date)
+    let displayDate = getStringDate(date);
 
-    //timeDiff 계산 
+    //timeDiff 계산
 
-    let formattedDate = getDateHourMinuteEng(date)
+    let formattedDate = getDateHourMinuteEng(date);
 
-    return formattedDate
-
-  }
+    return formattedDate;
+  };
 
   const historyHtmlParser = (item, value) => {
     if (item.field == "label") {
