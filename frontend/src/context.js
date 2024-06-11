@@ -94,15 +94,6 @@ const AppProvider = ({ children }) => {
     { sid: "3", title: "Medium" },
     { sid: "4", title: "Low" },
   ]);
-
-  // const [priority, setPriority] = useState([
-  //   { priorityId: "1", priorityTitle: "Urgent" },
-  //   { priorityId: "2", priorityTitle: "High" },
-  //   { priorityId: "3", priorityTitle: "Medium" },
-  //   { priorityId: "4", priorityTitle: "Low" },
-  //   { priorityId: "5", priorityTitle: "No priority" },
-  // ]);
-
   const [status, setStatus] = useState([
     { sid: "0", title: "No Status" },
     { sid: "1", title: "Backlog" },
@@ -175,8 +166,6 @@ const AppProvider = ({ children }) => {
       ? "http://128.199.74.175/api/"
       : "http://localhost:5000/api/";
 
-  console.log("process.env.REACT_APP_ENV", process.env.REACT_APP_ENV);
-
   const configToken = {
     headers: {
       Authorization: `Bearer ${user.token}`,
@@ -184,15 +173,6 @@ const AppProvider = ({ children }) => {
   };
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log("todostodos", todos);
-    console.log("projectsprojects", projects);
-  }, []);
-
-  useEffect(() => {
-    console.log("WS ", openWorkspaceModal);
-  }, [openWorkspaceModal]);
 
   useEffect(() => {
     window.localStorage.setItem("todoList", JSON.stringify(todos));
@@ -349,8 +329,6 @@ const AppProvider = ({ children }) => {
   const getMe = async () => {
     try {
       const response = await axios.get(BASE_URL + "users/me", configToken);
-      console.log("GET User: ", response);
-
       if (response.data) {
         return response.data;
       }
@@ -559,7 +537,6 @@ const getWorkspaceMembers = async (slug) => {
         projectForm,
         configToken
       );
-      console.log("CREATE NEW PROJ: ", response);
 
       if (response.data) {
         toast.success("Successfully created!");
@@ -573,14 +550,11 @@ const getWorkspaceMembers = async (slug) => {
 
   //GET project Self
   const getProjectSelf = async (slug, projectId) => {
-    console.log("SLUG :", slug);
     try {
       const response = await axios.get(
         BASE_URL + `workspace/${slug}/project/${projectId}/me`,
         configToken
       );
-      console.log("GET Project Self: ", response);
-
       if (response.data) {
         return response.data;
       }
@@ -647,8 +621,6 @@ const getWorkspaceMembers = async (slug) => {
         BASE_URL + `workspace/${slug}/project/${projectId}/todo`,
         configToken
       );
-      console.log("GET Todos: ", response);
-
       if (response.data) {
         setTodo(response.data.data);
       }
@@ -824,8 +796,6 @@ const getWorkspaceMembers = async (slug) => {
         BASE_URL + `workspace/${slug}/project/${projectId}/label`,
         configToken
       );
-      console.log("GET Labels: ", response);
-
       if (response.data) {
         setLabels(response.data.data);
       }
@@ -840,14 +810,12 @@ const getWorkspaceMembers = async (slug) => {
 
   //create label
   const createLabel = async (labelForm, slug, projectId) => {
-    console.log("SLUG :", labelForm, slug, projectId);
     try {
       const response = await axios.post(
         BASE_URL + `workspace/${slug}/project/${projectId}/label`,
         labelForm,
         configToken
       );
-      console.log("CREATE NEW label: ", response);
 
       if (response.data) {
         toast.success("Successfully created!");
@@ -866,7 +834,6 @@ const getWorkspaceMembers = async (slug) => {
         BASE_URL + `workspace/${slug}/project/${projectId}/todo/${todoId}/subtodo`,
         configToken
       );
-      console.log("GET Sub Todos: ", response);
 
       if (response.data) {
         return response.data;
@@ -885,7 +852,6 @@ const getWorkspaceMembers = async (slug) => {
           `workspace/${slug}/project/${projectId}/todo/${todoId}/history`,
         configToken
       );
-      console.log("GET Todo History: ", response);
 
       if (response.data) {
         return response.data;
@@ -905,7 +871,6 @@ const getWorkspaceMembers = async (slug) => {
         { parent: parent, content: comment },
         configToken
       );
-      console.log("CREATE NEW Comment: ", response);
 
       if (response.data) {
         toast.success("Successfully created!");
@@ -932,7 +897,6 @@ const getWorkspaceMembers = async (slug) => {
         data,
         configToken
       );
-      console.log("Invite Workspace: ", response);
 
       if (response.data) {
         console.log("GG");
@@ -996,7 +960,6 @@ const getWorkspaceMembers = async (slug) => {
         data,
         configToken
       );
-      console.log("RES Invite: ", response);
 
       if (response.data) {
         toast.success("Successfully created!");
@@ -1018,7 +981,6 @@ const getWorkspaceMembers = async (slug) => {
         BASE_URL + "users/notification?size=10",
         configToken
       );
-      console.log("RES Notification: ", response);
 
       if (response.data) {
         return response.data;

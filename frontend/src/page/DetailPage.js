@@ -19,7 +19,6 @@ import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import { Line, Circle } from "rc-progress";
 import StatusDropdown2 from "../modal/Dropdown/StatusDropdown";
-import PriorityDropdown from "../modal/Dropdown/PriorityDropdown";
 import DuedateDropdown from "../modal/Dropdown/DuedateDropdown";
 import LabelDropdown from "../modal/Dropdown/LabelDropdown";
 import TodoHistory from "./TodoHistory";
@@ -27,6 +26,7 @@ import CommentPage from "./CommentPage";
 import AssigneeDropdown from "../modal/Dropdown/AssigneeDropdown";
 import ParentDropdown from "../modal/Dropdown/ParentDropdown";
 import { useForm } from "react-hook-form";
+import PriorityDropdown2 from "../modal/Dropdown/PriorityDropdown2";
 
 function DetailPage() {
   const {
@@ -74,7 +74,7 @@ function DetailPage() {
     },
   });
 
-  const { title, description, priority, status, dueDate, label } = todoForm;
+  const { title, description } = todoForm;
 
   const [todoHistory, setTodoHistory] = useState([]);
   const [selectedAttachment, setSelectedAttachment] = useState(null);
@@ -231,6 +231,7 @@ function DetailPage() {
   }, [location.pathname]);
 
   return (
+    <div className={styles.wrapper}>
     <div className={styles.singlePageContainer}>
       <div className={styles.singlePageBody}>
         <div className={styles.singlePageBodyTitle}>
@@ -294,17 +295,20 @@ function DetailPage() {
           </div>
           <div className={styles.optionContainer}>
             <StatusDropdown2
-              todoForm={todoForm}
-              setTodoForm={setTodoForm}
-              todoId={todoId}
-              action={handleUpdateTodoAPI}
+              todo={todoForm}
+              onUpdate={handleUpdateTodoAPI}
             />
 
-            <PriorityDropdown
+            {/* <PriorityDropdown
               todoForm={todoForm}
               setTodoForm={setTodoForm}
               todoId={todoId}
               action={handleUpdateTodoAPI}
+            /> */}
+
+            <PriorityDropdown2
+              todo={todoForm}
+              onUpdate ={handleUpdateTodoAPI}
             />
 
             <DuedateDropdown
@@ -335,10 +339,7 @@ function DetailPage() {
             <ParentDropdown
               todoForm={todoForm}
               setTodoForm={setTodoForm}
-              todoId={todoId}
               action={handleUpdateTodoAPI}
-              slug={slug}
-              projectId={projectId}
             />
           </div>
 
@@ -502,7 +503,6 @@ function DetailPage() {
             </div>
           ))}
         </div>
-      </div>
       <TodoHistory
         slug={slug}
         projectId={projectId}
@@ -516,6 +516,13 @@ function DetailPage() {
         todoId={todoId}
         fetchDataTodoHist={fetchDataTodoHist}
       />
+      </div>
+    <div className={styles.container2}>
+      <div className={styles.inner}>
+aaa
+      </div>
+    </div>
+    </div>
     </div>
   );
 }

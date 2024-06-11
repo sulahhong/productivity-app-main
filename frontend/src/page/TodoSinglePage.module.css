@@ -1,15 +1,39 @@
-.singlePageContainer {
-    padding-top: var(--navTopHeight);
-    padding-left: var(--navSideWidth) ;
-    height: 100%;
-    background-color: white;
-    color: gray;
+
+.wrapper {
+    background-color: var(--navSideColor);
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 0%;
+    min-width: 0px;
 }
+
+.singlePageContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    position: relative;
+    overflow: auto;
+    -webkit-box-align: stretch;
+    place-items: stretch;
+    background-color: white;
+    scrollbar-gutter: auto;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 4px;
+    margin: 8px 8px 8px 0px;
+    padding-top: var(--navTopHeight);
+    padding-left: var(--navSideWidth) ; 
+    height: 98.8vh;
+    
+}
+
 
 .singlePageBody {
     padding: 1rem;
 }
 
+.container2 {
+  
+}
 
 
 .singlePageMain {
@@ -596,6 +620,8 @@
 .subTodoTitleButton {
     margin-bottom: 1rem;
     cursor: pointer;
+    align-items: center;
+    justify-content: center;
     /* border-bottom: 1px solid rgb(209, 206, 206); 
     padding-bottom: 1rem; */
 }
@@ -614,6 +640,10 @@
     font-size: 1.1rem;
     font-weight: 600;
     color: gray;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .subTodoListContainer {
@@ -635,14 +665,16 @@
 }
 
 .subTodoButtonBox {
-    padding: 0.5rem;
+padding: 0.5rem;
   display: flex;
   justify-content: end;
   gap: 1rem;
 }
 
 .subTodoTitleButtonBox {
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .subTodoButton {

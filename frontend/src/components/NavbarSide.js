@@ -68,20 +68,19 @@ function NavbarSide() {
 
   async function fetchData() {
     const data = await getMe();
-    console.log("NAVBAR HI", data);
     setProfile(data);
 
-    if (window.location.pathname == "/") {
+    if (window.location.pathname === "/") {
       navigate(`/${data.lastWorkspaceSlug}/project`);
     }
   }
 
   useEffect(() => {
-
     if(user){
       fetchData();
-      console.log("loca", window.location);
-    } 
+    } else {
+      navigate('/login')
+    }
    
   }, []);
 
@@ -128,10 +127,7 @@ function NavbarSide() {
   };
 
   const handleProjectView = (item) => {
-    console.log("projectView", item.projectId);
-
-    const arr = todos.filter((todo) => todo.projectId == item.projectId);
-    console.log("filterprojectId", arr);
+    const arr = todos.filter((todo) => todo.projectId === item.projectId);
     setViewTodos(arr);
   };
 
@@ -145,9 +141,7 @@ function NavbarSide() {
   };
 
   const handleEditProject = (id) => {
-    console.log("edit project id", id);
     const targetProject = projects.find((item) => item.projectId === id);
-    console.log("targetProject", targetProject, id);
     setOpenModalProject(!openModalProject);
     setTargetProjectGlobal(targetProject);
     setIsEditingProject(true);
@@ -157,9 +151,7 @@ function NavbarSide() {
     if (projects.length === 2) {
       setProjectIsActive(false);
     }
-    console.log("DEL project id", id);
     const newArray = projects.filter((item) => item.projectId !== id);
-    console.log("newProjects", newArray);
 
     setProjects(newArray);
 
@@ -172,7 +164,6 @@ function NavbarSide() {
       }
       return item;
     });
-    console.log("Arrr", arr);
     setTodos(arr);
   };
 
@@ -185,7 +176,6 @@ function NavbarSide() {
   };
 
   const handleMyWorkspace = () => {
-    console.log("yyyyyyy");
     navigate("/myworkspace");
   };
 

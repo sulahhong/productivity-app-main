@@ -1,10 +1,10 @@
 body {
-    --navSideColor: white;
+    --navSideColor: #eaeaeb;
     --navTopColor: white;
     --navHoverColor: rgb(231, 230, 230);
-    --navSideWidth: 260px;
+    --navSideWidth: 280px;
     --navTopHeight: 0;
-    --navSideIconColor: rgb(165, 161, 161);
+    --navSideIconColor: rgb(101, 96, 96);
     --borderLineColor: rgb(216, 216, 216);
 }
 
@@ -18,8 +18,9 @@ body {
     background-color: var(--navSideColor);
     z-index: 1002 ;
     /* padding: var(--navTopHeight) 0; */
-    border-right: 1px solid var(--borderLineColor);
-    color: rgb(151, 147, 147);
+    /* border-right: 1px solid var(--borderLineColor); */
+    /* color: rgb(151, 147, 147); */
+    color: var(--navSideIconColor);
 }
 
 .navbarSideContents {

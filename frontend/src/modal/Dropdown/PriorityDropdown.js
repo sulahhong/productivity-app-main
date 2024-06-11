@@ -108,7 +108,7 @@ function PriorityDropdown({ todoForm, setTodoForm, todoId, type, action }) {
             >
                {getMenuItem(option.sid)}
               {option.title}
-              {todoForm?.priority.sid == option.sid && <MdCheck />}
+              {todoForm?.priority.sid === option.sid && <MdCheck />}
             </div>
           ))}
         </div>
