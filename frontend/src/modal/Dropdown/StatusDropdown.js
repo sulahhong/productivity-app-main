@@ -24,66 +24,38 @@ import {
 } from "react-icons/md";
 import { useGlobalContext } from "../../context";
 
-function StatusDropdown2({ todoForm, setTodoForm, type, action }) {
-  const {
-    status,
-    setStatus,
-    todos,
-    setTodos,
-    statusDropdown,
-    setStatusDropdown,
-  } = useGlobalContext();
+function StatusDropdown2({ todo, onUpdate }) {
+  const { status } = useGlobalContext();
 
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   let statusRef = useRef(null);
 
   useEffect(() => {
-    let handler = (e) => {
+    const handleClickOutside = (e) => {
       if (!statusRef.current?.contains(e.target)) {
-        setStatusDropdown(false);
+        setDropdownVisible(false);
       }
     };
-    document.addEventListener("mousedown", handler);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
-  });
-  
+  }, []);
 
-  const handleStatusChange = async(option) => {
-    console.log("Status change check", option);
-
-    let todo = {
-      ...todoForm,
-      ["status"]: option,
-
+  const handleStatusChange = (option) => {
+    const updatedTodo = {
+      ...todo,
+      status: option,
     };
-
-    
-    await setTodoForm(todo);
-
-
-    if(todoForm._id){
-      action(todo)
-    }
-    setStatusDropdown(false);
+    onUpdate(updatedTodo);
+    setDropdownVisible(false);
   };
 
-  // const handleStatusChange = (option) => {
-  //   console.log("Status change check", option);
-
-  //   let todo = {
-  //     ...todoForm,
-  //     ["status"]: option,
-
-  //   };
-
-  //   setTodoForm(todo);
-  //   setStatusDropdown(false);
-  // };
-
   const getMenuItem = (statusId) => {
-    switch (statusId) {
+    switch (statusId.toString()) {
+      case "0":
+        return <MdPauseCircleOutline />;
       case "1":
         return <MdPauseCircleOutline />;
       case "2":
@@ -103,20 +75,20 @@ function StatusDropdown2({ todoForm, setTodoForm, type, action }) {
     <div className={styles.parent}>
       <button
         className={styles.textBoxIconsingle}
-        onClick={() => setStatusDropdown(!statusDropdown)}
+        onClick={() => setDropdownVisible(!dropdownVisible)}
       >
-        {todoForm?.status.sid == "0" ? (
+        {todo?.status.sid === "0" ? (
           <span>Status</span>
         ) : (
           <div className={styles.dropdownButton}>
             <span className={styles.dropdownButton}>
-              {getMenuItem(todoForm.status.sid)}
+              {getMenuItem(todo?.status.sid)}
             </span>
-            <span>{todoForm?.status.title}</span>
+            <span>{todo?.status.title}</span>
           </div>
         )}
       </button>
-      {statusDropdown && (
+      {dropdownVisible && (
         <div className={styles.statusDropdownContent} ref={statusRef}>
           {status.map((option) => (
             <div
@@ -127,7 +99,7 @@ function StatusDropdown2({ todoForm, setTodoForm, type, action }) {
             >
               {getMenuItem(option.sid)}
               {option.title}
-              {todoForm?.status.sid == option.sid && <MdCheck />}
+              {todo?.status.sid === option.sid && <MdCheck />}
             </div>
           ))}
         </div>

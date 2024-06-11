@@ -32,7 +32,8 @@ function MyProjectPage() {
   };
 
   return (
-    <div className={styles.mainContainer}>
+    <div className={styles.wrapper}>
+      <div className={styles.container}>
       <div className={styles.todoBody}>
         <div className={styles.todoGuideBar}>
           <div className={styles.todoGuideBarLeftside}>
@@ -76,6 +77,7 @@ function MyProjectPage() {
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -80,7 +80,7 @@ const handleParents = (item) => {
 
 const checker = (data) => {
     // console.log("CCCC", data)
-    if (todoForm.parent?._id == data._id) {
+    if (todoForm.parent?._id === data._id) {
         return true;
     } else {
         return false;

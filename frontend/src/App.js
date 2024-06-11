@@ -40,6 +40,7 @@ import Activity from "./page/Activity";
 
 function App() {
   const {
+    user,
     todos,
     setTodos,
     openModal,
@@ -61,17 +62,13 @@ function App() {
   } = useGlobalContext();
 
   const location = useLocation();
-  console.log("LOCATION", location)
   const isSettingsPage = location.pathname.includes("settings");
-
-  console.log("useParams", useParams);
 
   return (
     <>
       <NavbarTop />
 
       {isSettingsPage ? <NavbarSideSettings /> : <NavbarSide />}
-
 
 
       {openModal && <TodoModal />}

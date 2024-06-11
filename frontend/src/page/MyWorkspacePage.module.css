@@ -1,67 +1,88 @@
+.wrapper {
+  background-color: var(--navSideColor);
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  min-width: 0px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  position: relative;
+  overflow: auto;
+  -webkit-box-align: stretch;
+  place-items: stretch;
+  background-color: white;
+  scrollbar-gutter: auto;
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 4px;
+  margin: 8px 8px 8px 0px;
+  padding-top: var(--navTopHeight);
+  padding-left: var(--navSideWidth);
+  height: 98.5vh;
+}
+
 .mainContainer {
-    padding-top: var(--navTopHeight);
-    padding-left: var(--navSideWidth) ;
-    height: 100%;
-    background-color: white;
+  padding-top: var(--navTopHeight);
+  padding-left: var(--navSideWidth);
+  height: 100%;
+  background-color: white;
 }
 
 .todoBody {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 .todoGuideBar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--borderLineColor);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--borderLineColor);
 }
 
 .todoGuideBarRightside {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .todoGuideBarLeftside {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    color: gray;
-  
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: gray;
 }
 
 .todoGuideBarLeftItem {
-    background-color: white;
-    display: flex;
-    align-items: center;
-    border: 1px solid var(--borderLineColor);
-    border-radius: 0.5rem;
-    padding: 0.3rem 0.5rem;
-    
+  background-color: white;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--borderLineColor);
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.5rem;
 }
 
 .todoGuideBarLeftText {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
-
 
 .todoAddButton {
-    padding: 0.2rem 1rem;
-    font-size: 0.8rem;
-    border: none;
-    background-color: whitesmoke;
-    color: gray;
-    font-weight: 400;
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 1px;
+  padding: 0.2rem 1rem;
+  font-size: 0.8rem;
+  border: none;
+  background-color: whitesmoke;
+  color: gray;
+  font-weight: 400;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 1px 1px;
 }
-
 
 /* .wspaceContent {
     display: flex;
@@ -82,188 +103,178 @@
 } */
 
 .wspaceContent {
-    margin-top: 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
 }
 
-.wspaceItem{
-    height: 13rem;
-    
-    background-color: gray;
+.wspaceItem {
+  height: 13rem;
 
-    border: 1px solid rgb(216, 211, 211);
-    /* text-align: center; */
+  background-color: gray;
+
+  border: 1px solid rgb(216, 211, 211);
+  /* text-align: center; */
 }
 
 .wspaceItem2 {
-    background-color: white;
-    position: relative;
-    height: 50%;
+  background-color: white;
+  position: relative;
+  height: 50%;
 }
 
 .wspaceItem3 {
-    background-color: rgb(216, 211, 211);
-    height: 50%;
-    padding: 0.5rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  background-color: rgb(216, 211, 211);
+  height: 50%;
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.wspaceTitle{
-    font-size: 1.5rem;
-    text-align: start;
-    /* padding: 0.5rem 1rem; */
+.wspaceTitle {
+  font-size: 1.5rem;
+  text-align: start;
+  /* padding: 0.5rem 1rem; */
 }
 
 .wspaceLabel {
-    background-color: rgb(22, 163, 74);
-    color: white;
-    display: inline-block;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.8rem;
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
-    border-radius: 0.5rem;
+  background-color: rgb(22, 163, 74);
+  color: white;
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  border-radius: 0.5rem;
 }
 
 .wspaceContainer {
-    height: 10rem;
-    padding: 20px;
-    text-align: center;
-    background-color: lightblue;
+  height: 10rem;
+  padding: 20px;
+  text-align: center;
+  background-color: lightblue;
 }
-
 
 .todoContent {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: center;
-    padding: 1rem;
-    width: 100%;
-   
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
 }
-
 
 .todoSingleItem {
   background-color: white;
   border-bottom: 1px solid rgb(216, 216, 216);
-  padding: 0.5rem ;
+  padding: 0.5rem;
   display: flex;
   position: relative;
   width: 100%;
 }
 
-
-.todoFilter{
-    margin: 0 1rem ;
-    padding: 0.5rem;
-    font-weight: 500;
-    color: gray;
-
+.todoFilter {
+  margin: 0 1rem;
+  padding: 0.5rem;
+  font-weight: 500;
+  color: gray;
 }
 
-.todoDelSide{
-    color: gray;
-    font-size: 1rem;
-    flex-grow: 1;
-  }
+.todoDelSide {
+  color: gray;
+  font-size: 1rem;
+  flex-grow: 1;
+}
 
-  .menuButton {
-    background-color: white;
-    /* border: 1px solid var(--borderLineColor); */
-    /* border-radius: 0.5rem; */
-    border: none;
-  
-  
-    color: gray;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.3rem 0.5rem;
-  }
-  
-  .menuItem {
-    cursor: pointer;
-    border-radius: 6px;
-    /* padding: 0.375rem 4rem; */
-    display: flex;
-    gap: 1rem;
-    font-size: 0.8rem;
-    color: gray;
-  }
-  
-  .menuItemHover {
-    composes: menuItem;
-    color: #000000;
-    background-color: #e2e2e2;
-  }
-  
-  .menuItemDisabled {
-    composes: menuItem;
-    cursor: default;
-    color: #aaa;
-  }
-  
-  .menu:focus,
-  .menuItem:focus {
-    outline: none;
-  }
-  
-  .todolabels {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.3rem;
-    font-size: 0.7rem;
-    border: 1px solid #8b8b8b;
-    border-radius: 0.5rem;
-    padding: 0.1rem 0.6rem;
-  }
+.menuButton {
+  background-color: white;
+  /* border: 1px solid var(--borderLineColor); */
+  /* border-radius: 0.5rem; */
+  border: none;
 
-  .circle {
-    display: flex;
-    align-items: center;
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background-color: red;
-  }
+  color: gray;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.5rem;
+}
 
-  .todoOption {
-    font-size: 0.8rem;
-    color: #8b8b8b;
-    flex-grow: 5;
-    flex-shrink: 0;
-    display: flex;
-    margin-left: auto;
+.menuItem {
+  cursor: pointer;
+  border-radius: 6px;
+  /* padding: 0.375rem 4rem; */
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: gray;
+}
 
-  }
+.menuItemHover {
+  composes: menuItem;
+  color: #000000;
+  background-color: #e2e2e2;
+}
 
-  .labelDisplaySide {
-    font-size: 0.8rem;
-    display: flex;
-    text-align: start;
-    justify-content: space-between;
-    gap: 0.8rem;
-    color: #8b8b8b;
-    
-  }
+.menuItemDisabled {
+  composes: menuItem;
+  cursor: default;
+  color: #aaa;
+}
 
-  
+.menu:focus,
+.menuItem:focus {
+  outline: none;
+}
+
+.todolabels {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  border: 1px solid #8b8b8b;
+  border-radius: 0.5rem;
+  padding: 0.1rem 0.6rem;
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: red;
+}
+
+.todoOption {
+  font-size: 0.8rem;
+  color: #8b8b8b;
+  flex-grow: 5;
+  flex-shrink: 0;
+  display: flex;
+  margin-left: auto;
+}
+
+.labelDisplaySide {
+  font-size: 0.8rem;
+  display: flex;
+  text-align: start;
+  justify-content: space-between;
+  gap: 0.8rem;
+  color: #8b8b8b;
+}
+
 .todoCardDueDate {
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.8rem;
   color: rgb(168, 164, 164);
-
 }
 
 .dueDateIcon {
@@ -283,7 +294,7 @@
   border-radius: 0.5rem;
   padding: 0.1rem 0.6rem;
 }
-  
+
 .todoItemTitle {
   font-size: 0.9rem;
   color: gray;
@@ -293,11 +304,8 @@
 
 /* My Todo Page */
 
-
 @media (max-width: 750px) {
   .mainContainer {
-      padding-left: 0 ;
-    
+    padding-left: 0;
   }
- 
- }
+}

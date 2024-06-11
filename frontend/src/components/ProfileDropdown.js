@@ -27,8 +27,6 @@ function ProfileDropdown({profile, setProfile}) {
 
   const slug = pathSegments[1];
 
-  console.log(slug)
-
 
   // async function fetchData() {
   //   const data = await getMe();
