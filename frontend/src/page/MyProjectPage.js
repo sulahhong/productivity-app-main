@@ -1,17 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
 import styles from "../page/MyWorkspacePage.module.css";
 import { useGlobalContext } from "../context";
-import { MdAdd, MdKeyboardArrowLeft } from "react-icons/md";
+import { MdAdd, MdKeyboardArrowLeft, MdOutlineSettings } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
+import MySingleProjectItem from "./MySingleProjectItem";
 
 function MyProjectPage() {
   const {
-    getProjectByWspace,
     project,
+    getProjectByWspace,
     setOpenProjectModal,
-    currentWorkspace,
     setCurrentWorkspace,
-    getProjectSelf,
   } = useGlobalContext();
   const { slug } = useParams();
 
@@ -21,11 +20,6 @@ function MyProjectPage() {
     getProjectByWspace(slug);
     setCurrentWorkspace(slug);
   }, []);
-
-  const handleGotoProject = (projectId) => {
-    navigate(`/${slug}/project/${projectId}`);
-    
-  };
 
   const handleGoBack = () => {
     navigate("/myworkspace");
@@ -57,24 +51,10 @@ function MyProjectPage() {
           </div>
         </div>
         <div className={styles.wspaceContent}>
-          {project?.length > 0 ? (
-            project.map((item) => (
-              <div
-                className={styles.wspaceItem}
-                onClick={() => handleGotoProject(item._id)}
-              >
-                <div className={styles.wspaceItem2}>
-                  {/* <div className={styles.wspaceLabel}>joined</div> */}
-                </div>
-                <div className={styles.wspaceItem3}>
-                  <div className={styles.wspaceTitle}>{item.title}</div>
-                  <div className={styles.wspaceName}>{item.description}</div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className={styles.wspaceContent}></div>
-          )}
+      {project?.length > 0 ? (
+        project.map((item) => (
+        <MySingleProjectItem item={item} key={item._id} />)))
+        : null}
         </div>
       </div>
     </div>

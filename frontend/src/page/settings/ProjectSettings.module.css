@@ -1,0 +1,215 @@
+/*reset*/
+.wrapper {
+	margin: unset;
+	padding-left: var(--navSideWidth) ;
+}
+
+h1, p {
+	margin: unset;
+	padding: unset;
+	font-size: unset;
+	font-weight: unset;
+}
+
+input {
+	margin: unset;
+	padding: unset;
+}
+
+/*components*/
+.wrapper {
+	padding-left: var(--navSideWidth) ;
+	background-color: white;
+	color: rgb(168, 168, 168);
+}
+
+.main {
+	width: 60%; 
+	/* margin: 3rem auto;
+	margin-bottom: 0; */
+	margin: 3rem auto 0 auto ;
+	padding: 1rem;
+	border-bottom: 1px solid rgb(168, 168, 168);
+
+}
+
+.title {
+	font-size: 2rem;
+	font-weight: 400;
+
+}
+
+.titleDes {
+	font-size: 0.8rem;
+	letter-spacing: 3;
+}
+
+.contents {
+	display: block;
+	width: 60%;
+	margin: 0 auto;
+	padding: 1rem;
+}
+
+.workspacePhoto {
+	width: 60%;
+	margin: 0 auto;
+	padding: 1rem;
+}
+
+.defaultIcon {
+	display: flex;
+	align-items: center;
+	font-size: 10rem;
+	color: rgb(168, 168, 168);
+	cursor: pointer;
+}
+
+.contentsItem {
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 1rem;
+}
+
+.itemLabel {
+	padding: 0.2rem;
+	font-size: 0.8rem;
+}
+
+.itemInput {
+	padding: 0.5rem;
+	width: 100%;
+	color: rgb(168, 168, 168);
+}
+
+.footer {
+	width: 60%;
+	margin: 0 auto;
+	text-align: center;
+	padding: 1rem;
+}
+
+.saveBtn {
+	padding: 0.5rem 3rem;
+	background-color: rgb(168, 168, 168);
+	color: white;
+	border: none;
+	border-radius: 0.5rem;
+	cursor: pointer;
+}
+
+.saveBtn:hover {
+	background-color: rgb(60, 145, 231);
+}
+
+
+.workspaceLogo {
+	width: 10rem;
+	height: 10rem;
+
+}
+
+.workspaceLogoItem {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 100%;
+}
+
+/* Workspcae Members settings */
+.header {
+	width: 60%; 
+	/* margin: 3rem auto;
+	margin-bottom: 0; */
+	margin: 3rem auto 0 auto ;
+	padding: 1rem;
+	width: 60%;
+}
+
+.headerItem {
+	margin-bottom: 1rem;
+	padding: 1rem 0;
+	border-bottom: 1px solid rgb(168, 168, 168);
+	display: flex;
+}
+
+.headerMain {
+	margin-left: auto;
+}
+
+.mainInput {
+	padding: 0.3rem 1rem;
+	margin-right: 0.5rem;
+}
+
+.addBtn {
+	border: none;
+	border-radius: 0.5rem;
+	padding: 0.3rem 0.8rem;
+	color: white;
+	background-color: rgb(190, 189, 189);
+}
+
+.addBtn:hover {
+	background-color: rgb(243, 184, 117);
+}
+
+.deleteBtn {
+	padding: 0.5rem 3rem;
+	background-color: rgb(168, 168, 168);
+	color: white;
+	border: none;
+	border-radius: 0.5rem;
+	cursor: pointer;
+}
+
+.deleteBtn:hover {
+	background-color: rgb(230, 96, 18);
+}
+
+.memberMain {
+	width: 60%; 
+	/* margin: 3rem auto;
+	margin-bottom: 0; */
+	margin:  0 auto ;
+	display: flex;
+}
+
+.memberMainBox {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2rem;
+	padding: 0 2rem;
+}
+
+.memberAvatarBox {
+	width: 3rem;
+	height: 3rem;
+	flex-shrink: 0;
+	flex-basis: 1;
+}
+
+.memberAvatarBoxItem {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+
+}
+
+.memberInnerBox {
+	width: 100%;
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+@media (max-width: 750px) {
+	.wrapper {
+			padding-left: 0 ;
+		
+	}
+ 
+ }

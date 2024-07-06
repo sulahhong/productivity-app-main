@@ -75,10 +75,13 @@ function NavbarSide() {
     }
   }
 
+  console.log('useruser',user )
+
   useEffect(() => {
     if(user){
       fetchData();
-    } else {
+    }else {
+
       navigate('/login')
     }
    

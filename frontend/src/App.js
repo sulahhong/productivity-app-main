@@ -37,6 +37,8 @@ import WorkspaceGeneral from "./page/settings/WorkspaceGeneral";
 import MyDetailPage from "./page/MyDetailPage";
 import NavbarSideSettings from "./components/NavbarSideSettings";
 import Activity from "./page/Activity";
+import InvitationListPage from "./page/InvitationListPage";
+import ProjectGeneral from "./page/settings/ProjectGeneral";
 
 function App() {
   const {
@@ -95,13 +97,16 @@ function App() {
         <Route path="/:slug/project" element={<MyProjectPage />} />
         <Route path="/:slug/settings/user/me" element={<SettingPage />} />
         <Route path="/:slug/settings/workspace" element={<WorkspaceGeneral />} />
-        <Route path="/:slug/settings/members" element={<WorkspaceMember />} />
+        <Route path="/:slug/settings/workspace/members" element={<WorkspaceMember />} />
+        <Route path="/:slug/settings/workspace/invites" element={<InvitationListPage />} />
+        <Route path="/:slug/settings/project/:projectId" element={<ProjectGeneral />}/>
         <Route path="/:slug/settings/user/me/activity" element={<Activity />} />
         <Route path="/:slug/project/:projectId" element={<MyTodoPage />} />
         <Route
           path="/:slug/project/:projectId/todo/:todoId"
           element={<DetailPage />}
         />
+        <Route path="/workspace/join/:inviteId" element={<JoinWorkspacePage />} />
       </Routes>
     </>
   );

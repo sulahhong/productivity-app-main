@@ -41,7 +41,17 @@ function NavbarSideSettings() {
         <h2>Workspace</h2>
         <ul>
           <li onClick={() => navigate(`/${slug}/settings/workspace`)}>General</li>
-          <li onClick={() => navigate(`/${slug}/settings/members`)}>Members</li>
+          <li onClick={() => navigate(`/${slug}/settings/workspace/members`)}>Members</li>
+          <li onClick={() => navigate(`/${slug}/settings/workspace/invites`)}>Invites</li>
+        </ul>
+      </div>
+      <div className={styles.main}>
+        <h2>Project</h2>
+        <ul>
+          <li onClick={() => navigate(`/${slug}/settings/project`)}>General</li>
+          <li onClick={() => navigate(`/${slug}/settings/project/members`)}>Members</li>
+          <li onClick={() => navigate(`/${slug}/settings/project/invites`)}>Invites</li>
+          <li onClick={() => navigate(`/${slug}/settings/project/label`)}>labels</li>
         </ul>
       </div>
       <div className={styles.main}>
