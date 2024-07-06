@@ -36,7 +36,7 @@ h2 {
 
 .backButton {
     border: none;
-    background-color: white;
+    background-color: var(--navSideColor);
     font-size: 1.5rem;
     display: flex;
     align-items: center;

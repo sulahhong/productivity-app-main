@@ -490,11 +490,11 @@ const AppProvider = ({ children }) => {
     }
   };
 
-// Get workspace members
-const getWorkspaceMembers = async (slug) => {
+// Get workspace All members
+const getWorkspaceAllMembers = async (slug) => {
   try {
     const response = await axios.get(
-      BASE_URL + `workspace/${slug}/members`,
+      BASE_URL + `workspace/${slug}/members/total`,
       configToken
     );
     console.log("GET workspace members: ", response);
@@ -508,6 +508,26 @@ const getWorkspaceMembers = async (slug) => {
     toast.error(error.response.data.message);
   }
 };
+
+// Get workspace members
+const getWorkspaceMembers = async (slug) => {
+  try {
+    const response = await axios.get(
+      BASE_URL + `workspace/${slug}/members`,
+      configToken
+    );
+    console.log("GET workspace All members: ", response);
+
+    if (response.data) {
+      return response.data.data;
+    }
+  } catch (error) {
+    return toast.error(error.response.data.message);
+    console.log("error", error);
+    toast.error(error.response.data.message);
+  }
+};
+
 
 
   // GET project by Wspace
@@ -574,6 +594,44 @@ const getWorkspaceMembers = async (slug) => {
         configToken
       );
       console.log("JOIN Project: ", response);
+
+      if (response.data) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  
+  // Get joined Project
+  const getJoinedProject= async (slug) => {
+    try {
+      const response = await axios.get(
+        BASE_URL + `workspace/${slug}/project/joined`,
+        configToken
+      );
+      console.log("GET JOINED project: ", response);
+
+      if (response.data) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  //Update Project
+  const updateProjectSetting = async (projectForm, slug, projectId) => {
+    try {
+      const response = await axios.put(
+        BASE_URL + `workspace/${slug}/project/${projectId}`,
+        projectForm,
+        configToken
+      );
+      console.log("GET PROJECT: ", response);
 
       if (response.data) {
         return response.data;
@@ -974,6 +1032,26 @@ const getWorkspaceMembers = async (slug) => {
     }
   };
 
+  console.log("BASE_URL:", BASE_URL);
+console.log("configToken:", configToken);
+
+  //Get Invitations 
+  const getMyInvitation = async () => {
+    try {
+      const response = await axios.get(
+        BASE_URL + "users/me/invites",
+        configToken
+      );
+
+      if (response.data) {
+        return response.data
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
   // Get User Notifications
   const getUserNotifications = async () => {
     try {
@@ -1102,6 +1180,10 @@ const getWorkspaceMembers = async (slug) => {
         getWorkspaceMembers,
         getUserActivity, 
         getSubTodos, 
+        getWorkspaceAllMembers,
+        getMyInvitation,
+        getJoinedProject,
+        updateProjectSetting
       }}
     >
       {children}

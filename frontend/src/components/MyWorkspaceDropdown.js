@@ -41,13 +41,14 @@ function MyWorkspaceDropdown({profile, setProfile}) {
 
   }
 
-  const handleGoToMembersSettings = () => {
-    navigate(`/${slug}/settings/members`)
+  const handleGoToInvites = () => {
+    navigate(`/${slug}/settings/invites`)
   }
 
   const handleGoToWorkspaceSettings = () => {
     navigate(`/${slug}/settings/workspace`)
   }
+
 
   const handleCreateWorkspace = () => {
     setOpenWorkspaceModal(!openWorkspaceModal)
@@ -119,7 +120,7 @@ function MyWorkspaceDropdown({profile, setProfile}) {
             ))}
           <MenuItem onClick={handleCreateWorkspace}>+ Create New Workspace</MenuItem>
           <MenuItem onClick={handleGoToWorkspaceSettings}>Workspace Settings</MenuItem>
-          <MenuItem onClick={handleGoToMembersSettings}>Workspace Invites</MenuItem>
+          <MenuItem onClick={handleGoToInvites}>Workspace Invites</MenuItem>
           <MenuItem onClick={handleLogout}>Sign Out</MenuItem>
         </Menu>
     </div>

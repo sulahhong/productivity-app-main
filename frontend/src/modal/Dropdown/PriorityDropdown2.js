@@ -29,6 +29,9 @@ function PriorityDropdown2({ todo, onUpdate }) {
     };
   }, []);
 
+
+
+
   const handlePriorityChange = (option) => {
     const updatedTodo = {
       ...todo,

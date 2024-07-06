@@ -84,7 +84,7 @@ function NewTodoModal() {
           </button>
         </div>
         <div className={styles.optionContainer}>
-          <StatusDropdown2 todoForm={todoForm} setTodoForm={setTodoForm} />
+          {/* <StatusDropdown2 todoForm={todoForm} setTodoForm={setTodoForm} /> */}
           <PriorityDropdown todoForm={todoForm} setTodoForm={setTodoForm} />
           <DuedateDropdown todoForm={todoForm} setTodoForm={setTodoForm} />
           <LabelDropdown todoForm={todoForm} setTodoForm={setTodoForm} />

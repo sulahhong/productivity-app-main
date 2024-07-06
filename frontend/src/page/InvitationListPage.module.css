@@ -1,0 +1,93 @@
+.wrapper {
+	padding-left: var(--navSideWidth) ;
+	color: rgb(168, 168, 168);
+}
+
+.title {
+	font-size: 2rem;
+	font-weight: 400;
+
+}
+
+.titleDes {
+	font-size: 0.8rem;
+	letter-spacing: 3;
+}
+
+
+.main {
+	width: 60%; 
+	/* margin: 3rem auto;
+	margin-bottom: 0; */
+	margin: 3rem auto 0 auto ;
+	padding: 1rem;
+	border-bottom: 1px solid rgb(168, 168, 168);
+
+}
+
+.header {
+	width: 60%; 
+	/* margin: 3rem auto;
+	margin-bottom: 0; */
+	margin: 3rem auto 0 auto ;
+	padding: 1rem;
+	width: 60%;
+}
+
+.headerItem {
+	margin-bottom: 1rem;
+	padding: 1rem 0;
+	border-bottom: 1px solid rgb(168, 168, 168);
+	display: flex;
+}
+
+.headerMain {
+	margin-left: auto;
+}
+
+.mainInput {
+	padding: 0.3rem 1rem;
+	margin-right: 0.5rem;
+}
+
+.addBtn {
+	border: none;
+	border-radius: 0.5rem;
+	padding: 0.3rem 0.8rem;
+	color: white;
+	background-color: rgb(190, 189, 189);
+}
+
+.addBtn:hover {
+	background-color: rgb(243, 184, 117);
+}
+
+.deleteBtn {
+	padding: 0.5rem 3rem;
+	background-color: rgb(168, 168, 168);
+	color: white;
+	border: none;
+	border-radius: 0.5rem;
+	cursor: pointer;
+}
+
+.deleteBtn:hover {
+	background-color: rgb(230, 96, 18);
+}
+
+.memberMain {
+	width: 60%; 
+	/* margin: 3rem auto;
+	margin-bottom: 0; */
+	margin:  0 auto ;
+	display: flex;
+}
+
+.memberMainBox {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2rem;
+	padding: 0 2rem;
+}

@@ -105,12 +105,12 @@
 .wspaceContent {
   margin-top: 1rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 1rem;
 }
 
 .wspaceItem {
-  height: 13rem;
+  height: 14rem;
 
   background-color: gray;
 
@@ -122,21 +122,75 @@
   background-color: white;
   position: relative;
   height: 50%;
+  display: flex;
+  align-items: end;
+  padding: 10px;
+  gap: 20px;
+  cursor: pointer;
 }
+
+.wspaceIcon {
+  width: 70px;
+  height: 70px;
+  background-color: #8b8b8b;
+  border-radius: 20%;
+  /* position: absolute;
+  bottom: 0;
+  margin: 10px; */
+  display: flex;
+  cursor: pointer;
+
+}
+
+.wspaceName {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+
 
 .wspaceItem3 {
   background-color: rgb(216, 211, 211);
   height: 50%;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 0.5rem;
 }
 
+.projectSettings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.projectSettingIcon {
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 .wspaceTitle {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
   text-align: start;
-  /* padding: 0.5rem 1rem; */
+}
+
+.projectLabels {
+  display: flex;
+  gap: 10px;
+}
+
+.projectLabel {
+  font-size: 0.8rem;
+  padding: 0.2rem 1rem;
+  border-radius: 0.3rem;
+  border: 1px solid;
 }
 
 .wspaceLabel {

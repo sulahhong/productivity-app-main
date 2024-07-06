@@ -13,7 +13,7 @@ import { useGlobalContext } from "../../context";
 import { useParams } from "react-router-dom";
 
 function WorkspaceMember() {
-  const { openInviteModal, setOpenInviteModal, getWorkspaceMembers } =
+  const { openInviteModal, setOpenInviteModal, getWorkspaceMembers, getWorkspaceAllMembers } =
     useGlobalContext();
 
   const [workspaceMembers, setWorkspaceMembers] = useState([]);
@@ -27,8 +27,14 @@ function WorkspaceMember() {
     setWorkspaceMembers(data);
   }
 
+  const getAllMembers = async () => {
+    const data = await getWorkspaceAllMembers(slug);
+    console.log(data.pending)
+  }
+
   useEffect(() => {
     fetchData();
+    getAllMembers()
   }, []);
 
   return (

@@ -30,8 +30,13 @@ function Activity() {
         <p className={styles.titleDes}>descriptions</p>
       </div>
       <div className={styles.contents}>
-      {Array.isArray(activities) &&
-        activities.map((item) => <div className={styles.content} key={item._id}>{item.comment}</div>)}
+        {Array.isArray(activities) &&
+          activities.map((item) => (
+            <div className={styles.content} key={item._id}>
+              <div>{item.actor.name}</div>
+              <div>{item.commentBasic}</div>
+            </div>
+          ))}
       </div>
     </div>
   );

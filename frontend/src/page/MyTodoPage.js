@@ -80,50 +80,55 @@ function MyTodoPage() {
     navigate(`/${slug}/project`);
   };
 
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-      <header className={styles.topBar}>
-        <div className={styles.topBarGuideMain}>
-          <div className={styles.topBarGuideItem}>
-            <button
-              className={styles.guideButton}
-              onClick={() => handleGoBack()}
-            >
-              <MdKeyboardArrowLeft />
-            </button>
-            <h1>My TodoList</h1>
-          </div>
-          <div className={styles.topBarGuideAside}>
-            <div className={styles.topBarGuideFilter}>
-              <button className={styles.guideButton}>
-                <MdFilterList />
-              </button>
-            </div>
-            <div className={styles.topBarGuideAdd}>
+        <header className={styles.topBar}>
+          <div className={styles.topBarGuideMain}>
+            <div className={styles.topBarGuideItem}>
               <button
-                className={styles.addButton}
-                onClick={() => setOpenTodoModal(true)}
+                className={styles.guideButton}
+                onClick={() => handleGoBack()}
               >
-                <MdAdd className={styles.todoAddIcon} />
-                Add
+                <MdKeyboardArrowLeft />
               </button>
+              <h1>My TodoList</h1>
+            </div>
+            <div className={styles.topBarGuideAside}>
+              <div className={styles.topBarGuideFilter}>
+                <button className={styles.guideButton}>
+                  <MdFilterList />
+                </button>
+              </div>
+              <div className={styles.topBarGuideAdd}>
+                <button
+                  className={styles.addButton}
+                  onClick={() => setOpenTodoModal(true)}
+                >
+                  <MdAdd className={styles.todoAddIcon} />
+                  Add
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </header>
-      <main className={styles.main}>
-        <div className={styles.mainBoard}>
-        <div className={styles.mainBoardGridContainer}>
-		{todo?.length > 0
-			? todo.map((item) => (
-         <MySingleTodoItem key={item._id} slug={slug} projectId={projectId} item={item} />
-      )): null}
-        </div>
-        </div>
-      </main>
-    </div>
+        </header>
+        <main className={styles.main}>
+          <div className={styles.mainBoard}>
+            <div className={styles.mainBoardGridContainer}>
+              {todo?.length > 0
+                ? todo.map((item) => (
+                    <MySingleTodoItem
+                      key={item._id}
+                      slug={slug}
+                      projectId={projectId}
+                      item={item}
+                    />
+                  ))
+                : null}
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
